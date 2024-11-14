@@ -16,6 +16,7 @@ function renderRoutes(routesObj) {
         </Route>
       );
     }
+
     return (
       <Route
         key={route.path}

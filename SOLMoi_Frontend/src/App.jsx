@@ -29,11 +29,15 @@ function renderRoutes(routesObj) {
 }
 
 function App() {
+  console.log('App component rendering...');
+
   return (
     <>
       <BrowserRouter>
         <Routes>{renderRoutes(mainRoutes)}</Routes>
+
       </BrowserRouter>
+
     </>
   );
 }

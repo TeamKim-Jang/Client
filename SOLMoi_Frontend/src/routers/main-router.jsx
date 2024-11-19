@@ -2,6 +2,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import InvestMainBoard from "../routes/investMainBoard";
 import NewsFeed from "../components/NewsPage/NewsFeed";
+import InvestMain from "../components/investMain";
 
 export const mainRoutes = [
   {

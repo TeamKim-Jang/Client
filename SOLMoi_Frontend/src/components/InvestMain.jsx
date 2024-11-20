@@ -1,114 +1,282 @@
-import React from "react";
+"use client";
+
+import React, { useState, useEffect } from "react";
+
+// 숫자 포맷팅 유틸리티 함수
+const formatNumber = (num) => {
+  return new Intl.NumberFormat("ko-KR").format(num);
+};
+
+// 퍼센트 포맷팅 유틸리티 함수
+const formatPercent = (num) => {
+  return new Intl.NumberFormat("ko-KR", {
+    minimumFractionDigits: 1,
+    maximumFractionDigits: 1,
+  }).format(num);
+};
 
 export default function InvestMain() {
+  const [balanceData, setBalanceData] = useState(null);
+  const [stockData, setStockData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [balanceResponse, stockResponse] = await Promise.all([
+          fetch("http://localhost:3000/api/invest/main/balance/3"),
+          fetch("http://localhost:3000/api/invest/main/portfoliostock/3"),
+        ]);
+        const balanceData = await balanceResponse.json();
+        const stockData = await stockResponse.json();
+        setBalanceData(balanceData.data);
+        setStockData(stockData.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (isLoading || !balanceData || !stockData) return null;
+
+  const cashBalance = parseFloat(balanceData[0].cash_balance);
+  const totalInvestment = parseFloat(balanceData[0].total_investment);
+  const totalProfitLoss = parseFloat(balanceData[0].total_profit_loss);
+  const totalBalance = cashBalance + totalInvestment;
+  const totalProfitLossRate = (totalProfitLoss / totalInvestment) * 100;
+
   return (
-    <div className="max-w-md mx-auto bg-gray-50 min-h-screen">
+    <div style={styles.container}>
       {/* Header */}
-      <div className="p-4 bg-white">
-        <h1 className="text-center text-lg mb-6">로고</h1>
+      <div style={styles.header}>
+        <h1 style={styles.headerTitle}>로고</h1>
+      </div>
 
-        {/* Portfolio Value */}
-        <div className="space-y-4">
-          <h2 className="text-4xl font-bold">123,456원</h2>
-          <p className="text-blue-600">-33,467 (6.0%)</p>
-
-          <div className="space-y-1 text-right">
-            <div className="flex justify-between text-gray-600">
-              <span>투자</span>
-              <span>2,434.4원</span>
+      {/* Main Balance */}
+      <div style={styles.balanceSection}>
+        <div style={styles.balanceContainer}>
+          <div>
+            <div style={styles.totalBalance}>
+              {formatNumber(totalBalance)}원
             </div>
-            <div className="flex justify-between text-gray-600">
-              <span>현금</span>
-              <span>102,234.4원</span>
+            <div style={styles.profitLoss}>
+              {formatNumber(totalProfitLoss)}원 (
+              {formatPercent(totalProfitLossRate)}%)
+            </div>
+          </div>
+          <div style={styles.investmentCashContainer}>
+            <div style={styles.investmentCashItem}>
+              <div style={styles.label}>투자</div>
+              <div style={styles.value}>{formatNumber(totalInvestment)}원</div>
+            </div>
+            <div style={styles.investmentCashItem}>
+              <div style={styles.label}>현금</div>
+              <div style={styles.value}>{formatNumber(cashBalance)}원</div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Stocks List */}
-      <div className="p-4 space-y-4">
-        <h3 className="text-lg mb-2">주식</h3>
-
-        <div className="bg-white rounded-lg shadow p-4 space-y-2">
-          <div className="flex items-center justify-between">
-            <div>
-              <div className="flex items-center gap-2">
-                <div className="w-6 h-6 bg-blue-500 rounded-full"></div>
-                <span className="font-medium">삼성전자</span>
-              </div>
-              <span className="text-sm text-gray-500">11.25 SSG</span>
-            </div>
-            <div className="text-right">
-              <div>2,4234원</div>
-              <div className="text-red-500">-2493.4 (5.7%)</div>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-white rounded-lg shadow p-4 space-y-2">
-          <div className="flex items-center justify-between">
-            <div>
-              <div className="flex items-center gap-2">
-                <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center text-white text-sm">
-                  <span>N</span>
+      {/* Stocks Section */}
+      <div style={styles.stocksSection}>
+        <h2 style={styles.sectionTitle}>주식</h2>
+        <div style={styles.stocksList}>
+          {stockData.map((stock) => (
+            <div key={stock.portfoliostock_id} style={styles.stockItem}>
+              <div style={styles.stockInfo}>
+                <div style={styles.logoContainer}>
+                  <div style={styles.logo}>
+                    {stock.name.toString().charAt(0)}
+                  </div>
                 </div>
-                <span className="font-medium">네이버</span>
+                <div>
+                  <div style={styles.stockName}>{stock.name}</div>
+                  <div style={styles.stockCode}>{stock.symbol}</div>
+                </div>
               </div>
-              <span className="text-sm text-gray-500">14 NVR</span>
-            </div>
-            <div className="text-right">
-              <div>55512원</div>
-              <div className="text-red-500">-23.4 (1.7%)</div>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-white rounded-lg shadow p-4 space-y-2">
-          <div className="flex items-center justify-between">
-            <div>
-              <div className="flex items-center gap-2">
-                <div className="w-6 h-6 bg-yellow-500 rounded-full"></div>
-                <span className="font-medium">이마트</span>
+              <div style={styles.stockPriceInfo}>
+                <div style={styles.currentPrice}>
+                  {formatNumber(stock.current_price)}원
+                </div>
+                <div
+                  style={
+                    stock.price_change >= 0
+                      ? styles.priceChangePositive
+                      : styles.priceChangeNegative
+                  }
+                >
+                  {stock.price_change >= 0 ? "+" : ""}
+                  {formatNumber(stock.price_change)}원 (
+                  {formatPercent(
+                    (stock.price_change /
+                      (stock.current_price - stock.price_change)) *
+                      100
+                  )}
+                  %)
+                </div>
               </div>
-              <span className="text-sm text-gray-500">20 EMT</span>
             </div>
-            <div className="text-right">
-              <div>19273원</div>
-              <div className="text-red-500">-2344 (15.7%)</div>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
-
-      {/* Quick Actions */}
-      <div className="p-4">
-        <h3 className="text-lg mb-4">쓸방울 모으기</h3>
-        <div className="grid grid-cols-3 gap-4">
-          <div className="bg-white rounded-lg shadow p-4 flex flex-col items-center text-center space-y-2">
-            <div className="w-6 h-6 border-2 border-gray-600 rounded-full"></div>
-            <span className="text-sm">출석체크 하러가기</span>
-          </div>
-          <div className="bg-white rounded-lg shadow p-4 flex flex-col items-center text-center space-y-2">
-            <div className="w-6 h-6 border-2 border-gray-600"></div>
-            <span className="text-sm">오를까? 내릴까?</span>
-          </div>
-          <div className="bg-white rounded-lg shadow p-4 flex flex-col items-center text-center space-y-2">
-            <div className="w-6 h-6 border-2 border-gray-600"></div>
-            <span className="text-sm">금융뉴스 읽기</span>
-          </div>
+      <footer style={styles.bottomNav}>
+        <div style={styles.navItems}>
+          <div style={{ ...styles.navItem, ...styles.activeNavItem }}></div>
+          <div style={styles.navItem}></div>
+          <div style={styles.navItem}></div>
+          <div style={styles.navItem}></div>
+          <div style={styles.navItem}></div>
         </div>
-      </div>
-
-      {/* Bottom Navigation */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t">
-        <div className="flex justify-around p-4">
-          <div className="w-6 h-6 bg-blue-600 rounded-full"></div>
-          <div className="w-6 h-6 bg-gray-400 rounded-full"></div>
-          <div className="w-6 h-6 bg-gray-400 rounded-full"></div>
-          <div className="w-6 h-6 bg-gray-400 rounded-full"></div>
-          <div className="w-6 h-6 bg-gray-400 rounded-full"></div>
-        </div>
-      </div>
+      </footer>
     </div>
   );
 }
+
+const styles = {
+  container: {
+    minHeight: "100vh",
+    backgroundColor: "#F8F9FB",
+    fontFamily:
+      '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+    color: "black",
+  },
+  header: {
+    padding: "16px 20px",
+    backgroundColor: "white",
+  },
+  headerTitle: {
+    fontSize: "18px",
+    fontWeight: "500",
+    textAlign: "center",
+    margin: 0,
+  },
+  balanceSection: {
+    padding: "32px 20px 24px",
+    backgroundColor: "white",
+  },
+  balanceContainer: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+  },
+  totalBalance: {
+    fontSize: "40px",
+    fontWeight: "bold",
+    lineHeight: "1.2",
+  },
+  profitLoss: {
+    color: "#2D59F7",
+    fontSize: "18px",
+    marginTop: "4px",
+  },
+  investmentCashContainer: {
+    textAlign: "right",
+  },
+  investmentCashItem: {
+    marginBottom: "16px",
+  },
+  label: {
+    color: "#6B7280",
+    fontSize: "14px",
+    marginBottom: "4px",
+  },
+  value: {
+    fontSize: "18px",
+    fontWeight: "500",
+  },
+  stocksSection: {
+    padding: "24px 20px",
+  },
+  sectionTitle: {
+    fontSize: "18px",
+    fontWeight: "500",
+    marginBottom: "16px",
+  },
+  stocksList: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "12px",
+  },
+  stockItem: {
+    backgroundColor: "white",
+    borderRadius: "16px",
+    padding: "16px",
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  stockInfo: {
+    display: "flex",
+    alignItems: "center",
+  },
+  logoContainer: {
+    width: "40px",
+    height: "40px",
+    borderRadius: "50%",
+    backgroundColor: "#F3F4F6",
+    marginRight: "12px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  logo: {
+    width: "32px",
+    height: "32px",
+    borderRadius: "50%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    color: "white",
+    fontSize: "12px",
+    backgroundColor: "#1428A0",
+  },
+  stockName: {
+    fontWeight: "500",
+  },
+  stockCode: {
+    color: "#6B7280",
+    fontSize: "14px",
+  },
+  stockPriceInfo: {
+    textAlign: "right",
+  },
+  currentPrice: {
+    fontSize: "16px",
+    fontWeight: "500",
+  },
+  priceChangePositive: {
+    color: "#10B981",
+    fontSize: "14px",
+  },
+  priceChangeNegative: {
+    color: "#EF4444",
+    fontSize: "14px",
+  },
+  bottomNav: {
+    position: "fixed",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: "white",
+    borderTop: "1px solid #E5E7EB",
+    padding: "16px",
+  },
+  navItems: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  navItem: {
+    width: "24px",
+    height: "24px",
+    borderRadius: "50%",
+    backgroundColor: "#E5E7EB",
+  },
+  activeNavItem: {
+    backgroundColor: "#2D59F7",
+  },
+};

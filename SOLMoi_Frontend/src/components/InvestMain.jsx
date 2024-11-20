@@ -90,7 +90,7 @@ export default function InvestMain() {
               <div style={styles.stockInfo}>
                 <div style={styles.logoContainer}>
                   <div style={styles.logo}>
-                    {stock.symbol.toString().charAt(0)}
+                    {stock.name.toString().charAt(0)}
                   </div>
                 </div>
                 <div>

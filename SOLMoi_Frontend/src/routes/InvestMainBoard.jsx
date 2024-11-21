@@ -1,5 +1,6 @@
 import InvestMain from "../components/investMain";
 
+
 const InvestMainBoard = () => {
   return (
     <div>

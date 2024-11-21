@@ -1,6 +1,27 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+html, body {
+  margin: 0;
+  padding-top: 60px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto !important; /
+
+}
+
+.root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+#container {
+  flex: 1;
+  padding: 2em;
+  overflow-y: auto; /* Enable scrolling */
+}
+.custom-navbar{
+  max-width: 400px;
+}
+.no-underline {
+  text-decoration: none; /* 밑줄 제거 */
 }

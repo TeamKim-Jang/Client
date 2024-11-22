@@ -1,13 +1,11 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
-// 숫자 포맷팅 유틸리티 함수
 const formatNumber = (num) => {
   return new Intl.NumberFormat("ko-KR").format(num);
 };
 
-// 퍼센트 포맷팅 유틸리티 함수
 const formatPercent = (num) => {
   return new Intl.NumberFormat("ko-KR", {
     minimumFractionDigits: 1,
@@ -20,32 +18,38 @@ export default function InvestMain() {
   const [stockData, setStockData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [balanceResponse, stockResponse] = await Promise.all([
-          fetch("http://localhost:3000/api/invest/main/balance/3"),
-          fetch("http://localhost:3000/api/invest/main/portfoliostock/3"),
-        ]);
-        const balanceData = await balanceResponse.json();
-        const stockData = await stockResponse.json();
-        setBalanceData(balanceData.data);
-        setStockData(stockData.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
+  const fetchData = useCallback(async () => {
+    try {
+      const [balanceResponse, stockResponse] = await Promise.all([
+        fetch("http://localhost:3000/api/invest/main/balance/3"),
+        fetch("http://localhost:3000/api/invest/main/portfoliostock/3"),
+      ]);
+      const balanceData = await balanceResponse.json();
+      const stockData = await stockResponse.json();
+      setBalanceData(balanceData.data[0]);
+      setStockData(stockData.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      setIsLoading(false);
+    }
   }, []);
+
+  useEffect(() => {
+    fetchData();
+
+    // Set up polling interval (e.g., every 5 seconds)
+    const intervalId = setInterval(fetchData, 5000);
+    console.log("fetched data");
+    // Clean up interval on component unmount
+    return () => clearInterval(intervalId);
+  }, [fetchData]);
 
   if (isLoading || !balanceData || !stockData) return null;
 
-  const cashBalance = parseFloat(balanceData[0].cash_balance);
-  const totalInvestment = parseFloat(balanceData[0].total_investment);
-  const totalProfitLoss = parseFloat(balanceData[0].total_profit_loss);
+  const cashBalance = parseFloat(balanceData.cash_balance);
+  const totalInvestment = parseFloat(balanceData.total_investment);
+  const totalProfitLoss = parseFloat(balanceData.total_profit_loss);
   const totalBalance = cashBalance + totalInvestment;
   const totalProfitLossRate = (totalProfitLoss / totalInvestment) * 100;
 
@@ -89,9 +93,7 @@ export default function InvestMain() {
             <div key={stock.portfoliostock_id} style={styles.stockItem}>
               <div style={styles.stockInfo}>
                 <div style={styles.logoContainer}>
-                  <div style={styles.logo}>
-                    {stock.name.toString().charAt(0)}
-                  </div>
+                  <div style={styles.logo}>{stock.name.charAt(0)}</div>
                 </div>
                 <div>
                   <div style={styles.stockName}>{stock.name}</div>

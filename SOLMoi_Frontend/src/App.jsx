@@ -1,41 +1,9 @@
 import "./App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { mainRoutes } from "./routers/main-router";
-
-function renderRoutes(routesObj) {
-  return routesObj.map((route) => {
-    if (route.children) {
-      return (
-        <Route
-          key={route.path}
-          path={route.path}
-          index={route.index}
-          element={route.element}
-        >
-          {route.children ? renderRoutes(route.children) : null}
-        </Route>
-      );
-    }
-
-    return (
-      <Route
-        key={route.path}
-        path={route.path}
-        index={route.index}
-        element={route.element}
-      />
-    );
-  });
-}
+import { RouterProvider } from "react-router-dom";
+import router from "./routers/main-router.jsx";
 
 function App() {
-  return (
-    <>
-      <BrowserRouter>
-        <Routes>{renderRoutes(mainRoutes)}</Routes>
-      </BrowserRouter>
-    </>
-  );
+  return <RouterProvider router = {router}/>;
 }
 
 export default App;

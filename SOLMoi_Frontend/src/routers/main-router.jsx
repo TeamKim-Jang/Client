@@ -2,6 +2,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import InvestMainBoard from "../routes/investMainBoard";
 import NewsFeed from "../components/NewsPage/NewsFeed";
+import Solleafcontent from "../components/Solleafcontent/Solleafcontent";
 import InvestMain from "../components/investMain";
 
 export const mainRoutes = [
@@ -13,6 +14,10 @@ export const mainRoutes = [
   {
     path: "/news",
     element: <NewsFeed></NewsFeed>,
+  },
+  {
+    path: "/solleafcontent",
+    element: <Solleafcontent></Solleafcontent>,
   }
 ];
 

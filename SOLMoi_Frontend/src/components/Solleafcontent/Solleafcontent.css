@@ -1,0 +1,77 @@
+/* 전체 컨테이너 */
+.solleaf-container {
+  background: #f8fafd;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  min-height: 100vh;
+}
+
+/* 헤더 제목 */
+.header-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #214ebf;
+  margin-bottom: 20px;
+}
+
+/* 카드 그리드 레이아웃 */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 20px;
+  width: 100%;
+  max-width: 400px;
+}
+
+/* 카드 스타일 (버튼) */
+.card {
+  background: #ffffff;
+  border: 1px solid #214ebf;
+  border-radius: 20px;
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer; /* 클릭 가능한 손가락 커서 */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  font: inherit;
+  color: inherit;
+  outline: none;
+  border: none;
+}
+
+/* hover 효과 */
+.card:hover {
+  transform: translateY(-5px); /* 위로 살짝 이동 */
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* active 상태 (클릭 시 눌리는 효과) */
+.card:active {
+  transform: translateY(2px); /* 아래로 눌리는 효과 */
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* 카드 아이콘 */
+.card-icon {
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+
+/* 카드 제목 */
+.card-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #454545;
+  margin-bottom: 5px;
+}
+
+/* 카드 부제목 */
+.card-subtitle {
+  font-size: 14px;
+  color: #343030;
+}

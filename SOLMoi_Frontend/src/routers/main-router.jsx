@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import InvestMainBoard from "../routes/investMainBoard";
+import InvestMainBoard from "../routes/InvestMainBoard";
 import StockPage from "../routes/StockPage.jsx";
 
 export const mainRoutes = [

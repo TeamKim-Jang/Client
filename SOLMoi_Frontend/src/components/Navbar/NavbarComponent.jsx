@@ -7,20 +7,20 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 
 export default function NavbarComponent() {
     const expand = 'lg';
-    const { onLogin, setEmail, email, Logout } = useUser();
+    const { onLogin, setEmail, email, setOnLogin, Logout } = useUser();
 
-    // email 값이 없으면 sessionStorage에서 가져옴
     useEffect(() => {
-        if (!email) {
-            const storedEmail = sessionStorage.getItem('email');
-            if (storedEmail) {
-                setEmail(storedEmail);
-            }
+        const storedEmail = sessionStorage.getItem('email');
+        if (storedEmail) {
+            setEmail(storedEmail);
+            setOnLogin(true); // 로그인 상태로 설정
+        } else {
+            setOnLogin(false); // 로그아웃 상태로 설정
         }
-    }, [email, setEmail]);
+    }, [setEmail, setOnLogin]);
 
     return (
-        <Navbar fixed="top" expand={expand} className="bg-body-tertiary mb-3" style={{maxWidth:"400px"}}>
+        <Navbar fixed="top" expand={expand} className="bg-body-tertiary mb-3" style={{ maxWidth: "400px" }}>
             <Container fluid className="custom-navbar">
                 <Navbar.Brand href="/">쏠모이</Navbar.Brand>
                 <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />

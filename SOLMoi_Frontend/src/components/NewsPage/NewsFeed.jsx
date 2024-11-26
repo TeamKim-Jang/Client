@@ -46,9 +46,14 @@ const NewsFeed = () => {
   // 뉴스 읽기 기록 저장 함수
   const recordNewsRead = async (newsId) => {
     console.log('전달된 news_id:', newsId); // 로그로 news_id 출력
+    
+  
 
     try {
-      const read_date = new Date().toISOString().split('T')[0]; // YYYY-MM-DD 형식
+      const tomorrow = new Date(); // 현재 날짜 객체 생성
+      tomorrow.setDate(tomorrow.getDate() + 1); // 1일 추가
+      const read_date = tomorrow.toISOString().split('T')[0];
+      // const read_date = new Date().toISOString().split('T')[0]; // YYYY-MM-DD 형식
       const response = await axios.get(
         `/api/news/invest/solleafcontent/news/${newsId}`,
         {

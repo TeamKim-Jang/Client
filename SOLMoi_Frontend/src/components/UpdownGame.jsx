@@ -1,10 +1,31 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-export default function UpdownPrediction() {
+export default function Component() {
   const [isLoading, setIsLoading] = useState(false);
   const [apiResponse, setApiResponse] = useState(null);
+  const [selectedStock, setSelectedStock] = useState(null);
+  const [userId, setUserId] = useState(1); // Assuming user ID 1 for this example
+
+  useEffect(() => {
+    const fetchSelectedStock = async () => {
+      try {
+        // In a real application, you would fetch this from your API
+        const mockData = {
+          id: 1,
+          name: "NVIDIA",
+          symbol: "NVDA",
+          current_price: 450000,
+        };
+        setSelectedStock(mockData);
+      } catch (error) {
+        console.error("Failed to fetch selected stock:", error);
+      }
+    };
+
+    fetchSelectedStock();
+  }, []);
 
   const makePrediction = async (prediction) => {
     setIsLoading(true);
@@ -15,16 +36,26 @@ export default function UpdownPrediction() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          userId: 1,
-          stockId: 100,
-          predictionDate: new Date().toISOString().split("T")[0],
-          predictionUpOrDown: prediction,
+          user_id: userId,
+          stock_id: selectedStock.id,
+          prediction_date: new Date().toISOString().split("T")[0],
+          prediction_upordown: prediction,
         }),
       });
       const data = await response.json();
-      setApiResponse(data);
+      if (data.success) {
+        setApiResponse({
+          status: "success",
+          message: `Your ${prediction} prediction has been recorded.`,
+        });
+      } else {
+        throw new Error(data.message);
+      }
     } catch (error) {
-      setApiResponse({ status: "error", message: "예측 등록에 실패했습니다." });
+      setApiResponse({
+        status: "error",
+        message: error.message || "Failed to register prediction.",
+      });
     } finally {
       setIsLoading(false);
     }
@@ -32,84 +63,81 @@ export default function UpdownPrediction() {
 
   return (
     <div style={styles.container}>
-      {/* Header */}
-      <div style={styles.header}>
-        <div style={styles.collectingDrops}>쓸방울 모으기</div>
-      </div>
+      <header style={styles.header}>
+        <h1 style={styles.headerTitle}>쓸방울 모으기</h1>
+      </header>
 
-      {/* Main Content */}
-      <div style={styles.content}>
-        <h1 style={styles.gameTitle}>주가예측게임</h1>
+      <main style={styles.main}>
+        <div style={styles.card}>
+          <h2 style={styles.cardTitle}>주가예측게임</h2>
+          <div style={styles.cardContent}>
+            {selectedStock ? (
+              <div style={styles.stockInfo}>
+                <div style={styles.stockIcon}>
+                  {selectedStock.symbol.charAt(0)}
+                </div>
+                <h3 style={styles.stockName}>{selectedStock.name}</h3>
+                <p style={styles.stockPrice}>
+                  {new Intl.NumberFormat("ko-KR", {
+                    style: "currency",
+                    currency: "KRW",
+                  }).format(selectedStock.current_price)}
+                </p>
+              </div>
+            ) : (
+              <p style={styles.loading}>주식 정보 로딩 중...</p>
+            )}
 
-        {/* Tesla Logo */}
-        <div style={styles.logoContainer}>
-          <div style={styles.teslaLogo}>
-            <svg viewBox="0 0 342 35" style={styles.svg}></svg>
+            <p style={styles.question}>오를까? 내릴까?</p>
+
+            <div style={styles.buttonContainer}>
+              <button
+                onClick={() => makePrediction("UP")}
+                disabled={isLoading || !selectedStock}
+                style={{ ...styles.button, ...styles.upButton }}
+              >
+                <span style={styles.arrowUp}>▲</span>
+                오른다
+              </button>
+              <button
+                onClick={() => makePrediction("DOWN")}
+                disabled={isLoading || !selectedStock}
+                style={{ ...styles.button, ...styles.downButton }}
+              >
+                <span style={styles.arrowDown}>▼</span>
+                내린다
+              </button>
+            </div>
+
+            {apiResponse && (
+              <p
+                style={{
+                  ...styles.message,
+                  ...(apiResponse.status === "success"
+                    ? styles.successMessage
+                    : styles.errorMessage),
+                }}
+              >
+                {apiResponse.message}
+              </p>
+            )}
           </div>
         </div>
+      </main>
 
-        {/* Question */}
-        <div style={styles.questionContainer}>
-          <h2 style={styles.stockName}>테슬라</h2>
-          <p style={styles.question}>오를까? 내릴까?</p>
-        </div>
-
-        {/* Prediction Buttons */}
-        <div style={styles.buttonContainer}>
-          <button
-            style={styles.upButton}
-            onClick={() => makePrediction("UP")}
-            disabled={isLoading}
-          >
-            <div style={styles.arrowUp}></div>
-            오른다
-          </button>
-          <button
-            style={styles.downButton}
-            onClick={() => makePrediction("DOWN")}
-            disabled={isLoading}
-          >
-            <div style={styles.arrowDown}></div>
-            내린다
-          </button>
-        </div>
-
-        {/* API Response Message */}
-        {apiResponse && (
-          <div
-            style={
-              apiResponse.status === "success"
-                ? styles.successMessage
-                : styles.errorMessage
-            }
-          >
-            {apiResponse.message}
-          </div>
-        )}
-      </div>
-
-      {/* Bottom Navigation */}
-      <div style={styles.bottomNav}>
-        <div style={styles.navItems}>
-          <div style={styles.navItem}>
-            <div style={styles.navIcon}></div>
-          </div>
-          <div style={styles.navItem}>
+      <footer style={styles.footer}>
+        <div style={styles.navContainer}>
+          {[...Array(5)].map((_, i) => (
             <div
-              style={{ ...styles.navIcon, backgroundColor: "#2D59F7" }}
-            ></div>
-          </div>
-          <div style={styles.navItem}>
-            <div style={styles.navIcon}></div>
-          </div>
-          <div style={styles.navItem}>
-            <div style={styles.navIcon}></div>
-          </div>
-          <div style={styles.navItem}>
-            <div style={styles.navIcon}></div>
-          </div>
+              key={i}
+              style={{
+                ...styles.navItem,
+                ...(i === 1 ? styles.activeNavItem : {}),
+              }}
+            />
+          ))}
         </div>
-      </div>
+      </footer>
     </div>
   );
 }
@@ -117,156 +145,151 @@ export default function UpdownPrediction() {
 const styles = {
   container: {
     minHeight: "100vh",
-    backgroundColor: "#F8F9FB",
-    color: "black",
-    fontFamily:
-      '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+    display: "flex",
+    flexDirection: "column",
+    backgroundColor: "#F0F2F5",
+    fontFamily: "Arial, sans-serif",
+    color: "black", // 기본 글자색을 검정으로 설정
   },
   header: {
-    padding: "16px 20px",
     backgroundColor: "white",
+    padding: "16px",
+    boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
   },
-  collectingDrops: {
+  headerTitle: {
     color: "#2D59F7",
     fontSize: "18px",
-    fontWeight: "600",
+    fontWeight: "bold",
   },
-  content: {
-    padding: "20px",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
+  main: {
     flex: 1,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: "20px",
   },
-  gameTitle: {
+  card: {
+    backgroundColor: "white",
+    borderRadius: "8px",
+    boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
+    padding: "24px",
+    width: "100%",
+    maxWidth: "400px",
+  },
+  cardTitle: {
     fontSize: "24px",
     fontWeight: "bold",
-    marginBottom: "40px",
-  },
-  logoContainer: {
-    width: "100%",
-    display: "flex",
-    justifyContent: "center",
-    marginBottom: "40px",
-  },
-  teslaLogo: {
-    width: "200px",
-    height: "200px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    color: "#E31937",
-  },
-  svg: {
-    width: "100%",
-    height: "auto",
-  },
-  questionContainer: {
     textAlign: "center",
-    marginBottom: "60px",
+    marginBottom: "24px",
+    color: "black", // 카드 제목 색상 명시
   },
-  stockName: {
-    fontSize: "28px",
-    fontWeight: "bold",
-    marginBottom: "10px",
-  },
-  question: {
-    fontSize: "24px",
-    marginTop: "10px",
-  },
-  buttonContainer: {
-    width: "100%",
-    display: "flex",
-    justifyContent: "space-between",
-    gap: "20px",
-    marginTop: "auto",
-    padding: "0 20px",
-  },
-  upButton: {
-    flex: 1,
-    backgroundColor: "#FF6B6B",
-    color: "white",
-    border: "none",
-    borderRadius: "30px",
-    padding: "20px",
-    fontSize: "18px",
-    fontWeight: "600",
-    cursor: "pointer",
+  cardContent: {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    gap: "10px",
+    gap: "24px",
   },
-  downButton: {
-    flex: 1,
+  stockInfo: {
+    textAlign: "center",
+  },
+  stockIcon: {
+    width: "80px",
+    height: "80px",
+    borderRadius: "50%",
     backgroundColor: "#2D59F7",
     color: "white",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    fontSize: "36px",
+    fontWeight: "bold",
+    margin: "0 auto 16px",
+  },
+  stockName: {
+    fontSize: "24px",
+    fontWeight: "bold",
+    marginBottom: "8px",
+    color: "black", // 주식 이름 색상 명시
+  },
+  stockPrice: {
+    fontSize: "20px",
+    color: "#2D59F7",
+    fontWeight: "bold",
+  },
+  loading: {
+    color: "#666",
+    fontSize: "16px",
+  },
+  question: {
+    fontSize: "20px",
+    fontWeight: "bold",
+    color: "black", // 질문 텍스트 색상 명시
+  },
+  buttonContainer: {
+    display: "flex",
+    gap: "16px",
+    width: "100%",
+  },
+  button: {
+    flex: 1,
     border: "none",
     borderRadius: "30px",
-    padding: "20px",
-    fontSize: "18px",
-    fontWeight: "600",
+    padding: "16px",
+    fontSize: "16px",
+    fontWeight: "bold",
+    color: "white",
     cursor: "pointer",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    gap: "10px",
+    transition: "background-color 0.3s",
+  },
+  upButton: {
+    backgroundColor: "#FF6B6B",
+  },
+  downButton: {
+    backgroundColor: "#2D59F7",
   },
   arrowUp: {
-    width: "0",
-    height: "0",
-    borderLeft: "10px solid transparent",
-    borderRight: "10px solid transparent",
-    borderBottom: "15px solid white",
+    fontSize: "24px",
+    marginBottom: "8px",
   },
   arrowDown: {
-    width: "0",
-    height: "0",
-    borderLeft: "10px solid transparent",
-    borderRight: "10px solid transparent",
-    borderTop: "15px solid white",
+    fontSize: "24px",
+    marginBottom: "8px",
   },
-  bottomNav: {
-    position: "fixed",
-    bottom: 0,
-    left: 0,
-    right: 0,
+  message: {
+    padding: "12px",
+    borderRadius: "4px",
+    textAlign: "center",
+    fontWeight: "bold",
+  },
+  successMessage: {
+    backgroundColor: "#4CAF50",
+    color: "white",
+  },
+  errorMessage: {
+    backgroundColor: "#F44336",
+    color: "white",
+  },
+  footer: {
     backgroundColor: "white",
+    padding: "16px",
     borderTop: "1px solid #E5E7EB",
-    padding: "16px 24px",
   },
-  navItems: {
+  navContainer: {
     display: "flex",
     justifyContent: "space-between",
-    alignItems: "center",
+    maxWidth: "300px",
+    margin: "0 auto",
   },
   navItem: {
-    width: "24px",
-    height: "24px",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  navIcon: {
     width: "24px",
     height: "24px",
     borderRadius: "50%",
     backgroundColor: "#E5E7EB",
   },
-  successMessage: {
-    marginTop: "20px",
-    padding: "10px",
-    backgroundColor: "#4CAF50",
-    color: "white",
-    borderRadius: "5px",
-    textAlign: "center",
-  },
-  errorMessage: {
-    marginTop: "20px",
-    padding: "10px",
-    backgroundColor: "#F44336",
-    color: "white",
-    borderRadius: "5px",
-    textAlign: "center",
+  activeNavItem: {
+    backgroundColor: "#2D59F7",
   },
 };

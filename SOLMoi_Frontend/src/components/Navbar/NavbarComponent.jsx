@@ -20,7 +20,7 @@ export default function NavbarComponent() {
     }, [email, setEmail]);
 
     return (
-        <Navbar fixed="top" expand={expand} className="bg-body-tertiary mb-3" style={{maxWidth:"400px"}}>
+        <Navbar expand={expand} className="bg-body-tertiary">
             <Container fluid className="custom-navbar">
                 <Navbar.Brand href="/">쏠모이</Navbar.Brand>
                 <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />

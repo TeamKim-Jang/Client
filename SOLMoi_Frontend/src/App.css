@@ -19,9 +19,7 @@ html, body {
   padding: 2em;
   overflow-y: auto; /* Enable scrolling */
 }
-.custom-navbar{
-  max-width: 400px;
-}
+
 .no-underline {
   text-decoration: none; /* 밑줄 제거 */
 }

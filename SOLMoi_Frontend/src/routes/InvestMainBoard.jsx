@@ -1,4 +1,5 @@
-import InvestMain from "../components/investMain";
+import InvestMain from "../components/InvestMain";
+
 
 const InvestMainBoard = () => {
   return (

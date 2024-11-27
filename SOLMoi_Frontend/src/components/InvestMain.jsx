@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -14,6 +15,8 @@ const formatPercent = (num) => {
     maximumFractionDigits: 1,
   }).format(num);
 };
+=======
+>>>>>>> f06898676ee0d954a9dd70a357b51ddeb31fd327
 
 export default function InvestMain() {
   const [balanceData, setBalanceData] = useState(null);

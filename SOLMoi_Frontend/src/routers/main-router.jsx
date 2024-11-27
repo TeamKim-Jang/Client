@@ -1,6 +1,8 @@
-// Router: 각 URL에 따른 page 컴포넌트 연결
 import { createBrowserRouter } from "react-router-dom";
 import InvestMainBoard from "../routes/investMainBoard";
+import LoginBoard from "../routes/loginBoard";
+import RegisterBoard from "../routes/registerBoard";
+import AttendanceCheckBoard from "../routes/AttendanceCheckBoard";
 
 export const mainRoutes = [
   {
@@ -8,6 +10,21 @@ export const mainRoutes = [
     element: <InvestMainBoard></InvestMainBoard>,
     index: true,
   },
+  {
+    path: "/auth/login",
+    element: <LoginBoard></LoginBoard>,
+    index: true,
+  },
+  {
+    path: "/auth/register",
+    element: <RegisterBoard></RegisterBoard>,
+    index: true,
+  },
+  {
+    path:"/attendance",
+    element: <AttendanceCheckBoard></AttendanceCheckBoard>,
+    index: true,
+  }
 ];
 
 const router = createBrowserRouter(mainRoutes);

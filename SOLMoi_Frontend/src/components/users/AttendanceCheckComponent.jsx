@@ -1,4 +1,4 @@
-import { Calendar, BarChart3, Users, Newspaper, Clock, GrapeIcon, ChartArea, CoinsIcon } from 'lucide-react';
+import { Calendar, BarChart3, Users, Newspaper, Clock } from 'lucide-react';
 import '../../styles/AttendanceCheck.css';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
@@ -136,7 +136,7 @@ export default function AttendanceCheck() {
       {/* Bottom Navigation */}
       <div className="bottom-nav">
         <Clock className="icon" />
-        <CoinsIcon className="active-icon"/>
+        <div className="active-icon"></div>
         <BarChart3 className="icon" />
         <Newspaper className="icon" />
         <Users className="icon" />

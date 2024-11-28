@@ -7,17 +7,17 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 
 export default function NavbarComponent() {
     const expand = 'lg';
-    const { onLogin, setEmail, setOnLogin, Logout } = useUser();
+    const { onLogin, setEmail, email, Logout } = useUser();
 
+    // email 값이 없으면 sessionStorage에서 가져옴
     useEffect(() => {
-        const storedEmail = sessionStorage.getItem('email');
-        if (storedEmail) {
-            setEmail(storedEmail);
-            setOnLogin(true); // 로그인 상태로 설정
-        } else {
-            setOnLogin(false); // 로그아웃 상태로 설정
+        if (!email) {
+            const storedEmail = sessionStorage.getItem('email');
+            if (storedEmail) {
+                setEmail(storedEmail);
+            }
         }
-    }, [setEmail, setOnLogin]);
+    }, [email, setEmail]);
 
     return (
         <Navbar expand={expand} className="bg-body-tertiary">

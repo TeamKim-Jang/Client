@@ -1,4 +1,6 @@
+
 import '../styles/Main.css'
+
 
 export default function InvestMain() {
   return (

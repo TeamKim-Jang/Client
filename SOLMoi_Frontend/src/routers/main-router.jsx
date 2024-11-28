@@ -1,8 +1,9 @@
 import { createBrowserRouter } from "react-router-dom";
-import InvestMainBoard from "../routes/investMainBoard";
 import LoginBoard from "../routes/loginBoard";
 import RegisterBoard from "../routes/registerBoard";
 import AttendanceCheckBoard from "../routes/AttendanceCheckBoard";
+import InvestMainBoard from "../routes/InvestMainBoard";
+
 
 export const mainRoutes = [
   {

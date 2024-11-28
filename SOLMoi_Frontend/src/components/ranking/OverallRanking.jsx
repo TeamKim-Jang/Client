@@ -17,7 +17,7 @@ const OverallRanking = () => {
       const response = await axios.get(`http://localhost:3001/api/ranking/${endpoint}`);
       const sortedRankings = response.data.data.sort(
         (a, b) => b.total_profit_loss - a.total_profit_loss
-      ); // 수익금 기준으로 정렬
+      );
       setRankings(sortedRankings);
       setLoading(false);
     } catch (err) {

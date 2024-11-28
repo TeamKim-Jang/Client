@@ -1,5 +1,4 @@
 import { createBrowserRouter } from "react-router-dom";
-
 import LoginBoard from "../routes/loginBoard";
 import RegisterBoard from "../routes/registerBoard";
 import AttendanceCheckBoard from "../routes/AttendanceCheckBoard";

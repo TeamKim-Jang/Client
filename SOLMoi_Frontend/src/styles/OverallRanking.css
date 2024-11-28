@@ -1,32 +1,31 @@
 .overall-ranking-container {
-    font-family: 'Arial', sans-serif;
+    padding: 20px 15px;
     background-color: #f9f9f9;
-    min-height: 100vh;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    border-radius: 12px;
+    max-width: 400px;
+    margin: 10px auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
   }
   
+
   .ranking-tabs {
     display: flex;
     justify-content: flex-start;
-    width: 100%;
-    max-width: 500px;
     margin-bottom: 10px;
+    padding-left: 10px; 
   }
   
   .tab {
-    flex: 0 0 auto;
-    margin-right: 10px;
-    padding: 5px 15px;
-    border-radius: 15px;
-    font-size: 14px;
+    font-size: 14px; 
     font-weight: bold;
-    background-color: #e0e0e0;
-    color: #555;
+    padding: 5px 15px;
+    margin-right: 8px;
+    border-radius: 20px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    color: #555;
+    background-color: #f1f1f1;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
   
   .tab.active {
@@ -34,61 +33,49 @@
     color: #fff;
   }
   
-  .tab:hover {
-    background-color: #0056b3;
-    color: #fff;
-  }
-  
   .ranking-list {
-    width: 100%;
-    max-width: 500px;
-    background-color: #fff;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
   
   .ranking-item {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    padding: 10px 15px;
-    border-bottom: 1px solid #eaeaea;
-  }
-  
-  .ranking-item:last-child {
-    border-bottom: none;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #e0e0e0;
   }
   
   .ranking-index {
-    font-size: 24px;
-    font-weight: bold;
     display: flex;
     align-items: center;
-    justify-content: center;
-    width: 40px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #555;
   }
   
   .medal {
-    font-size: 38px;
-    display: inline-block;
+    font-size: 2rem;
   }
   
-  .rank-number {
-    font-size: 20px;
-    color: #555;
+  .rank-circle {
+    font-size: 16px;
+    width: 35px;
+    height: 35px;
     background-color: #e0e0e0;
+    color: #555;
     border-radius: 50%;
-    width: 30px;
-    height: 30px;
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
   }
   
   .ranking-info {
+    text-align: left;
     flex: 1;
-    margin-left: 15px;
+    margin-left: 10px;
   }
   
   .ranking-name {
@@ -99,26 +86,35 @@
   
   .ranking-profit {
     font-size: 14px;
-    color: #27ae60;
+    color: #e74c3c;
+  }
+  
+  .tier-icon img {
+    width: 24px;
+    height: 24px;
   }
   
   .ranking-footer {
     margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #eaf6ff;
-    border-radius: 10px;
-    text-align: center;
-    font-size: 12px;
-    color: #555;
+    padding: 10px;
+    background-color: #f1f9ff;
+    border-radius: 8px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    width: 100%;
-    max-width: 500px;
+    font-size: 12px;
+    color: #555;
   }
   
   .footer-icon {
-    font-size: 20px;
+    font-size: 1.5rem;
     margin-right: 10px;
+  }
+  
+  .loading,
+  .error {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 16px;
+    color: #999;
   }
   

@@ -1,0 +1,338 @@
+.bank-app {
+  font-family: Arial, sans-serif;
+  background-color: #f0f4ff;
+  padding: 30px; /* 패딩 제거 */
+  margin: 0; /* 마진 제거 */
+  width: 100vw; /* 전체 화면 너비 */
+  height: auto; /* 전체 화면 높이 */
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+.rectangle-9 {
+  background: #e5f0fc;
+  border-radius: 20px;
+  width: 82px;
+  height: 36px;
+  margin: 10px;
+  margin-top: 10px;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
+  display: flex; /* Flexbox 활성화 */
+  align-items: center; /* 세로 방향으로 가운데 정렬 */
+  justify-content: center; /* 가로 방향으로 가운데 정렬 */
+  gap: 5px; /* 👻와 김쏠밈 사이 간격 */
+}
+
+.profile {
+  font-size: 17px;
+}
+
+.rectangle-12 {
+  margin-top: 10px;
+  background: white;
+  border-radius: 10px 10px 0px 0px;
+  width: 100px;
+  height: 45px;
+  display: flex; /* Flexbox 활성화 */
+  align-items: center; /* 세로 방향으로 가운데 정렬 */
+  justify-content: center;
+  margin-left: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.main-card {
+  background: white;
+  padding: 20px;
+  border-end-start-radius: 10px;
+  border-end-end-radius: 10px;
+  border-start-end-radius: 10px;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.div4 {
+  color: #000000;
+  text-align: left;
+  font-family: 'Inter-Regular', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  position: absolute;
+}
+
+.rectangle-16 {
+  background: #ffffff;
+  border-radius: 0.8px;
+  border-style: solid;
+  border-color: #6b6b6b;
+  border-width: 0.7px;
+  width: 10px;
+  height: 10px;
+  left: 168px;
+  top: 202px;
+}
+.rectangle-17 {
+  background: #ffffff;
+  border-radius: 0.8px;
+  border-style: solid;
+  border-color: #6b6b6b;
+  border-width: 0.7px;
+  width: 10px;
+  height: 10px;
+  left: 171px;
+  top: 205px;
+  transform: translateX(-9px) translateY(4px);
+}
+.rectangle-18 {
+  background: #e5f0fc;
+  border-radius: 10px;
+  width: 101px;
+  height: 45px;
+  transform: translateX(30px);
+}
+.rectangle-333 {
+  background: #e8f6ff;
+  border-radius: 60px;
+  padding: 7px;
+}
+
+.div9 {
+  color: #0046ff;
+  text-align: left;
+  font-family: 'Inter-SemiBold', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  left: 312px;
+  top: 224px;
+  transform: translateX(-75px) translateY(11px);
+}
+.image-card {
+  width: 30px; /* 너비를 고정 */
+  height: auto; /* 높이를 비율에 따라 자동으로 계산 */
+  transform: rotate(90deg) scale(1, 1) translateY(5px);
+  object-fit: cover;
+}
+
+.image-bear {
+  width: 80px; /* 너비를 고정 */
+  height: auto; /* 높이를 비율에 따라 자동으로 계산 */
+  transform: translateX(40px) translateY(-6px);
+}
+
+.image-up {
+  width: 70px; /* 너비를 고정 */
+  height: auto; /* 높이를 비율에 따라 자동으로 계산 */
+  transform: rotate(10deg) translateY(14px);
+}
+
+.image-leafL {
+  width: 13.07px;
+  height: auto;
+  transform: translateX(-20px) translateY(-5px);
+  object-fit: cover;
+}
+
+.image-leafR {
+  width: 15.22px;
+  height: auto;
+  /* position: absolute; */
+  left: 119.78px;
+  top: 142.34px;
+  object-fit: cover;
+}
+
+.investment-card {
+  background: #1f9dc5;
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px;
+  margin-bottom: 20px;
+  cursor: pointer; /* 버튼처럼 보이도록 커서 변경 */
+  transition: all 0.3s ease; /* 호버와 클릭 효과를 위한 애니메이션 */
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
+}
+
+.investment-card:hover {
+  background: #177ca5; /* 배경색 더 어둡게 */
+  transform: translateY(-2px); /* 살짝 위로 올라가는 효과 */
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
+}
+
+.investment-card:active {
+  background: #125d7f; /* 클릭 시 버튼 색상 변경 */
+  transform: translateY(0); /* 눌린 효과 */
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
+}
+
+.tabs {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.tab {
+  flex: 1;
+  text-align: center;
+  padding: 10px;
+  border-bottom: 2px solid lightgray;
+}
+
+.account-info h2 {
+  margin: 10px 0;
+}
+
+.challenge-section {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(calc((100% - 30px) / 3), 1fr)
+  ); /* gap 고려한 크기 계산 */
+  gap: 10px; /* 카드 간격 유지 */
+  width: 100%; /* 부모의 너비에 맞춤 */
+  box-sizing: border-box; /* 패딩 포함 크기 계산 */
+  margin-top: 20px; /* 상단 간격 추가 */
+}
+
+.challenge-card {
+  background: white;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  margin: 10px;
+  grid-column: span 3;
+}
+
+.mini-card {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 3px 3px 1px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* 세로 중앙 정렬 */
+  align-items: center; /* 가로 중앙 정렬 */
+  text-align: center;
+  margin: 10px;
+  padding: 20px; /* 카드 내부 여백 */
+  box-sizing: border-box; /* 패딩 포함 크기 계산 */
+  height: auto; /* 고정된 높이 */
+}
+
+.mini-card2 {
+  background: #a9a7a7c3;
+  border-radius: 10px;
+  box-shadow: 3px 3px 1px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* 세로 중앙 정렬 */
+  align-items: center; /* 가로 중앙 정렬 */
+  text-align: center;
+  margin: 10px;
+  padding: 20px; /* 카드 내부 여백 */
+  box-sizing: border-box; /* 패딩 포함 크기 계산 */
+  padding: 50px;
+  height: auto; /* 고정된 높이 */
+}
+
+.footer {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #007aff; /* 푸터 배경색 */
+  color: white; /* 푸터 텍스트 색상 */
+  border-radius: 10px;
+  margin: 10px;
+}
+
+.icon-container {
+  position: relative;
+  width: 28px;
+  height: 28px;
+  background: transparent;
+}
+
+.horizontal-line {
+  position: absolute;
+  height: 1px;
+  background-color: white;
+}
+
+.vertical-line {
+  position: absolute;
+  width: 1px;
+  background-color: white;
+}
+
+/* Specific positions */
+.horizontal-line.top {
+  width: 10px;
+  top: 0;
+  left: 0;
+}
+
+.vertical-line.left-top {
+  height: 10px;
+  top: 0.667px;
+  left: 0.5px;
+}
+
+.vertical-line.left-bottom {
+  height: 10px;
+  bottom: 0;
+  left: 0.167px;
+}
+
+.horizontal-line.bottom-left {
+  width: 10px;
+  bottom: 0;
+  left: 0.667px;
+}
+
+.horizontal-line.bottom-right {
+  width: 10px;
+  bottom: 0.5px;
+  right: 0;
+}
+
+.vertical-line.right-bottom {
+  height: 10px;
+  bottom: 0.667px;
+  right: 0.5px;
+}
+
+.vertical-line.right-top {
+  height: 10px;
+  top: 0;
+  right: 0.167px;
+}
+
+.horizontal-line.top-right {
+  width: 10px;
+  top: 0.5px;
+  right: 0.667px;
+}
+
+/* Center line */
+.center-line {
+  position: absolute;
+  width: 14px;
+  height: 4px;
+  background-color: #062dbb;
+  top: 12px;
+  left: 7px;
+}
+
+.payment {
+  flex: 1;
+  text-align: center;
+  background: #007aff;
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+  margin-left: 10px;
+}

@@ -1,7 +1,7 @@
-/* Container 스타일 */
+/* 전체 컨테이너 */
 .overall-ranking-container {
     font-family: 'Arial', sans-serif;
-    background-color: #f5f5f5;
+    background-color: #f9f9f9;
     min-height: 100vh;
     padding: 20px;
     display: flex;
@@ -9,13 +9,39 @@
     align-items: center;
   }
   
-  .ranking-header h1 {
-    font-size: 24px;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 20px;
+  /* 탭 스타일 */
+  .ranking-tabs {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    max-width: 500px;
+    margin-bottom: 10px;
   }
   
+  .tab {
+    flex: 0 0 auto;
+    margin-right: 10px;
+    padding: 5px 15px;
+    border-radius: 15px;
+    font-size: 14px;
+    font-weight: bold;
+    background-color: #e0e0e0;
+    color: #555;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .tab.active {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  .tab:hover {
+    background-color: #0056b3;
+    color: #fff;
+  }
+  
+  /* 랭킹 리스트 */
   .ranking-list {
     width: 100%;
     max-width: 500px;
@@ -27,9 +53,9 @@
   
   .ranking-item {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 15px;
+    justify-content: space-between;
+    padding: 10px 15px;
     border-bottom: 1px solid #eaeaea;
   }
   
@@ -37,23 +63,18 @@
     border-bottom: none;
   }
   
+  /* 순위 아이콘 */
   .ranking-index {
-    font-size: 18px;
-    font-weight: bold;
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+    font-size: 24px;
     width: 40px;
     height: 40px;
     border-radius: 50%;
     background-color: #f0f0f0;
-  }
-  
-  .medal {
-    font-size: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    color: #555;
+    font-weight: bold;
   }
   
   .medal.gold {
@@ -68,11 +89,14 @@
     color: #cd7f32;
   }
   
+  .rank-number {
+    font-size: 20px;
+  }
+  
+  /* 유저 정보 */
   .ranking-info {
     flex: 1;
-    margin-left: 10px;
-    display: flex;
-    flex-direction: column; 
+    margin-left: 15px;
   }
   
   .ranking-name {
@@ -84,33 +108,33 @@
   .ranking-profit {
     font-size: 14px;
     color: #27ae60;
-    margin-top: 4px; 
+    margin-top: 5px;
   }
   
+  /* 나무 아이콘 */
   .tree-icon {
-    color: #2ecc71;
+    font-size: 20px;
+    color: #6ab04c;
   }
   
+  /* Footer */
   .ranking-footer {
-    width: 100%;
-    max-width: 500px;
     margin-top: 20px;
-    padding: 15px;
+    padding: 10px 20px;
     background-color: #eaf6ff;
     border-radius: 10px;
+    text-align: center;
+    font-size: 12px;
+    color: #555;
     display: flex;
     align-items: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    justify-content: center;
+    width: 100%;
+    max-width: 500px;
   }
   
-  .ranking-footer p {
-    font-size: 14px;
-    margin-left: 10px;
-    color: #555;
-  }
-  
-  .footer-trophy {
-    font-size: 24px;
+  .footer-icon {
+    font-size: 20px;
     margin-right: 10px;
   }
   

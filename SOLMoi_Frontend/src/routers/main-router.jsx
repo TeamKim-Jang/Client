@@ -25,6 +25,8 @@ export const mainRoutes = [
   {
     path: "/solleafcontent",
     element: <Solleafcontent></Solleafcontent>,
+  },
+  {
 
     path: "/auth/login",
     element: <LoginBoard></LoginBoard>,

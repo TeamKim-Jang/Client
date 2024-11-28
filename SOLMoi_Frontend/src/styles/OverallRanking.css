@@ -1,0 +1,116 @@
+/* Container 스타일 */
+.overall-ranking-container {
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f5f5;
+    min-height: 100vh;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .ranking-header h1 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .ranking-list {
+    width: 100%;
+    max-width: 500px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+  
+  .ranking-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid #eaeaea;
+  }
+  
+  .ranking-item:last-child {
+    border-bottom: none;
+  }
+  
+  .ranking-index {
+    font-size: 18px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #f0f0f0;
+  }
+  
+  .medal {
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .medal.gold {
+    color: #ffd700;
+  }
+  
+  .medal.silver {
+    color: #c0c0c0;
+  }
+  
+  .medal.bronze {
+    color: #cd7f32;
+  }
+  
+  .ranking-info {
+    flex: 1;
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column; 
+  }
+  
+  .ranking-name {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .ranking-profit {
+    font-size: 14px;
+    color: #27ae60;
+    margin-top: 4px; 
+  }
+  
+  .tree-icon {
+    color: #2ecc71;
+  }
+  
+  .ranking-footer {
+    width: 100%;
+    max-width: 500px;
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #eaf6ff;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .ranking-footer p {
+    font-size: 14px;
+    margin-left: 10px;
+    color: #555;
+  }
+  
+  .footer-trophy {
+    font-size: 24px;
+    margin-right: 10px;
+  }
+  

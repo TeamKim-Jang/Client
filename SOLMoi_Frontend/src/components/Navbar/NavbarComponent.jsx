@@ -7,7 +7,7 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 
 export default function NavbarComponent() {
     const expand = 'lg';
-    const { onLogin, setEmail, email, setOnLogin, Logout } = useUser();
+    const { onLogin, setEmail, setOnLogin, Logout } = useUser();
 
     useEffect(() => {
         const storedEmail = sessionStorage.getItem('email');
@@ -20,7 +20,7 @@ export default function NavbarComponent() {
     }, [setEmail, setOnLogin]);
 
     return (
-        <Navbar fixed="top" expand={expand} className="bg-body-tertiary mb-3" style={{ maxWidth: "400px" }}>
+        <Navbar expand={expand} className="bg-body-tertiary">
             <Container fluid className="custom-navbar">
                 <Navbar.Brand href="/">쏠모이</Navbar.Brand>
                 <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />

@@ -6,7 +6,7 @@ import coneIcon from '../../assets/쏠방울.png';
 import seedIcon from '../../assets/쏠씨.png';
 
 const OverallRanking = () => {
-  const [currentTab, setCurrentTab] = useState('overall'); // "전체" or "학교"
+  const [currentTab, setCurrentTab] = useState('overall');
   const [rankings, setRankings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

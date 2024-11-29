@@ -1,14 +1,20 @@
 import { createBrowserRouter } from "react-router-dom";
-import InvestMainBoard from "../routes/investMainBoard";
-import UpdownGameBoard from "../routes/UpdownGameBoard";
-
+import NewsFeed from "../components/NewsPage/NewsFeed";
+import Solleafcontent from "../components/Solleafcontent/Solleafcontent";
+import SolMainPage from "../components/SolMainPage/SolMainPage";
 import LoginBoard from "../routes/loginBoard";
 import RegisterBoard from "../routes/registerBoard";
 import AttendanceCheckBoard from "../routes/AttendanceCheckBoard";
-
+import InvestMainBoard from "../routes/InvestMainBoard";
+import UpdownGameBoard from "../routes/UpdownGameBoard";
 export const mainRoutes = [
   {
-    path: "/stockmain",
+    path: "/",
+    element: <SolMainPage></SolMainPage>,
+    index: true,
+  },
+  {
+    path: "/stock",
     element: <InvestMainBoard></InvestMainBoard>,
     index: true,
   },
@@ -16,6 +22,14 @@ export const mainRoutes = [
     path: "/updowngame",
     element: <UpdownGameBoard></UpdownGameBoard>,
     index: true,
+  },
+  {
+    path: "/news",
+    element: <NewsFeed></NewsFeed>,
+  },
+  {
+    path: "/solleafcontent",
+    element: <Solleafcontent></Solleafcontent>,
   },
   {
     path: "/auth/login",

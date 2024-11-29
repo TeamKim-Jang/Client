@@ -1,6 +1,13 @@
+html, body {
+  margin: 0;
+  padding-top: 60px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
-   
   text-align: center;
 }

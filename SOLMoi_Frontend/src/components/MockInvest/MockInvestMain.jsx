@@ -13,7 +13,7 @@ const formatPercent = (num) => {
   }).format(num);
 };
 
-export default function InvestMain() {
+export default function MockInvestMain() {
   const [balanceData, setBalanceData] = useState(null);
   const [stockData, setStockData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);

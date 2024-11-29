@@ -4,6 +4,8 @@ import LoginBoard from "../routes/loginBoard";
 import RegisterBoard from "../routes/registerBoard";
 import AttendanceCheckBoard from "../routes/AttendanceCheckBoard";
 import InvestMainBoard from "../routes/InvestMainBoard";
+import OverallRanking from '../components/ranking/OverallRanking';
+
 
 
 export const mainRoutes = [
@@ -26,7 +28,12 @@ export const mainRoutes = [
     path:"/attendance",
     element: <AttendanceCheckBoard></AttendanceCheckBoard>,
     index: true,
-  }
+  },
+  {
+    path:"/ranking/overall",
+    element: <OverallRanking></OverallRanking>,
+    index: true,
+  },
 ];
 
 const router = createBrowserRouter(mainRoutes);

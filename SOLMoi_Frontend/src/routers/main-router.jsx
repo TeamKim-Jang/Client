@@ -5,7 +5,7 @@ import SolMainPage from "../components/SolMainPage/SolMainPage";
 import LoginBoard from "../routes/loginBoard";
 import RegisterBoard from "../routes/registerBoard";
 import AttendanceCheckBoard from "../routes/AttendanceCheckBoard";
-import InvestMainBoard from "../routes/InvestMainBoard";
+import MockInvestMainBoard from "../routes/MockInvestMainBoard";
 import UpdownGameBoard from "../routes/UpdownGameBoard";
 export const mainRoutes = [
   {
@@ -15,7 +15,7 @@ export const mainRoutes = [
   },
   {
     path: "/stock",
-    element: <InvestMainBoard></InvestMainBoard>,
+    element: <MockInvestMainBoard></MockInvestMainBoard>,
     index: true,
   },
   {

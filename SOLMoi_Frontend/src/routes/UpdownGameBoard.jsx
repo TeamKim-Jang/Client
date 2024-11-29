@@ -1,5 +1,4 @@
-import UpdownPrediction from "../components/UpdownGame";
-
+import UpdownPrediction from "../components/MockInvest/UpdownGame";
 const UpdownGameBoard = () => {
   return (
     <div>

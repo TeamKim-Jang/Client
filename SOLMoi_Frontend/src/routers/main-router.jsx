@@ -8,6 +8,7 @@ import AttendanceCheckBoard from "../routes/AttendanceCheckBoard";
 import InvestMainBoard from "../routes/InvestMainBoard";
 import OverallRanking from "../components/ranking/OverallRanking";
 import SchoolRanking from "../components/ranking/SchoolRanking";
+import StockPage from "../routes/StockPage.jsx";
 
 export const mainRoutes = [
   {
@@ -53,6 +54,10 @@ export const mainRoutes = [
     path: "/ranking/school/:schoolId",
     element: <SchoolRanking />,
     index: true,
+  },
+  {
+    path: "/stock/:stockCode",
+    element: <StockPage />,
   },
 ];
 

@@ -33,7 +33,7 @@ const SchoolRanking = () => {
           axios.get(`http://localhost:3001/api/ranking/schoolrank/${schoolId}`),
         ]);
         
-        const rankingsWithTier = calculateTier(rankingsResponse.data.data); // Tier 추가
+        const rankingsWithTier = calculateTier(rankingsResponse.data.data);
         setRankings(rankingsWithTier);
 
         //소속 학교의 랭킹

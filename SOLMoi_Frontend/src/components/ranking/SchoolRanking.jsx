@@ -13,6 +13,17 @@ const SchoolRanking = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  const calculateTier = (rankings) => {
+    const totalUsers = rankings.length;
+    return rankings.map((rank, index) => {
+      const percentage = ((index + 1) / totalUsers) * 100;
+      let tier = '쏠씨';
+      if (percentage <= 10) tier = '쏠나무';
+      else if (percentage <= 55) tier = '쏠방울';
+      return { ...rank, tier };
+    });
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -21,7 +32,11 @@ const SchoolRanking = () => {
           axios.get(`http://localhost:3001/api/ranking/school/${schoolId}`),
           axios.get(`http://localhost:3001/api/ranking/schoolrank/${schoolId}`),
         ]);
-        setRankings(rankingsResponse.data.data);
+        
+        const rankingsWithTier = calculateTier(rankingsResponse.data.data); // Tier 추가
+        setRankings(rankingsWithTier);
+
+        //소속 학교의 랭킹
         setSchoolRank(schoolRankResponse.data.data);
         setError(null);
       } catch (err) {

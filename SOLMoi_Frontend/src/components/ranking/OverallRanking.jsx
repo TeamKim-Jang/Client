@@ -13,7 +13,7 @@ const OverallRanking = () => {
     const totalUsers = rankings.length;
     return rankings.map((rank, index) => {
       const percentage = ((index + 1) / totalUsers) * 100;
-      let tier = '쏠씨'; // 기본값
+      let tier = '쏠씨';
       if (percentage <= 10) tier = '쏠나무';
       else if (percentage <= 55) tier = '쏠방울';
       return { ...rank, tier };

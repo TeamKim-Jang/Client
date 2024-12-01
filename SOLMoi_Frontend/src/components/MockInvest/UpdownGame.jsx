@@ -15,7 +15,7 @@ export default function UpdownGame() {
     const fetchUserData = async () => {
       try {
         // 실제 애플리케이션에서는 이 부분을 인증 시스템에서 가져와야 합니다.
-        setUserId(1);
+        setUserId(2);
       } catch (error) {
         console.error("Failed to fetch user data:", error);
         setError(
@@ -28,7 +28,9 @@ export default function UpdownGame() {
       if (!userId) return;
 
       try {
-        const response = await fetch(`/api/predict/game-status/${userId}`);
+        const response = await fetch(
+          `http://localhost:3000/api/predict/game-status/${userId}`
+        );
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -65,17 +67,20 @@ export default function UpdownGame() {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await fetch("/api/predict/predict", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userId: userId,
-          stockId: selectedStock.stock_id,
-          predictionUpOrDown: prediction,
-        }),
-      });
+      const response = await fetch(
+        "http://localhost:3000/api/predict/predict",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userId: userId,
+            stockId: selectedStock.stock_id,
+            predictionUpOrDown: prediction,
+          }),
+        }
+      );
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -137,7 +142,7 @@ export default function UpdownGame() {
             {selectedStock && (
               <div className="stock-info">
                 <div className="stock-icon">
-                  {selectedStock.symbol.charAt(0)}
+                  {selectedStock.symbol.toString().charAt(0)}
                 </div>
                 <h3 className="stock-name">{selectedStock.name}</h3>
                 <p className="stock-price">
@@ -149,34 +154,25 @@ export default function UpdownGame() {
               </div>
             )}
 
-            {!todayPrediction ? (
-              <>
-                <p className="question">오를까? 내릴까?</p>
-                <div className="button-container">
-                  <button
-                    onClick={() => makePrediction("UP")}
-                    disabled={isLoading || !selectedStock}
-                    className="button up-button"
-                  >
-                    <span className="arrow-up">▲</span>
-                    오른다
-                  </button>
-                  <button
-                    onClick={() => makePrediction("DOWN")}
-                    disabled={isLoading || !selectedStock}
-                    className="button down-button"
-                  >
-                    <span className="arrow-down">▼</span>
-                    내린다
-                  </button>
-                </div>
-              </>
-            ) : (
-              <p className="today-prediction">
-                오늘의 예측:{" "}
-                {todayPrediction.prediction_upordown === "UP" ? "상승" : "하락"}
-              </p>
-            )}
+            <p className="question">오를까? 내릴까?</p>
+            <div className="button-container">
+              <button
+                onClick={() => makePrediction("UP")}
+                disabled={isLoading || !selectedStock || todayPrediction}
+                className={`button up-button ${todayPrediction && todayPrediction.prediction_upordown === "UP" ? "selected" : ""}`}
+              >
+                <span className="arrow-up">▲</span>
+                오른다
+              </button>
+              <button
+                onClick={() => makePrediction("DOWN")}
+                disabled={isLoading || !selectedStock || todayPrediction}
+                className={`button down-button ${todayPrediction && todayPrediction.prediction_upordown === "DOWN" ? "selected" : ""}`}
+              >
+                <span className="arrow-down">▼</span>
+                내린다
+              </button>
+            </div>
 
             {apiResponse && (
               <p
@@ -200,7 +196,7 @@ export default function UpdownGame() {
         </div>
       </footer>
 
-      <style>{`
+      <style jsx>{`
         .container {
           min-height: 100vh;
           display: flex;
@@ -301,13 +297,22 @@ export default function UpdownGame() {
           display: flex;
           flex-direction: column;
           align-items: center;
-          transition: background-color 0.3s;
+          transition:
+            background-color 0.3s,
+            opacity 0.3s;
         }
         .up-button {
           background-color: #ff6b6b;
         }
         .down-button {
           background-color: #2d59f7;
+        }
+        .button:disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
+        }
+        .button.selected {
+          opacity: 1;
         }
         .arrow-up,
         .arrow-down {
@@ -364,10 +369,6 @@ export default function UpdownGame() {
           padding: 20px;
           border-radius: 8px;
           text-align: center;
-        }
-        .today-prediction {
-          font-size: 18px;
-          font-weight: bold;
         }
       `}</style>
     </div>

@@ -30,7 +30,6 @@
     color: #ffffff;
 }
 
-/* 랭킹 리스트 */
 .ranking-list {
     background: #ffffff;
     padding: 20px;
@@ -95,10 +94,12 @@
     font-weight: bold;
 }
 
-.tree-icon img {
-    width: 24px;
-    height: 24px;
-}
+.tier-icon img {
+    width: 30px; 
+    height: 30px;
+    object-fit: contain;
+  }
+  
 
 .school-ranking-footer {
     background: #eaf4ff;

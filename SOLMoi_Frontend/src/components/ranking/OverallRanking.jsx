@@ -9,12 +9,24 @@ const OverallRanking = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  const calculateTier = (rankings) => {
+    const totalUsers = rankings.length;
+    return rankings.map((rank, index) => {
+      const percentage = ((index + 1) / totalUsers) * 100;
+      let tier = '쏠씨'; // 기본값
+      if (percentage <= 10) tier = '쏠나무';
+      else if (percentage <= 55) tier = '쏠방울';
+      return { ...rank, tier };
+    });
+  };
+
   useEffect(() => {
     const fetchRankings = async () => {
       setLoading(true);
       try {
         const response = await axios.get('http://localhost:3001/api/ranking/overall');
-        setRankings(response.data.data);
+        const rankingsWithTier = calculateTier(response.data.data); // Tier 추가
+        setRankings(rankingsWithTier);
         setError(null);
       } catch (err) {
         console.error("Error fetching rankings:", err.message);

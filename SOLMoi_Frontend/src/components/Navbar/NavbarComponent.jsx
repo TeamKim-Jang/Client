@@ -17,7 +17,7 @@ export default function NavbarComponent() {
                 setEmail(storedEmail);
             }
         }
-    }, [email, setEmail]);
+    }, [setEmail]);
 
     return (
         <Navbar expand={expand} className="bg-body-tertiary">

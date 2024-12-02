@@ -58,13 +58,10 @@ const RegisterComponent = () => {
 
     return (
         <div className="user-container">
-            <div className="status-bar">
-                <span className="time">9:41</span>
-            </div>
             <div className="register-page">
             <header className="header">
                 <h1>회원가입</h1>
-                <button className="close-button">×</button>
+                <button className="close-button"onClick={() => navigate('/')}>×</button>
             </header>
                 <form className="user-form" onSubmit={handleRegister}>
                     {errorMessage && <p className="error-message">{errorMessage}</p>}

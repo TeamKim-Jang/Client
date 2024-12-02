@@ -31,7 +31,7 @@ export default function InvestMain() {
             <img className="image-card" src={card}/>
             머니
       </div>
-      <div className="main-card">
+      <div className="main-card2">
         <div className="account-info">
           <p style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             123456-24-123456
@@ -57,8 +57,10 @@ export default function InvestMain() {
         console.log("모의투자 하러가기!");
       }}>
         <h2>모의투자 하러 가기</h2>
+        <div>
         <img className="image-bear" src={bear1} alt="bear Icon" />
         <img className="image-up" src={up} alt="up Icon" />
+        </div>
       </button>
 
       {/* 챌린지/광고/쿠폰/만보기 */}

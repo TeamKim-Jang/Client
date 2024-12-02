@@ -9,10 +9,12 @@ export function UserProvider({ children }) {
 
     // 세션에서 사용자 정보 가져오기
     useEffect(() => {
-        const storedName = sessionStorage.getItem("name");
-        if (storedName) {
+        const storedName = sessionStorage.getItem("user_name");
+        const storedEmail = sessionStorage.getItem("email");
+        if (storedName && storedEmail) {
             setOnLogin(true);
             setUserName(storedName);
+            setEmail(storedEmail);
         }
     }, []);
 
@@ -62,7 +64,7 @@ export function useUser() {
         email,
         userName,
         setEmail,
-        Login, // Login 함수 추가
+        Login,
     } = useContext(UserContext);
 
     return { onLogin, setOnLogin, Logout, email, userName, setEmail, Login };

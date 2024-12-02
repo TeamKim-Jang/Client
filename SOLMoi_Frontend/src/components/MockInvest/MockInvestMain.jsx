@@ -13,7 +13,7 @@ const formatPercent = (num) => {
   }).format(num);
 };
 
-export default function InvestMain() {
+export default function MockInvestMain() {
   const [balanceData, setBalanceData] = useState(null);
   const [stockData, setStockData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -21,8 +21,8 @@ export default function InvestMain() {
   const fetchData = useCallback(async () => {
     try {
       const [balanceResponse, stockResponse] = await Promise.all([
-        fetch("http://localhost:3000/api/invest/main/balance/3"),
-        fetch("http://localhost:3000/api/invest/main/portfoliostock/3"),
+        fetch("http://localhost:3001/api/portfolio/3"),
+        fetch("http://localhost:3001/api/portfoliostock/3"),
       ]);
       const balanceData = await balanceResponse.json();
       const stockData = await stockResponse.json();

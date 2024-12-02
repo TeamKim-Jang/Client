@@ -1,12 +1,12 @@
 import { createBrowserRouter } from "react-router-dom";
 import NewsFeed from "../components/NewsPage/NewsFeed";
 import Solleafcontent from "../components/Solleafcontent/Solleafcontent";
-import SolMainPage from "../components/SolMainPage/SolMainPage"
+import SolMainPage from "../components/SolMainPage/SolMainPage";
 import LoginBoard from "../routes/loginBoard";
 import RegisterBoard from "../routes/registerBoard";
 import AttendanceCheckBoard from "../routes/AttendanceCheckBoard";
-import InvestMainBoard from "../routes/InvestMainBoard";
-
+import MockInvestMainBoard from "../routes/MockInvestMainBoard";
+import UpdownGameBoard from "../routes/UpdownGameBoard";
 export const mainRoutes = [
   {
     path: "/",
@@ -15,7 +15,12 @@ export const mainRoutes = [
   },
   {
     path: "/stock",
-    element: <InvestMainBoard></InvestMainBoard>,
+    element: <MockInvestMainBoard></MockInvestMainBoard>,
+    index: true,
+  },
+  {
+    path: "/updowngame",
+    element: <UpdownGameBoard></UpdownGameBoard>,
     index: true,
   },
   {
@@ -37,10 +42,10 @@ export const mainRoutes = [
     index: true,
   },
   {
-    path:"/attendance",
+    path: "/attendance",
     element: <AttendanceCheckBoard></AttendanceCheckBoard>,
     index: true,
-  }
+  },
 ];
 
 const router = createBrowserRouter(mainRoutes);

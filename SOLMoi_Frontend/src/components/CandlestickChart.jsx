@@ -62,9 +62,9 @@ const CandlestickChart = ({ stockCode, duration }) => {
 
   return (
     <div style={{ background: "#F9FAFB", padding: "20px", borderRadius: "10px" }}>
-      {/* 상단 현재가 표시 */}
+      {/* 현재가 */}
       <div style={{ textAlign: "center", marginBottom: "20px" }}>
-        <h1 style={{ fontSize: "36px", margin: 0, color: "#333" }}>
+        <h1 style={{ fontSize: "20px", margin: 0, color: "#333" }}>
           {currentPrice} 원
         </h1>
         <p style={{ fontSize: "16px", margin: 0, color: "#777" }}>
@@ -72,6 +72,7 @@ const CandlestickChart = ({ stockCode, duration }) => {
         </p>
       </div>
 
+      {/* 차트 */}
       <ChartCanvas
         height={400}
         width={800}
@@ -123,6 +124,38 @@ const CandlestickChart = ({ stockCode, duration }) => {
           />
         </Chart>
       </ChartCanvas>
+
+      {/* 사기/팔기 */}
+      <div style={{ marginTop: "30px", textAlign: "center" }}>
+        <button
+          style={{
+            padding: "12px 30px",
+            fontSize: "16px",
+            margin: "0 20px",
+            borderRadius: "5px",
+            backgroundColor: "#007AFF",
+            color: "white",
+            border: "none",
+            cursor: "pointer",
+          }}
+        >
+          사기
+        </button>
+        <button
+          style={{
+            padding: "12px 30px",
+            fontSize: "16px",
+            margin: "0 20px",
+            borderRadius: "5px",
+            backgroundColor: "#FF3B30",
+            color: "white",
+            border: "none",
+            cursor: "pointer",
+          }}
+        >
+          팔기
+        </button>
+      </div>
     </div>
   );
 };

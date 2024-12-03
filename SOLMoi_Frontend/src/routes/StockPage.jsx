@@ -16,13 +16,8 @@ const StockPage = () => {
   return (
     <div className="stock-page-container">
       <header className="stock-header">
-        <h1>삼성전자 {stockCode}</h1>
-        <p>주가 차트</p>
+        <h1 style={{ fontSize: 20 }}>삼성전자 {stockCode}</h1>
       </header>
-
-      <div className="chart-container">
-        <CandlestickChart stockCode={stockCode} duration={duration} />
-      </div>
 
       <div className="timeframe-buttons" style={{ marginTop: "20px" }}>
         {Object.entries(timeframes).map(([key, label]) => (
@@ -35,6 +30,12 @@ const StockPage = () => {
           </button>
         ))}
       </div>
+
+      <div className="chart-container">
+        <CandlestickChart stockCode={stockCode} duration={duration} />
+      </div>
+
+      
     </div>
   );
 };

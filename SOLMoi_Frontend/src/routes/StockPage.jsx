@@ -1,48 +1,48 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 import CandlestickChart from "../components/CandlestickChart.jsx";
+import "../styles/StockPage.css";
 
 const StockPage = () => {
   const { stockCode } = useParams();
-  const [stockData, setStockData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [duration, setDuration] = useState("1D"); 
 
-  useEffect(() => {
-    const fetchStockData = async () => {
-      try {
-        const response = await axios.get(`http://localhost:3000/api/stock/${stockCode}`);
-        const apiData = response.data;
-
-        const formattedData = apiData.data.map((item) => ({
-          date: new Date(item.date), // Date 객체로 변환
-          open: item.open,
-          high: item.high,
-          low: item.low,
-          close: item.close,
-        }));
-
-        console.log("Formatted Data:", formattedData);
-        setStockData(formattedData);
-      } catch (err) {
-        console.error("Error fetching stock data:", err.message);
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchStockData();
-  }, [stockCode]);
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
+  const periodMapping = {
+    "1D": "D", // 일봉
+    "1W": "W", // 주봉
+    "1M": "M", // 월봉
+  };
 
   return (
-    <div className="chart-container">
-      <h1>삼성전자 [{stockCode}]</h1>
-      <CandlestickChart data={stockData} width={800} height={400} />
+    <div className="stock-page-container">
+      <header className="stock-header">
+        <h1>{stockCode}</h1>
+        <p>주가 차트</p>
+      </header>
+
+      {/* 시간 범위 */}
+      <div className="chart-container">
+        <div className="timeframe-buttons">
+          {Object.keys(periodMapping).map((key) => (
+            <button
+              key={key}
+              className={`timeframe-button ${duration === key ? "active" : ""}`}
+              onClick={() => {
+                console.log(`Duration set to: ${key}`);
+                setDuration(key);
+              }}
+            >
+              {key}
+            </button>
+          ))}
+        </div>
+
+        <CandlestickChart
+          stockCode={stockCode}
+          duration={duration}
+          periodType={periodMapping[duration]}
+        />
+      </div>
     </div>
   );
 };

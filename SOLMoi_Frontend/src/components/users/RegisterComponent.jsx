@@ -66,100 +66,101 @@ const RegisterComponent = () => {
       }
       console.error("오류 발생:", error.response?.data || error);
     }
-
-    return (
-      <div className="user-container">
-        <div className="register-page">
-          <header className="header">
-            <h1>회원가입</h1>
-            <button className="close-button" onClick={() => navigate("/")}>
-              ×
-            </button>
-          </header>
-          <form className="user-form" onSubmit={handleRegister}>
-            {errorMessage && <p className="error-message">{errorMessage}</p>}
-            <div className="form-group">
-              <label htmlFor="userName">이름</label>
-              <input
-                type="text"
-                id="userName"
-                value={userName}
-                onChange={(e) => setUserName(e.target.value)}
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="nickname">닉네임</label>
-              <input
-                type="text"
-                id="nickname"
-                value={nickname}
-                onChange={(e) => setNickname(e.target.value)}
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="birthDate">생년월일</label>
-              <input
-                type="date"
-                id="birthDate"
-                value={birthDate}
-                onChange={(e) => setBirthDate(e.target.value)}
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="phoneNumber">전화번호</label>
-              <input
-                type="text"
-                id="phoneNumber"
-                value={phoneNumber}
-                onChange={(e) => setPhoneNumber(e.target.value)}
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="email">이메일</label>
-              <input
-                type="text"
-                id="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="password">비밀번호</label>
-              <input
-                type="password"
-                id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="schoolName">학교 이름</label>
-              <input
-                type="text"
-                id="schoolName"
-                value={isNoSchool ? "무소속" : schoolName}
-                onChange={(e) => setSchoolName(e.target.value)}
-                disabled={isNoSchool}
-              />
-            </div>
-            <label>
-              <input
-                type="checkbox"
-                checked={isNoSchool}
-                onChange={(e) => setIsNoSchool(e.target.checked)} // 상태 업데이트
-              />
-            </label>
-            소속 학교 없음
-            <button className="user-button" type="submit">
-              가입하기
-            </button>
-            <p>
-              이미 회원이신가요? <Link to="/auth/login">로그인</Link>
-            </p>
-          </form>
-        </div>
-      </div>
-    );
   };
+
+  return (
+    <div className="user-container">
+      <div className="register-page">
+        <header className="header">
+          <h1>회원가입</h1>
+          <button className="close-button" onClick={() => navigate("/")}>
+            ×
+          </button>
+        </header>
+        <form className="user-form" onSubmit={handleRegister}>
+          {errorMessage && <p className="error-message">{errorMessage}</p>}
+          <div className="form-group">
+            <label htmlFor="userName">이름</label>
+            <input
+              type="text"
+              id="userName"
+              value={userName}
+              onChange={(e) => setUserName(e.target.value)}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="nickname">닉네임</label>
+            <input
+              type="text"
+              id="nickname"
+              value={nickname}
+              onChange={(e) => setNickname(e.target.value)}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="birthDate">생년월일</label>
+            <input
+              type="date"
+              id="birthDate"
+              value={birthDate}
+              onChange={(e) => setBirthDate(e.target.value)}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="phoneNumber">전화번호</label>
+            <input
+              type="text"
+              id="phoneNumber"
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="email">이메일</label>
+            <input
+              type="text"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password">비밀번호</label>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="schoolName">학교 이름</label>
+            <input
+              type="text"
+              id="schoolName"
+              value={isNoSchool ? "무소속" : schoolName}
+              onChange={(e) => setSchoolName(e.target.value)}
+              disabled={isNoSchool}
+            />
+          </div>
+          <label>
+            <input
+              type="checkbox"
+              checked={isNoSchool}
+              onChange={(e) => setIsNoSchool(e.target.checked)} // 상태 업데이트
+            />
+          </label>
+          소속 학교 없음
+          <button className="user-button" type="submit">
+            가입하기
+          </button>
+          <p>
+            이미 회원이신가요? <Link to="/auth/login">로그인</Link>
+          </p>
+        </form>
+      </div>
+    </div>
+  );
 };
+
 export default RegisterComponent;

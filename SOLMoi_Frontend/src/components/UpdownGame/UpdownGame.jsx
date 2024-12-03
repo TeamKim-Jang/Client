@@ -15,8 +15,7 @@ export default function UpdownGame() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        // 실제 애플리케이션에서는 이 부분을 인증 시스템에서 가져와야 합니다.
-        setUserId(2);
+        setUserId(sessionStorage.getItem("user_id"));
       } catch (error) {
         console.error("Failed to fetch user data:", error);
         setError(

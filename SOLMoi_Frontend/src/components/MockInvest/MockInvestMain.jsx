@@ -3,7 +3,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import "./MockInvestMain.css";
 
-
 const formatNumber = (num) => {
   return new Intl.NumberFormat("ko-KR").format(num);
 };
@@ -19,12 +18,19 @@ export default function MockInvestMain() {
   const [balanceData, setBalanceData] = useState(null);
   const [stockData, setStockData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  // 세션 저장소에서 userId 가져오기
+  const userId = sessionStorage.getItem("user_id");
 
   const fetchData = useCallback(async () => {
+    if (!userId) {
+      console.error("User ID not found in sessionStorage");
+      return;
+    }
+
     try {
       const [balanceResponse, stockResponse] = await Promise.all([
-        fetch("http://localhost:3001/api/portfolio/3"),
-        fetch("http://localhost:3001/api/portfoliostock/3"),
+        fetch(`http://localhost:3001/api/portfolio/${userId}`),
+        fetch(`http://localhost:3001/api/portfoliostock/${userId}`),
       ]);
       const balanceData = await balanceResponse.json();
       const stockData = await stockResponse.json();

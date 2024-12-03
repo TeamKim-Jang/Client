@@ -1,9 +1,11 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "./UpdownGame.css";
 
 export default function UpdownGame() {
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
   const [apiResponse, setApiResponse] = useState(null);
   const [selectedStock, setSelectedStock] = useState(null);
@@ -15,8 +17,7 @@ export default function UpdownGame() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        // 실제 애플리케이션에서는 이 부분을 인증 시스템에서 가져와야 합니다.
-        setUserId(2);
+        setUserId(sessionStorage.getItem("user_id"));
       } catch (error) {
         console.error("Failed to fetch user data:", error);
         setError(
@@ -67,9 +68,10 @@ export default function UpdownGame() {
   const makePrediction = async (prediction) => {
     setIsLoading(true);
     setError(null);
+    const stockBackup = selectedStock;
     try {
       const response = await fetch(
-        "http://localhost:3001/api/predicton/predict",
+        "http://localhost:3001/api/prediction/predict",
         {
           method: "POST",
           headers: {
@@ -103,6 +105,8 @@ export default function UpdownGame() {
       });
       setError("예측을 하는데 실패했습니다. 나중에 다시 시도해주세요.");
     } finally {
+      setSelectedStock(stockBackup); // 주식 정보 복원
+
       setIsLoading(false);
     }
   };
@@ -117,13 +121,8 @@ export default function UpdownGame() {
 
   return (
     <div className="container">
-      <header className="header">
-        <h1 className="header-title">쓸방울 모으기</h1>
-      </header>
-
       <main className="main">
         <div className="card">
-          <h2 className="card-title">주가예측게임</h2>
           <div className="card-content">
             {yesterdayPrediction && yesterdayPrediction.is_correct !== null && (
               <div className="popup">
@@ -140,44 +139,60 @@ export default function UpdownGame() {
               </div>
             )}
 
+            <h2 className="game-title">주가예측게임</h2>
+
             {selectedStock && (
               <div className="stock-info">
-                <div className="stock-icon">
+                <div className="stock-logo">
                   {selectedStock.symbol.toString().charAt(0)}
                 </div>
                 <h3 className="stock-name">{selectedStock.name}</h3>
-                <p className="stock-price">
-                  {new Intl.NumberFormat("ko-KR", {
-                    style: "currency",
-                    currency: "KRW",
-                  }).format(selectedStock.current_price)}
-                </p>
               </div>
             )}
 
-            <p className="question">오를까? 내릴까?</p>
-            <div className="button-container">
-              <button
-                onClick={() => makePrediction("UP")}
-                disabled={isLoading || !selectedStock || todayPrediction}
-                className={`button up-button ${todayPrediction && todayPrediction.prediction_upordown === "UP" ? "selected" : ""}`}
-              >
-                <span className="arrow-up">▲</span>
-                오른다
-              </button>
-              <button
-                onClick={() => makePrediction("DOWN")}
-                disabled={isLoading || !selectedStock || todayPrediction}
-                className={`button down-button ${todayPrediction && todayPrediction.prediction_upordown === "DOWN" ? "selected" : ""}`}
-              >
-                <span className="arrow-down">▼</span>
-                내린다
-              </button>
+            <div className="prediction-section">
+              <h4 className="stock-name-question">{selectedStock?.name}</h4>
+              <p className="question">오를까? 내릴까?</p>
+            </div>
+
+            <div className="buttons-wrapper">
+              <div className="button-container">
+                <button
+                  onClick={() => makePrediction("UP")}
+                  disabled={isLoading || !selectedStock || todayPrediction}
+                  className={`button up-button ${
+                    todayPrediction?.prediction_upordown === "UP"
+                      ? "selected"
+                      : ""
+                  }`}
+                >
+                  <span className="arrow-icon">↗</span>
+                  <span className="button-text">오른다</span>
+                </button>
+              </div>
+              <div className="button-container">
+                <button
+                  onClick={() => makePrediction("DOWN")}
+                  disabled={isLoading || !selectedStock || todayPrediction}
+                  className={`button down-button ${
+                    todayPrediction?.prediction_upordown === "DOWN"
+                      ? "selected"
+                      : ""
+                  }`}
+                >
+                  <span className="arrow-icon">↘</span>
+                  <span className="button-text">내린다</span>
+                </button>
+              </div>
             </div>
 
             {apiResponse && (
               <p
-                className={`message ${apiResponse.status === "success" ? "success-message" : "error-message"}`}
+                className={`message ${
+                  apiResponse.status === "success"
+                    ? "success-message"
+                    : "error-message"
+                }`}
               >
                 {apiResponse.message}
               </p>
@@ -188,8 +203,8 @@ export default function UpdownGame() {
 
       <footer className="bottomNav">
         <div className="navItems">
+          <div className="navItem" onClick={() => navigate("/stock")}></div>
           <div className="navItem activeNavItem"></div>
-          <div className="navItem"></div>
           <div className="navItem"></div>
           <div className="navItem"></div>
           <div className="navItem"></div>

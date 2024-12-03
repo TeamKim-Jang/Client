@@ -1,3 +1,4 @@
+//Navbar/NavbarComponent.jsx
 import { useUser } from "../../contexts/userContext";
 import { useEffect } from "react";
 import Container from 'react-bootstrap/Container';

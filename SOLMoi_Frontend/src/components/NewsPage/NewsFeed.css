@@ -1,0 +1,119 @@
+/* 전체 컨테이너 */
+.title{
+  font-Size: 36px !important;
+  font-family: 'Rowdies', cursive; /* Rowdies 폰트 적용 */
+  color: #214ebf;
+  text-align: left;
+  font-weight: 700; 
+  margin-bottom: 20px;
+}
+
+.news-company {
+  font-size: 10px;
+  margin-right: auto; 
+  text-align: center; /* 텍스트를 가운데 정렬 */
+  padding: 10;
+}
+
+.news-container {
+  padding: 16px;
+  background-color: #f8fafd;
+  min-height: 100vh;
+  overflow-y: auto; /* 스크롤 가능 */
+  /* align-items: center; */
+}
+
+.news-row {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  justify-content: space-between; /* 양쪽 정렬 */
+}
+
+/* 뉴스 카드 리스트 */
+.news-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* 카드 간격 */
+}
+
+/* 뉴스 카드 */
+.news-card {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 5px;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  /* gap: 10px; */
+
+}
+
+/* 뉴스 카드 헤더 */
+.news-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* 로고 이미지 */
+.news-logo {
+  width: 30px; /* 원하는 크기로 설정 */
+  height: auto; /* 비율 유지 */
+  object-fit: contain; /* 이미지 왜곡 방지 */
+}
+
+/* 뉴스 썸네일 */
+.news-thumbnail {
+  width: 70px;
+  height: 70px;
+  border-radius: 8px;
+  object-fit: cover;
+  margin-left: auto; /* 이미지가 오른쪽으로 정렬됨 */
+}
+
+/* 뉴스 제목 */
+.news-title {
+  font-family: "Do Hyeon", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 16px;
+  text-align: left;
+  margin: 0;
+}
+
+
+/* 더보기 링크 */
+.read-more {
+  font-size: 14px;
+  color: #214ebf;
+  text-decoration: none;
+  font-weight: bold;
+  align-self: flex-end;
+}
+
+/* 뉴스 카드 hover 효과 */
+.news-card:hover {
+  transform: scale(1.02); /* 살짝 확대 */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15); /* 더 강한 그림자 */
+  transition: all 0.3s ease-in-out; /* 부드러운 효과 */
+}
+
+/* 더보기 링크 hover 효과 */
+.read-more:hover {
+  text-decoration: underline; /* 밑줄 추가 */
+  color: #ff4c4c; /* 색상 변경 */
+  transition: color 0.2s ease-in-out; /* 부드러운 색상 전환 */
+}
+
+/* 뉴스 제목 hover 효과 */
+.news-title:hover {
+  color: #214ebf; /* 강조 색상 변경 */
+  transition: color 0.2s ease-in-out; /* 부드러운 전환 */
+}
+
+/* 뉴스 로고 hover 효과 */
+.news-logo:hover {
+  transform: scale(1.1); /* 살짝 확대 */
+  transition: transform 0.2s ease-in-out; /* 부드러운 전환 */
+}

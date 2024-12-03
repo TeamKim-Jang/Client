@@ -1,3 +1,4 @@
+//components/RegisterComponentjsx
 import axios from "axios";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -36,14 +37,13 @@ const RegisterComponent = () => {
         console.log('Payload to send:', payload);
 
         try {
-            const response = await axios.post("http://localhost:3000/auth/register", payload, {
+            const response = await axios.post("http://localhost:3001/api/auth/register", payload, {
                 headers: {
                     "Content-Type": "application/json",
                 },
             });
 
             if (response.status === 201) {
-                console.log("성공! 이름: " + response.data.userName);
                 navigate("/auth/login");
             }
         } catch (error) {
@@ -58,13 +58,10 @@ const RegisterComponent = () => {
 
     return (
         <div className="user-container">
-            <div className="status-bar">
-                <span className="time">9:41</span>
-            </div>
             <div className="register-page">
             <header className="header">
                 <h1>회원가입</h1>
-                <button className="close-button">×</button>
+                <button className="close-button"onClick={() => navigate('/')}>×</button>
             </header>
                 <form className="user-form" onSubmit={handleRegister}>
                     {errorMessage && <p className="error-message">{errorMessage}</p>}

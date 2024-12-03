@@ -1,3 +1,4 @@
+//contexts/userContext.jsx
 import { createContext, useContext, useEffect, useState } from "react";
 
 export const UserContext = createContext();
@@ -9,10 +10,13 @@ export function UserProvider({ children }) {
 
     // 세션에서 사용자 정보 가져오기
     useEffect(() => {
-        const storedName = sessionStorage.getItem("name");
-        if (storedName) {
+        const storedName = sessionStorage.getItem("user_name");
+        const storedEmail = sessionStorage.getItem("email");
+        const storedToken = sessionStorage.getItem("accessToken");
+        if (storedName && storedEmail && storedToken) {
             setOnLogin(true);
             setUserName(storedName);
+            setEmail(storedEmail);
         }
     }, []);
 
@@ -22,7 +26,7 @@ export function UserProvider({ children }) {
         setOnLogin(false);
         setUserName("");
         setEmail("");
-        window.location.href = "/"; // 페이지 새로고침
+        window.location.href = "/";
     };
 
     // 로그인
@@ -62,7 +66,7 @@ export function useUser() {
         email,
         userName,
         setEmail,
-        Login, // Login 함수 추가
+        Login,
     } = useContext(UserContext);
 
     return { onLogin, setOnLogin, Logout, email, userName, setEmail, Login };

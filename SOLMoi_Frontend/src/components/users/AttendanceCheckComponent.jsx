@@ -1,3 +1,4 @@
+//components/AttendanceCheckComponentjsx
 import { Calendar, BarChart3, Users, Newspaper, Clock } from 'lucide-react';
 import '../../styles/AttendanceCheck.css';
 import axios from 'axios';
@@ -20,7 +21,7 @@ export default function AttendanceCheck() {
           throw new Error('로그인 정보가 유효하지 않습니다. 로그인해주세요.');
         }
 
-        const response = await axios.get('http://localhost:3000/attendance', {
+        const response = await axios.get('http://localhost:3001/api/attendance', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -44,7 +45,7 @@ export default function AttendanceCheck() {
       const token = sessionStorage.getItem("accessToken");
       if (!token) throw new Error("로그인 정보가 없습니다.");
 
-      const response = await axios.post("http://localhost:3000/attendance", {}, {
+      const response = await axios.post("http://localhost:3001/api/attendance", {}, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -70,22 +71,6 @@ export default function AttendanceCheck() {
   }
   return (
     <div className="attendance-check">
-      {/* Status Bar */}
-      <div className="status-bar">
-        <div className="time">9:41</div>
-        <div className="icons">
-          <div className="icon">
-            <svg viewBox="0 0 24 24" className="fill-current">
-              <path d="M12 3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2s2-.9 2-2V5c0-1.1-.9-2-2-2z"/>
-            </svg>
-          </div>
-          <div className="icon">
-            <svg viewBox="0 0 24 24" className="fill-current">
-              <path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z"/>
-            </svg>
-          </div>
-        </div>
-      </div>
 
       {/* Header */}
       <div className="header">
@@ -101,7 +86,7 @@ export default function AttendanceCheck() {
         </div>
 
         <p className="description">
-          매일매일 출석만 해도 포인트가 쏠쏠!<br />
+          매일매일 출석만 해도 포인트가 쏠쏠!<br/>
           출석할수록 커지는 혜택을 확인해보세요
         </p>
 

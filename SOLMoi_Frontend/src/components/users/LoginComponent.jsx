@@ -1,3 +1,4 @@
+//components/LoginComponentjsx
 import axios from "axios";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -15,7 +16,7 @@ const LoginComponent = () => {
     event.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:3000/auth/login", {
+      const response = await axios.post("http://localhost:3001/api/auth/login", {
         email: email,
         password: password,
       });
@@ -32,13 +33,10 @@ const LoginComponent = () => {
 
   return (
     <div className="user-container">
-      <div className="status-bar">
-        <span className="time">9:41</span>
-      </div>
       <div className="login-page">
         <header className="header">
             <h1>로그인</h1>
-            <button className="close-button">×</button>
+            <button className="close-button" onClick={() => navigate('/')}>×</button>
         </header>
         <form className="user-form" onSubmit={handleLogin}>
         <div className="form-group">
@@ -64,7 +62,7 @@ const LoginComponent = () => {
           )}
           <button className="user-button" type="submit">로그인</button>
         </form>
-        <p>
+        <p style={{paddingLeft:'15px'}}>
           아직 회원이 아니신가요? <Link to="/auth/register">회원가입</Link>
         </p>
       </div>

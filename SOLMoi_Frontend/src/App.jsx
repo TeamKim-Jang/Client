@@ -32,13 +32,17 @@ function renderRoutes(routesObj) {
 }
 
 function App() {
+  console.log('App component rendering...');
+
   return (
     <>
     <UserProvider>
       <BrowserRouter>
         <NavbarComponent />
         <Routes>{renderRoutes(mainRoutes)}</Routes>
+
       </BrowserRouter>
+
     </UserProvider>
     </>
   );

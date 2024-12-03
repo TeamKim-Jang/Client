@@ -104,7 +104,7 @@ export default function InvestMain() {
       </div>
 
       {/* Footer */}
-      <div className="footer">
+      <div className="footer-main">
         <div class="icon-container">
           <div class="horizontal-line top"></div>
           <div class="vertical-line left-top"></div>

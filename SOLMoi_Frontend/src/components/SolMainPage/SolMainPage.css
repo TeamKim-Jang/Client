@@ -237,7 +237,7 @@
   height: auto; /* 고정된 높이 */
 }
 
-.footer {
+.footer-main {
   margin-top: 20px;
   display: flex;
   justify-content: space-between;

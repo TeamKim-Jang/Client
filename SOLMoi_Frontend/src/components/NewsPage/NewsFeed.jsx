@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './NewsFeed.css';
+import { useUser } from '../../contexts/userContext'; // UserContext 가져오기
 
 import shinhanLogo from '../../../src/assets/images/shinhanlogo.png';
 import samsungLogo from '../../../src/assets/images/samsung.jpg';
@@ -15,7 +16,7 @@ const NewsFeed = () => {
   const [readNewsIds, setReadNewsIds] = useState([]);
   const [solAnimation, setSolAnimation] = useState(false);
   const [error, setError] = useState(null);
-  const USER_ID = 9;
+  const { userId } = useUser(); // userContext에서 userId 가져오기
 
   const keywordsToNames = {
     신한지주: ['신한지주'],
@@ -65,13 +66,18 @@ const NewsFeed = () => {
   const recordNewsRead = async (newsId) => {
     console.log('전달된 news_id:', newsId); // 로그로 news_id 출력
 
+    if (!userId) {
+      console.error('❌ 사용자 ID가 설정되지 않았습니다.');
+      return;
+    }
+
     try {
       const read_date = new Date().toISOString().split('T')[0]; // YYYY-MM-DD 형식
       const response = await axios.get(
         `/api/news/invest/solleafcontent/news/${newsId}`,
         {
           params: {
-            user_id: USER_ID,
+            user_id: userId,
             read_date: read_date,
           },
         }
@@ -80,7 +86,7 @@ const NewsFeed = () => {
 
       // 상태와 로컬 스토리지에 읽은 뉴스 ID 저장
       setReadNewsIds((prev) => [...prev, news_id]);
-      saveReadNewsToLocalStorage(USER_ID, news_id);
+      saveReadNewsToLocalStorage(userId, news_id);
 
       if (response.data.message === '뉴스읽기 기록 저장 및 쏠잎 지급 완료') {
         console.log('✅ 쏠잎 지급 애니메이션 시작');
@@ -104,11 +110,13 @@ const NewsFeed = () => {
     return '종목이름 없음';
   };
 
-  // 컴포넌트가 마운트될 때 뉴스 데이터를 가져옴
+  // 컴포넌트가 마운트될 때 사용자 ID와 뉴스 데이터를 가져옴
   useEffect(() => {
-    fetchArticles();
-    loadReadNewsFromLocalStorage(USER_ID); // 사용자별로 로컬 스토리지에서 읽은 뉴스 로드
-  }, []);
+    if (userId) {
+      loadReadNewsFromLocalStorage(userId);
+      fetchArticles();
+    }
+  }, [userId]);
 
   if (loading) return <p>로딩중...</p>;
   if (error) return <p>에러: {error}</p>;

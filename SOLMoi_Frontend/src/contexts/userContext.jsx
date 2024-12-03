@@ -1,3 +1,4 @@
+//contexts/userContext.jsx
 import { createContext, useContext, useEffect, useState } from "react";
 
 export const UserContext = createContext();
@@ -11,7 +12,8 @@ export function UserProvider({ children }) {
     useEffect(() => {
         const storedName = sessionStorage.getItem("user_name");
         const storedEmail = sessionStorage.getItem("email");
-        if (storedName && storedEmail) {
+        const storedToken = sessionStorage.getItem("accessToken");
+        if (storedName && storedEmail && storedToken) {
             setOnLogin(true);
             setUserName(storedName);
             setEmail(storedEmail);
@@ -24,7 +26,7 @@ export function UserProvider({ children }) {
         setOnLogin(false);
         setUserName("");
         setEmail("");
-        window.location.href = "/"; // 페이지 새로고침
+        window.location.href = "/";
     };
 
     // 로그인

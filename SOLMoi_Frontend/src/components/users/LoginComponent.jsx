@@ -1,3 +1,4 @@
+//components/LoginComponentjsx
 import axios from "axios";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -15,7 +16,7 @@ const LoginComponent = () => {
     event.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:3000/auth/login", {
+      const response = await axios.post("http://localhost:3001/api/auth/login", {
         email: email,
         password: password,
       });

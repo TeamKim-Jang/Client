@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import "./MockInvestMain.css";
 
+
 const formatNumber = (num) => {
   return new Intl.NumberFormat("ko-KR").format(num);
 };

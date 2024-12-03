@@ -16,7 +16,7 @@ const StockPage = () => {
   return (
     <div className="stock-page-container">
       <header className="stock-header">
-        <h1>{stockCode} 주식</h1>
+        <h1>삼성전자 {stockCode}</h1>
         <p>주가 차트</p>
       </header>
 

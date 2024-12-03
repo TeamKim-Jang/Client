@@ -57,9 +57,21 @@ const CandlestickChart = ({ stockCode, duration }) => {
 
   const highestPoint = Math.max(...data.map((d) => d.high));
   const lowestPoint = Math.min(...data.map((d) => d.low));
+  const currentPrice =
+    duration === "1D" && data.length > 0 ? data[data.length - 1].close.toLocaleString() : "N/A";
 
   return (
     <div style={{ background: "#F9FAFB", padding: "20px", borderRadius: "10px" }}>
+      {/* 상단 현재가 표시 */}
+      <div style={{ textAlign: "center", marginBottom: "20px" }}>
+        <h1 style={{ fontSize: "36px", margin: 0, color: "#333" }}>
+          {currentPrice} 원
+        </h1>
+        <p style={{ fontSize: "16px", margin: 0, color: "#777" }}>
+          {duration === "1D" ? "현재가 (일봉 기준)" : "일봉 데이터를 기준으로 표시됩니다"}
+        </p>
+      </div>
+
       <ChartCanvas
         height={400}
         width={800}

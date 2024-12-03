@@ -1,7 +1,7 @@
 :root {
   --primary-color: #3B82F6;
   --secondary-color: #10B981;
-  --background-color: #F3F4F6;
+  --background-color: #E5F0FC;
   --text-color: #1F2937;
   --light-text-color: #6B7280;
   --card-background: #FFFFFF;
@@ -55,7 +55,7 @@
 }
 
 .totalBalance {
-  font-size: 44px;
+  font-size: 38px;
   font-weight: bold;
   line-height: 1.2;
 }
@@ -101,8 +101,8 @@
 }
 
 .sectionTitle {
-  font-size: 20px;
-  font-weight: 600;
+  font-size: 30px;
+  font-weight: 800;
   margin-bottom: 16px;
   color: var(--primary-color);
   text-align: center;

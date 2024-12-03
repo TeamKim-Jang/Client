@@ -5,24 +5,23 @@ import { useNavigate } from "react-router-dom";
 import "./MockInvestMain.css";
 
 const formatNumber = (num) => {
-  return new Intl.NumberFormat("ko-KR").format(num);
+  return new Intl.NumberFormat("ko-KR").format(num || 0);
 };
 
 const formatPercent = (num) => {
   return new Intl.NumberFormat("ko-KR", {
     minimumFractionDigits: 1,
     maximumFractionDigits: 1,
-  }).format(num);
+  }).format(num || 0);
 };
 
 export default function MockInvestMain() {
   const navigate = useNavigate();
   const [balanceData, setBalanceData] = useState(null);
-  const [stockData, setStockData] = useState(null);
+  const [stockData, setStockData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isUpdating, setIsUpdating] = useState(false);
   const timeoutRef = useRef(null);
-  // 세션 저장소에서 userId 가져오기
   const userId = sessionStorage.getItem("user_id");
 
   const fetchData = useCallback(async () => {
@@ -38,14 +37,14 @@ export default function MockInvestMain() {
       ]);
       const balanceData = await balanceResponse.json();
       const stockData = await stockResponse.json();
-      setBalanceData(balanceData.data[0]);
-      setStockData(stockData.data);
+      setBalanceData(balanceData.data[0] || {});
+      setStockData(stockData.data || []);
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [userId]);
 
   useEffect(() => {
     fetchData();
@@ -62,13 +61,14 @@ export default function MockInvestMain() {
     };
   }, [fetchData]);
 
-  if (isLoading || !balanceData || !stockData) return null;
-
-  const cashBalance = parseFloat(balanceData.cash_balance);
-  const totalInvestment = parseFloat(balanceData.total_investment);
-  const totalProfitLoss = parseFloat(balanceData.total_profit_loss);
+  // 기본값 설정
+  const cashBalance = parseFloat(balanceData?.cash_balance || 0);
+  const totalInvestment = parseFloat(balanceData?.total_investment || 0);
+  const totalProfitLoss = parseFloat(balanceData?.total_profit_loss || 0);
   const totalBalance = cashBalance + totalInvestment;
-  const totalProfitLossRate = (totalProfitLoss / totalInvestment) * 100;
+  const totalProfitLossRate = totalInvestment
+    ? (totalProfitLoss / totalInvestment) * 100
+    : 0;
 
   return (
     <div className="container">
@@ -80,7 +80,9 @@ export default function MockInvestMain() {
           <div>
             <div className="totalBalance">{formatNumber(totalBalance)}원</div>
             <div
-              className={`profitLoss ${totalProfitLoss < 0 ? "negative" : "positive"}`}
+              className={`profitLoss ${
+                totalProfitLoss < 0 ? "negative" : "positive"
+              }`}
             >
               {formatNumber(totalProfitLoss)}원 (
               {formatPercent(totalProfitLossRate)}%)
@@ -103,43 +105,47 @@ export default function MockInvestMain() {
       <div className="stocksSection">
         <h2 className="sectionTitle">내 주식</h2>
         <div className="stocksList">
-          {stockData.map((stock) => (
-            <div
-              key={stock.portfoliostock_id}
-              className={`stockItem ${isUpdating ? "updating" : ""}`}
-            >
-              <div className="stockInfo">
-                <div className="logoContainer">
-                  <div className="logo">{stock.name.charAt(0)}</div>
+          {stockData.length > 0 ? (
+            stockData.map((stock) => (
+              <div
+                key={stock.portfoliostock_id}
+                className={`stockItem ${isUpdating ? "updating" : ""}`}
+              >
+                <div className="stockInfo">
+                  <div className="logoContainer">
+                    <div className="logo">{stock.name.charAt(0)}</div>
+                  </div>
+                  <div>
+                    <div className="stockName">{stock.name}</div>
+                    <div className="stockCode">{stock.symbol}</div>
+                  </div>
                 </div>
-                <div>
-                  <div className="stockName">{stock.name}</div>
-                  <div className="stockCode">{stock.symbol}</div>
+                <div className="stockPriceInfo">
+                  <div className="currentPrice">
+                    {formatNumber(stock.current_price)}원
+                  </div>
+                  <div
+                    className={
+                      stock.price_change >= 0
+                        ? "priceChangePositive"
+                        : "priceChangeNegative"
+                    }
+                  >
+                    {stock.price_change >= 0 ? "+" : ""}
+                    {formatNumber(stock.price_change)}원 (
+                    {formatPercent(
+                      (stock.price_change /
+                        (stock.current_price - stock.price_change)) *
+                        100
+                    )}
+                    %)
+                  </div>
                 </div>
               </div>
-              <div className="stockPriceInfo">
-                <div className="currentPrice">
-                  {formatNumber(stock.current_price)}원
-                </div>
-                <div
-                  className={
-                    stock.price_change >= 0
-                      ? "priceChangePositive"
-                      : "priceChangeNegative"
-                  }
-                >
-                  {stock.price_change >= 0 ? "+" : ""}
-                  {formatNumber(stock.price_change)}원 (
-                  {formatPercent(
-                    (stock.price_change /
-                      (stock.current_price - stock.price_change)) *
-                      100
-                  )}
-                  %)
-                </div>
-              </div>
-            </div>
-          ))}
+            ))
+          ) : (
+            <div className="noStocksMessage"></div>
+          )}
         </div>
       </div>
       <footer className="bottomNav">

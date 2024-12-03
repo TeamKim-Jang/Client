@@ -1,3 +1,4 @@
+//components/RegisterComponentjsx
 import axios from "axios";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -43,7 +44,6 @@ const RegisterComponent = () => {
             });
 
             if (response.status === 201) {
-                console.log("성공! 이름: " + response.data.userName);
                 navigate("/auth/login");
             }
         } catch (error) {

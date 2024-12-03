@@ -48,6 +48,17 @@
   /* gap: 10px; */
 
 }
+/* 읽은 뉴스의 스타일 */
+.news-title.read {
+  color: gray; /* 글자 색상 */
+  text-decoration: line-through; /* 취소선 추가 */
+}
+
+.news-card.read {
+  background-color: #f9f9f9; /* 배경 색상 변경 */
+  opacity: 0.8; /* 투명도 추가 */
+}
+
 
 /* 뉴스 카드 헤더 */
 .news-header {
@@ -117,3 +128,189 @@
   transform: scale(1.1); /* 살짝 확대 */
   transition: transform 0.2s ease-in-out; /* 부드러운 전환 */
 }
+
+
+@keyframes fade-in-out {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  20% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  80% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+
+/* 팝업 애니메이션 키프레임 */
+@keyframes pop-up {
+  0% {
+    opacity: 0;
+    transform: scale(0.5); /* 작게 시작 */
+  }
+  30% {
+    opacity: 1;
+    transform: scale(1.1); /* 살짝 커지면서 등장 */
+  }
+  60% {
+    transform: scale(0.95); /* 조금 작아지며 반동 효과 */
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1); /* 정상 크기로 안정 */
+  }
+}
+
+
+/* 프레임 스타일 */
+.frame-9 {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #ffffff;
+  padding: 10px;
+  border-radius: 10%;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  animation: pop-up;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 300px;
+  height: 300px;
+  overflow: hidden;
+}
+
+/* 폭죽처럼 터지는 꽃가루 */
+.burst-particle {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: var(--color); /* 각 파티클의 색상 지정 */
+  border-radius: 50%;
+  opacity: 0.8;
+  animation: burst 3s infinite ease-out; /* 무한 반복 애니메이션 */
+}
+
+/* 폭죽 애니메이션 */
+@keyframes burst {
+  0% {
+    transform: scale(0.5) translate(calc(50px * var(--x)), calc(50px * var(--y)));
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2) translate(calc(100px * var(--x)), calc(100px * var(--y)));
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) translate(calc(200px * var(--x)), calc(200px * var(--y)));
+    opacity: 0; /* 사라지도록 설정 */
+  }
+}
+
+/* 꽃가루마다 다른 방향, 색상으로 터지게 하기 위한 스타일 설정 */
+.burst-particle:nth-child(1) {
+  --x: 1;
+  --y: 1;
+  --color: #FF5733; /* 주황색 */
+  animation-delay: 0s;
+}
+.burst-particle:nth-child(2) {
+  --x: -1;
+  --y: 1;
+  --color: #FFC300; /* 노란색 */
+  animation-delay: 0.1s;
+}
+.burst-particle:nth-child(3) {
+  --x: 1;
+  --y: -1;
+  --color: #DAF7A6; /* 연두색 */
+  animation-delay: 0.2s;
+}
+.burst-particle:nth-child(4) {
+  --x: -1;
+  --y: -1;
+  --color: #FF00FB; /* 핑크색 */
+  animation-delay: 0.3s;
+}
+.burst-particle:nth-child(5) {
+  --x: 0.5;
+  --y: 1.5;
+  --color: #00FFFF; /* 청록색 */
+  animation-delay: 0.4s;
+}
+.burst-particle:nth-child(6) {
+  --x: -1.5;
+  --y: 0.5;
+  --color: #FF1493; /* 딥핑크 */
+  animation-delay: 0.5s;
+}
+.burst-particle:nth-child(7) {
+  --x: 1.5;
+  --y: -0.5;
+  --color: #8A2BE2; /* 보라색 */
+  animation-delay: 0.6s;
+}
+.burst-particle:nth-child(8) {
+  --x: -0.5;
+  --y: -1.5;
+  --color: #FFD700; /* 금색 */
+  animation-delay: 0.7s;
+}
+.burst-particle:nth-child(9) {
+  --x: 1;
+  --y: 0.5;
+  --color: #00FF00; /* 초록색 */
+  animation-delay: 0.8s;
+}
+.burst-particle:nth-child(10) {
+  --x: -0.5;
+  --y: 1;
+  --color: #0000FF; /* 파란색 */
+  animation-delay: 0.9s;
+}
+
+
+
+
+/* 쏠잎 이미지 */
+.solleaf {
+  width: 200px; /* 이미지 크기 조정 */
+  height: auto;
+  position: relative;
+  margin-top: 0px; /* 약간 위로 조정 */
+}
+
+
+
+/* 닫기 버튼 스타일 */
+.close-buttons {
+  position: absolute;
+  top: 10px; /* 팝업 프레임 안쪽에 위치 */
+  right: 10px; /* 팝업 프레임 안쪽에 위치 */
+  border: none;
+  font-size: 24px; /* 버튼 크기 조정 */
+  cursor: pointer;
+  color: #ff0000; /* "×" 글자 빨간색 */
+  background: transparent; /* 배경색 없음 */
+  width: 40px; /* 버튼의 가로 크기 */
+  height: 40px; /* 버튼의 세로 크기 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-buttons:focus {
+  outline: none; /* 포커스 시 외곽선 제거 */
+}
+
+

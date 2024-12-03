@@ -11,7 +11,7 @@ export default defineConfig({
       //   rewrite: (path) => path.replace(/^\/api\/deepsearch/, ''),
       // },
       '/api': {
-        target: 'http://localhost:3001', // Express 서버
+        target: 'http://localhost:3000', // Express 서버
         changeOrigin: true,
       },
     },

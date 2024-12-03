@@ -22,12 +22,19 @@ export default function MockInvestMain() {
   const [isLoading, setIsLoading] = useState(true);
   const [isUpdating, setIsUpdating] = useState(false);
   const timeoutRef = useRef(null);
+  // 세션 저장소에서 userId 가져오기
+  const userId = sessionStorage.getItem("user_id");
 
   const fetchData = useCallback(async () => {
+    if (!userId) {
+      console.error("User ID not found in sessionStorage");
+      return;
+    }
+
     try {
       const [balanceResponse, stockResponse] = await Promise.all([
-        fetch("http://localhost:3001/api/portfolio/11"),
-        fetch("http://localhost:3001/api/portfoliostock/11"),
+        fetch(`http://localhost:3001/api/portfolio/${userId}`),
+        fetch(`http://localhost:3001/api/portfoliostock/${userId}`),
       ]);
       const balanceData = await balanceResponse.json();
       const stockData = await stockResponse.json();

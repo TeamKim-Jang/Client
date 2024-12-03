@@ -17,7 +17,7 @@ export default function UpdownGame() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        setUserId(11);
+        setUserId(sessionStorage.getItem("user_id"));
       } catch (error) {
         console.error("Failed to fetch user data:", error);
         setError(

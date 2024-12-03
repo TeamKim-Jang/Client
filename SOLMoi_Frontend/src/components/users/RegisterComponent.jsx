@@ -36,7 +36,7 @@ const RegisterComponent = () => {
         console.log('Payload to send:', payload);
 
         try {
-            const response = await axios.post("http://localhost:3000/auth/register", payload, {
+            const response = await axios.post("http://localhost:3000/api/auth/register", payload, {
                 headers: {
                     "Content-Type": "application/json",
                 },

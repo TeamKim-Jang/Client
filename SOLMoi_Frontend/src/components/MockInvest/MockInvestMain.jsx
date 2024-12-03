@@ -4,7 +4,6 @@ import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "./MockInvestMain.css";
 
-
 const formatNumber = (num) => {
   return new Intl.NumberFormat("ko-KR").format(num);
 };
@@ -67,16 +66,15 @@ export default function MockInvestMain() {
   return (
     <div className="container">
       {/* Header */}
-      <div className="header">
-        <h1 className="headerTitle">내 자산</h1>
-      </div>
 
       {/* Main Balance */}
       <div className={`balanceSection ${isUpdating ? "updating" : ""}`}>
         <div className="balanceContainer">
           <div>
             <div className="totalBalance">{formatNumber(totalBalance)}원</div>
-            <div className="profitLoss">
+            <div
+              className={`profitLoss ${totalProfitLoss < 0 ? "negative" : "positive"}`}
+            >
               {formatNumber(totalProfitLoss)}원 (
               {formatPercent(totalProfitLossRate)}%)
             </div>
@@ -96,7 +94,7 @@ export default function MockInvestMain() {
 
       {/* Stocks Section */}
       <div className="stocksSection">
-        <h2 className="sectionTitle">주식</h2>
+        <h2 className="sectionTitle">내 주식</h2>
         <div className="stocksList">
           {stockData.map((stock) => (
             <div

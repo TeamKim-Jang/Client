@@ -21,6 +21,8 @@
   padding: 16px 20px;
   background-color: var(--card-background);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  align-items: center;
 }
 
 .headerTitle {
@@ -29,6 +31,7 @@
   text-align: center;
   margin: 0;
   color: var(--primary-color);
+  text-align: center;
 }
 
 .balanceSection {
@@ -64,6 +67,15 @@
   font-weight: 500;
 }
 
+
+.profitLoss.negative {
+  color: blue; /* 음수일 때 파란색 */
+}
+
+.profitLoss.positive {
+  color: red; /* 양수일 때 빨간색 */
+}
+
 .investmentCashContainer {
   text-align: right;
 }
@@ -93,6 +105,7 @@
   font-weight: 600;
   margin-bottom: 16px;
   color: var(--primary-color);
+  text-align: center;
 }
 
 .stocksList {
@@ -172,12 +185,12 @@
 }
 
 .priceChangePositive {
-  color: var(--secondary-color);
+  color: var(--negative-color);
   font-size: 14px;
 }
 
 .priceChangeNegative {
-  color: var(--negative-color);
+  color: var(--primary-color);
   font-size: 14px;
 }
 

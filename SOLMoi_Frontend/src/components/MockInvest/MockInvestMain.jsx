@@ -4,6 +4,7 @@ import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "./MockInvestMain.css";
 
+
 const formatNumber = (num) => {
   return new Intl.NumberFormat("ko-KR").format(num);
 };

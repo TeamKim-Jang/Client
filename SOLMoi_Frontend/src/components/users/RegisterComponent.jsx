@@ -1,3 +1,4 @@
+//components/RegisterComponentjsx
 import axios from "axios";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -29,45 +30,37 @@ const RegisterComponent = () => {
       return;
     }
 
-    const payload = {
-      email,
-      password,
-      nickname,
-      birth_date: birthDate, // 이 값이 정확히 포함되는지 확인
-      user_name: userName,
-      phone_number: phoneNumber.trim() || null,
-      school_name: isNoSchool ? "무소속" : schoolName.trim() || null,
-    };
+        const payload = {
+            email,
+            password,
+            nickname,
+            birth_date: birthDate, // 이 값이 정확히 포함되는지 확인
+            user_name: userName,
+            phone_number: phoneNumber.trim() || null,
+            school_name: isNoSchool ? "무소속" : schoolName.trim() || null,
+        };
+        
+        console.log('Payload to send:', payload);
 
-    console.log("Payload to send:", payload);
+        try {
+            const response = await axios.post("http://localhost:3001/api/auth/register", payload, {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
 
-    try {
-      const response = await axios.post(
-        "http://localhost:3001/api/auth/register",
-        payload,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
+            if (response.status === 201) {
+                navigate("/auth/login");
+            }
+        } catch (error) {
+            if (error.response && error.response.status === 500) {
+                setErrorMessage(error.response.data?.error || "이미 존재하는 이메일입니다.");
+            } else {
+                setErrorMessage("회원가입에 실패했습니다. 다시 시도해 주세요.");
+            }
+            console.error("오류 발생:", error.response?.data || error);
         }
-      );
-
-      if (response.status === 201) {
-        console.log("성공! 이름: " + response.data.userName);
-        navigate("/auth/login");
-      }
-    } catch (error) {
-      if (error.response && error.response.status === 500) {
-        setErrorMessage(
-          error.response.data?.error || "이미 존재하는 이메일입니다."
-        );
-      } else {
-        setErrorMessage("회원가입에 실패했습니다. 다시 시도해 주세요.");
-      }
-      console.error("오류 발생:", error.response?.data || error);
-    }
-  };
-
+    
   return (
     <div className="user-container">
       <div className="register-page">

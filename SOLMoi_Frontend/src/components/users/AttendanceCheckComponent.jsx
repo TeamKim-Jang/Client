@@ -1,3 +1,4 @@
+//components/AttendanceCheckComponentjsx
 import { Calendar, BarChart3, Users, Newspaper, Clock } from 'lucide-react';
 import '../../styles/AttendanceCheck.css';
 import axios from 'axios';
@@ -20,7 +21,7 @@ export default function AttendanceCheck() {
           throw new Error('로그인 정보가 유효하지 않습니다. 로그인해주세요.');
         }
 
-        const response = await axios.get('http://localhost:3000/attendance', {
+        const response = await axios.get('http://localhost:3001/api/attendance', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -44,7 +45,7 @@ export default function AttendanceCheck() {
       const token = sessionStorage.getItem("accessToken");
       if (!token) throw new Error("로그인 정보가 없습니다.");
 
-      const response = await axios.post("http://localhost:3000/attendance", {}, {
+      const response = await axios.post("http://localhost:3001/api/attendance", {}, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -85,7 +86,7 @@ export default function AttendanceCheck() {
         </div>
 
         <p className="description">
-          매일매일 출석만 해도 포인트가 쏠쏠!<br />
+          매일매일 출석만 해도 포인트가 쏠쏠!<br/>
           출석할수록 커지는 혜택을 확인해보세요
         </p>
 

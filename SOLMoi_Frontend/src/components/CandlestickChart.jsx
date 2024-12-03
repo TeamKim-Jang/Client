@@ -8,9 +8,10 @@ import {
   CandlestickSeries,
   discontinuousTimeScaleProvider,
   OHLCTooltip,
+  EdgeIndicator,
 } from "react-financial-charts";
 
-const CandlestickChart = ({ stockCode, duration, periodType }) => {
+const CandlestickChart = ({ stockCode, duration }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -19,11 +20,8 @@ const CandlestickChart = ({ stockCode, duration, periodType }) => {
     setLoading(true);
     setError(null);
     try {
-      console.log(
-        `Fetching stock data for ${stockCode} with duration: ${duration}, periodType: ${periodType}`
-      );
       const response = await axios.get(
-        `http://localhost:3001/api/stock/${stockCode}?duration=${duration}&periodType=${periodType}`
+        `http://localhost:3001/api/stock/${stockCode}?duration=${duration}`
       );
 
       const formattedData = response.data.data.map((item) => ({
@@ -36,26 +34,29 @@ const CandlestickChart = ({ stockCode, duration, periodType }) => {
       setData(formattedData);
     } catch (err) {
       console.error("Error fetching stock data:", err.message);
-      setError(err.message);
+      setError("차트 데이터를 불러오는 중 문제가 발생했습니다.");
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    if (stockCode && periodType) {
+    if (stockCode && duration) {
       fetchData();
     }
-  }, [duration, stockCode, periodType]);
+  }, [duration, stockCode]);
 
   if (loading) return <p>Loading chart...</p>;
-  if (error) return <p>Error: {error}</p>;
+  if (error) return <p>{error}</p>;
   if (!data || data.length === 0) return <p>No data available</p>;
 
-  const margin = { left: 50, right: 50, top: 10, bottom: 30 };
+  const margin = { left: 50, right: 80, top: 40, bottom: 50 };
   const xScaleProvider = discontinuousTimeScaleProvider.inputDateAccessor((d) => d.date);
   const { data: chartData, xScale, xAccessor, displayXAccessor } = xScaleProvider(data);
   const xExtents = [xAccessor(chartData[0]), xAccessor(chartData[chartData.length - 1])];
+
+  const highestPoint = Math.max(...data.map((d) => d.high));
+  const lowestPoint = Math.min(...data.map((d) => d.low));
 
   return (
     <div style={{ background: "#F9FAFB", padding: "20px", borderRadius: "10px" }}>
@@ -71,26 +72,43 @@ const CandlestickChart = ({ stockCode, duration, periodType }) => {
         seriesName="Candlestick Chart"
         xExtents={xExtents}
       >
-        <Chart id={1} yExtents={(d) => [d.high, d.low]}>
-          <XAxis
-            axisAt="bottom"
-            orient="bottom"
-            tickStroke="#333333"
-            stroke="#E0E0E0"
-          />
-          <YAxis
-            axisAt="left"
-            orient="left"
-            tickStroke="#333333"
-            stroke="#E0E0E0"
-          />
+        <Chart id={1} yExtents={[lowestPoint * 0.95, highestPoint * 1.05]}>
+          <XAxis axisAt="bottom" orient="bottom" stroke="transparent" tickStroke="#333" />
+          <YAxis axisAt="left" orient="left" stroke="transparent" tickStroke="#333" />
+
           <CandlestickSeries
-            wickStroke={(d) => (d.close > d.open ? "#FF3B30" : "#007AFF")}
-            fill={(d) => (d.close > d.open ? "#FF3B30" : "#007AFF")}
-            stroke={(d) => (d.close > d.open ? "#FF3B30" : "#007AFF")}
-            candleStrokeWidth={1}
+            wickStroke={(d) => (d.close >= d.open ? "#007AFF" : "#FF3B30")}
+            fill={(d) => (d.close >= d.open ? "#007AFF" : "#FF3B30")}
+            stroke={(d) => (d.close >= d.open ? "#007AFF" : "#FF3B30")}
           />
-          <OHLCTooltip origin={[-40, 0]} textFill="#333333" />
+
+          <OHLCTooltip origin={[10, 10]} textFill="#333333" fontSize={12} />
+
+          <EdgeIndicator
+            itemType="last"
+            orient="right"
+            edgeAt="right"
+            displayFormat={(value) => `최고 ${value.toLocaleString()}`}
+            yAccessor={() => highestPoint}
+            lineStroke="red"
+            textFill="red"
+            fill="transparent"
+            rectWidth={70}
+            rectHeight={20}
+          />
+
+          <EdgeIndicator
+            itemType="last"
+            orient="right"
+            edgeAt="right"
+            displayFormat={(value) => `최저 ${value.toLocaleString()}`}
+            yAccessor={() => lowestPoint}
+            lineStroke="blue"
+            textFill="blue"
+            fill="transparent"
+            rectWidth={70}
+            rectHeight={20}
+          />
         </Chart>
       </ChartCanvas>
     </div>

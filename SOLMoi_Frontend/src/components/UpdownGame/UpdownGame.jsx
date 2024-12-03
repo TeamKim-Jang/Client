@@ -1,9 +1,11 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "./UpdownGame.css";
 
 export default function UpdownGame() {
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
   const [apiResponse, setApiResponse] = useState(null);
   const [selectedStock, setSelectedStock] = useState(null);
@@ -16,7 +18,7 @@ export default function UpdownGame() {
     const fetchUserData = async () => {
       try {
         // 실제 애플리케이션에서는 이 부분을 인증 시스템에서 가져와야 합니다.
-        setUserId(2);
+        setUserId(12);
       } catch (error) {
         console.error("Failed to fetch user data:", error);
         setError(
@@ -69,7 +71,7 @@ export default function UpdownGame() {
     setError(null);
     try {
       const response = await fetch(
-        "http://localhost:3001/api/predicton/predict",
+        "http://localhost:3001/api/prediction/predict",
         {
           method: "POST",
           headers: {
@@ -118,7 +120,7 @@ export default function UpdownGame() {
   return (
     <div className="container">
       <header className="header">
-        <h1 className="header-title">쓸방울 모으기</h1>
+        <h1 className="header-title">주가예측게임</h1>
       </header>
 
       <main className="main">
@@ -188,8 +190,8 @@ export default function UpdownGame() {
 
       <footer className="bottomNav">
         <div className="navItems">
+          <div className="navItem" onClick={() => navigate("/stock")}></div>
           <div className="navItem activeNavItem"></div>
-          <div className="navItem"></div>
           <div className="navItem"></div>
           <div className="navItem"></div>
           <div className="navItem"></div>

@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import "./MockInvestMain.css";
 
 const formatNumber = (num) => {
@@ -15,15 +16,18 @@ const formatPercent = (num) => {
 };
 
 export default function MockInvestMain() {
+  const navigate = useNavigate();
   const [balanceData, setBalanceData] = useState(null);
   const [stockData, setStockData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isUpdating, setIsUpdating] = useState(false);
+  const timeoutRef = useRef(null);
 
   const fetchData = useCallback(async () => {
     try {
       const [balanceResponse, stockResponse] = await Promise.all([
-        fetch("http://localhost:3001/api/portfolio/3"),
-        fetch("http://localhost:3001/api/portfoliostock/3"),
+        fetch("http://localhost:3001/api/portfolio/11"),
+        fetch("http://localhost:3001/api/portfoliostock/11"),
       ]);
       const balanceData = await balanceResponse.json();
       const stockData = await stockResponse.json();
@@ -39,11 +43,16 @@ export default function MockInvestMain() {
   useEffect(() => {
     fetchData();
 
-    // Set up polling interval (e.g., every 5 seconds)
-    const intervalId = setInterval(fetchData, 5000);
-    console.log("fetched data");
-    // Clean up interval on component unmount
-    return () => clearInterval(intervalId);
+    const intervalId = setInterval(() => {
+      setIsUpdating(true);
+      fetchData();
+      timeoutRef.current = setTimeout(() => setIsUpdating(false), 300);
+    }, 5000);
+
+    return () => {
+      clearInterval(intervalId);
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
   }, [fetchData]);
 
   if (isLoading || !balanceData || !stockData) return null;
@@ -58,11 +67,11 @@ export default function MockInvestMain() {
     <div className="container">
       {/* Header */}
       <div className="header">
-        <h1 className="headerTitle">로고</h1>
+        <h1 className="headerTitle">내 자산</h1>
       </div>
 
       {/* Main Balance */}
-      <div className="balanceSection">
+      <div className={`balanceSection ${isUpdating ? "updating" : ""}`}>
         <div className="balanceContainer">
           <div>
             <div className="totalBalance">{formatNumber(totalBalance)}원</div>
@@ -89,7 +98,10 @@ export default function MockInvestMain() {
         <h2 className="sectionTitle">주식</h2>
         <div className="stocksList">
           {stockData.map((stock) => (
-            <div key={stock.portfoliostock_id} className="stockItem">
+            <div
+              key={stock.portfoliostock_id}
+              className={`stockItem ${isUpdating ? "updating" : ""}`}
+            >
               <div className="stockInfo">
                 <div className="logoContainer">
                   <div className="logo">{stock.name.charAt(0)}</div>
@@ -127,7 +139,10 @@ export default function MockInvestMain() {
       <footer className="bottomNav">
         <div className="navItems">
           <div className="navItem activeNavItem"></div>
-          <div className="navItem"></div>
+          <div
+            className="navItem"
+            onClick={() => navigate("/updowngame")}
+          ></div>
           <div className="navItem"></div>
           <div className="navItem"></div>
           <div className="navItem"></div>

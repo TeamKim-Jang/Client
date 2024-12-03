@@ -21,7 +21,7 @@ export default function AttendanceCheck() {
           throw new Error('로그인 정보가 유효하지 않습니다. 로그인해주세요.');
         }
 
-        const response = await axios.get('http://localhost:3001/api/attendance', {
+        const response = await axios.get('http://localhost:3000/api/attendance', {
           headers: {
             Authorization: `Bearer ${token}`,
           },

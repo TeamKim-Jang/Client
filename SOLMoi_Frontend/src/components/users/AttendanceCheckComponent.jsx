@@ -2,6 +2,7 @@ import { Calendar, BarChart3, Users, Newspaper, Clock } from 'lucide-react';
 import '../../styles/AttendanceCheck.css';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import solleaf10 from '../../assets/images/solleaf10.png';
 
 export default function AttendanceCheck() {
   const [monthlyCount, setMonthlyCount] = useState(0);
@@ -9,18 +10,19 @@ export default function AttendanceCheck() {
   const [userName, setUserName] = useState("");
   const [message, setMessage] = useState("");
   const [todayCheckedIn, setTodayCheckedIn] = useState(false);
+  const [solAnimation, setSolAnimation] = useState(false);
 
-  useEffect(()=>{
+  useEffect(() => {
     const fetchMonthlyAttendance = async () => {
-      try{
+      try {
         const token = sessionStorage.getItem('accessToken');
         const email = sessionStorage.getItem('email');
 
-        if(!token || !email){
+        if (!token || !email) {
           throw new Error('로그인 정보가 유효하지 않습니다. 로그인해주세요.');
         }
 
-        const response = await axios.get('http://localhost:3000/attendance', {
+        const response = await axios.get('http://localhost:3001/api/attendance', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -29,22 +31,25 @@ export default function AttendanceCheck() {
         setMonthlyCount(response.data.monthlyAttendanceCount);
         setTodayCheckedIn(response.data.hasCheckInToday);
         setUserName(sessionStorage.getItem("user_name"));
-      }catch(error){
+        if (response.data.hasCheckInToday) {
+          setSolAnimation(true);
+        }
+      } catch (error) {
         console.error("Error fetching montly attendance: ", error.message);
-      }finally{
+      } finally {
         setLoading(false);
       }
     };
 
     fetchMonthlyAttendance();
-  },[]);
+  }, []);
 
   const checkInAttendance = async () => {
     try {
       const token = sessionStorage.getItem("accessToken");
       if (!token) throw new Error("로그인 정보가 없습니다.");
 
-      const response = await axios.post("http://localhost:3000/attendance", {}, {
+      const response = await axios.post("http://localhost:3001/api/attendance", {}, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -54,6 +59,7 @@ export default function AttendanceCheck() {
       if (response.data.sol_leaf_earned > 0) {
         setTodayCheckedIn(true); // 오늘 출석 여부 갱신
         setMonthlyCount((prev) => prev + 1); // 이번 달 출석 횟수 증가
+        setSolAnimation(true); // 솔 애니메이션 표시
       }
     } catch (error) {
       console.error("Error checking in:", error.message);
@@ -65,33 +71,11 @@ export default function AttendanceCheck() {
     }
   };
 
-  if(loading){
+  if (loading) {
     return <p>Loading...</p>;
   }
   return (
     <div className="attendance-check">
-      {/* Status Bar */}
-      <div className="status-bar">
-        <div className="time">9:41</div>
-        <div className="icons">
-          <div className="icon">
-            <svg viewBox="0 0 24 24" className="fill-current">
-              <path d="M12 3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2s2-.9 2-2V5c0-1.1-.9-2-2-2z"/>
-            </svg>
-          </div>
-          <div className="icon">
-            <svg viewBox="0 0 24 24" className="fill-current">
-              <path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z"/>
-            </svg>
-          </div>
-        </div>
-      </div>
-
-      {/* Header */}
-      <div className="header">
-        <h1>쏠방울 모으기</h1>
-      </div>
-
       {/* Main Content */}
       <div className="main-card">
         <div className="title">
@@ -113,10 +97,11 @@ export default function AttendanceCheck() {
             </div>
           </div>
         </div>
-        
-        <button className="check-in-button"
-          onClick={checkInAttendance} 
-          disabled={todayCheckedIn} 
+
+        <button
+          className="check-in-button"
+          onClick={checkInAttendance}
+          disabled={todayCheckedIn}
           style={{
             padding: "10px 20px",
             backgroundColor: todayCheckedIn ? "#ccc" : "blue",
@@ -125,13 +110,29 @@ export default function AttendanceCheck() {
             cursor: todayCheckedIn ? "not-allowed" : "pointer",
           }}
         >
-        {todayCheckedIn ? "오늘 출석 완료":"오늘 출석하기"}
+          {todayCheckedIn ? "오늘 출석 완료" : "오늘 출석하기"}
         </button>
         {/* 메시지 표시 */}
         {message && (
           <p style={{ color: todayCheckedIn ? "green" : "red" }}>{message}</p>
         )}
       </div>
+
+      {/* Sol Animation */}
+      {solAnimation && (
+        <div
+          className="frame-9"
+          key={Date.now()} // 매번 새로운 키로 DOM 강제 갱신
+        >
+          <button className="close-buttons" onClick={() => setSolAnimation(false)}>
+            ×
+          </button>
+          <img className="solleaf" src={solleaf10} alt="Leaf Image 28" />
+          {Array.from({ length: 10 }).map((_, index) => (
+            <div className="burst-particle" key={index}></div>
+          ))}
+        </div>
+      )}
 
       {/* Bottom Navigation */}
       <div className="bottom-nav">

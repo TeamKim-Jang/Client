@@ -1,0 +1,243 @@
+:root {
+  --primary-color: #3B82F6;
+  --secondary-color: #10B981;
+  --background-color: #E5F0FC;
+  --text-color: #1F2937;
+  --light-text-color: #6B7280;
+  --card-background: #FFFFFF;
+  --negative-color: #EF4444;
+}
+
+.containerMock {
+  min-height: 100vh;
+  background-color: var(--background-color);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: var(--text-color);
+  padding: 10px;
+
+  animation: fadeIn 0.5s ease;
+}
+
+.header {
+  padding: 16px 20px;
+  background-color: var(--card-background);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  align-items: center;
+}
+
+.headerTitle {
+  font-size: 20px;
+  font-weight: 600;
+  text-align: center;
+  margin: 0;
+  color: var(--primary-color);
+  text-align: center;
+}
+
+.balanceSection {
+  padding: 32px 20px 24px;
+  background-color: var(--card-background);
+  margin-top: 16px;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  opacity: 1;
+}
+
+.balanceSection:hover {
+  transform: translateY(-4px);
+}
+
+.balanceContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.totalBalance {
+  font-size: 38px;
+  font-weight: bold;
+  line-height: 1.2;
+}
+
+.profitLoss {
+  color: var(--secondary-color);
+  font-size: 18px;
+  margin-top: 8px;
+  font-weight: 500;
+}
+
+
+.profitLoss.negative {
+  color: blue; /* 음수일 때 파란색 */
+}
+
+.profitLoss.positive {
+  color: red; /* 양수일 때 빨간색 */
+}
+
+.investmentCashContainer {
+  text-align: right;
+}
+
+.investmentCashItem {
+  margin-bottom: 16px;
+}
+
+.label {
+  color: var(--light-text-color);
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.value {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.stocksSection {
+
+  margin-top: 30px;
+}
+
+.sectionTitle {
+  font-size: 30px;
+  font-weight: 800;
+  margin-bottom: 16px;
+  color: var(--primary-color);
+  text-align: center;
+}
+
+.stocksList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.stockItem {
+  background-color: var(--card-background);
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: left;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: fadeIn 0.5s ease;
+  opacity: 1;
+}
+
+.stockItem:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.stockInfo {
+  display: flex;
+  align-items: center;
+}
+
+.logoContainer {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #F3F4F6;
+  margin-right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 14px;
+  background-color: var(--primary-color);
+  transition: background-color 0.3s ease;
+}
+
+.stockItem:hover .logo {
+  background-color: var(--secondary-color);
+}
+
+.stockName {
+  font-weight: 500;
+}
+
+.stockCode {
+  color: var(--light-text-color);
+  font-size: 14px;
+}
+
+.stockPriceInfo {
+  text-align: right;
+}
+
+.currentPrice {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.priceChangePositive {
+  color: var(--negative-color);
+  font-size: 14px;
+}
+
+.priceChangeNegative {
+  color: var(--primary-color);
+  font-size: 14px;
+}
+
+.bottomNav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: var(--card-background);
+  border-top: 1px solid #E5E7EB;
+  padding: 12px 16px;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navItems {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navItem {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #E5E7EB;
+  transition: background-color 0.3s ease;
+}
+
+.navItem:hover {
+  background-color: var(--secondary-color);
+}
+
+.activeNavItem {
+  background-color: var(--primary-color);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.balanceSection, .stockItem {
+  transition: opacity 0.3s ease;
+}
+
+.updating {
+  opacity: 0.7;
+}
+

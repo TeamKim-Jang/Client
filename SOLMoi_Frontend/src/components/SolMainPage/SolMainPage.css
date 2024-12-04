@@ -1,7 +1,7 @@
 .bank-app {
   font-family: Arial, sans-serif;
   background-color: #f0f4ff;
-  padding: 30px; /* 패딩 제거 */
+  padding: 15px; 
   margin: 0; /* 마진 제거 */
   width: 100vw; /* 전체 화면 너비 */
   height: auto; /* 전체 화면 높이 */
@@ -39,7 +39,7 @@
   margin-left: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-.main-card {
+.main-card2 {
   background: white;
   padding: 20px;
   border-end-start-radius: 10px;
@@ -237,7 +237,7 @@
   height: auto; /* 고정된 높이 */
 }
 
-.footer {
+.footer-main {
   margin-top: 20px;
   display: flex;
   justify-content: space-between;

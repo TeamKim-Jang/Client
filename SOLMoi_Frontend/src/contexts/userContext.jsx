@@ -1,3 +1,4 @@
+//contexts/userContext.jsx
 import { createContext, useContext, useEffect, useState } from "react";
 
 export const UserContext = createContext();
@@ -6,13 +7,19 @@ export function UserProvider({ children }) {
     const [userName, setUserName] = useState("");
     const [onLogin, setOnLogin] = useState(false);
     const [email, setEmail] = useState("");
+    const [userId, setUserId] = useState(null);
 
     // 세션에서 사용자 정보 가져오기
     useEffect(() => {
-        const storedName = sessionStorage.getItem("name");
-        if (storedName) {
+        const storedName = sessionStorage.getItem("user_name");
+        const storedEmail = sessionStorage.getItem("email");
+        const storedToken = sessionStorage.getItem("accessToken");
+        const storedUserId = sessionStorage.getItem("user_id");
+        if (storedName && storedEmail && storedToken && storedUserId) {
             setOnLogin(true);
             setUserName(storedName);
+            setEmail(storedEmail);
+            setUserId(storedUserId);
         }
     }, []);
 
@@ -22,7 +29,8 @@ export function UserProvider({ children }) {
         setOnLogin(false);
         setUserName("");
         setEmail("");
-        window.location.href = "/"; // 페이지 새로고침
+        setUserId(null);
+        window.location.href = "/";
     };
 
     // 로그인
@@ -31,9 +39,11 @@ export function UserProvider({ children }) {
         sessionStorage.setItem("user_name", res.userName);
         sessionStorage.setItem("accessToken", res.token);
         sessionStorage.setItem("email", res.email);
+        sessionStorage.setItem("user_id", res.user_id);
         setUserName(res.userName);
         setOnLogin(true);
         setEmail(res.email);
+        setUserId(res.user_id);
     };
 
     return (
@@ -47,6 +57,8 @@ export function UserProvider({ children }) {
                 Login,
                 email,
                 setEmail,
+                userId,
+                setUserId,
             }}
         >
             {children}
@@ -62,8 +74,10 @@ export function useUser() {
         email,
         userName,
         setEmail,
-        Login, // Login 함수 추가
+        Login,
+        userId,
+        setUserId,
     } = useContext(UserContext);
 
-    return { onLogin, setOnLogin, Logout, email, userName, setEmail, Login };
+    return { onLogin, setOnLogin, Logout, email, userName, setEmail, Login, userId, setUserId };
 }

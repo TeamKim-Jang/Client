@@ -1,3 +1,4 @@
+//Navbar/NavbarComponent.jsx
 import { useUser } from "../../contexts/userContext";
 import { useEffect } from "react";
 import Container from 'react-bootstrap/Container';
@@ -17,7 +18,7 @@ export default function NavbarComponent() {
                 setEmail(storedEmail);
             }
         }
-    }, [email, setEmail]);
+    }, [setEmail]);
 
     return (
         <Navbar expand={expand} className="bg-body-tertiary">

@@ -1,0 +1,160 @@
+.overall-ranking-container {
+    padding: 20px;
+    background-color: #f5f7fb;
+    max-width: 600px; 
+    margin: 20px auto; 
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.ranking-tabs {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+    gap: 12px;
+}
+
+.tab {
+    padding: 8px 16px;
+    border-radius: 20px;
+    background-color: #eaf4ff;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    color: #007bff;
+    text-align: center;
+}
+
+.tab.active {
+    background-color: #007bff;
+    color: #ffffff;
+}
+
+.ranking-list {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 0 auto; 
+}
+
+.ranking-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.ranking-item:last-child {
+    border-bottom: none;
+}
+
+.ranking-index {
+    display: flex;
+    align-items: center; 
+    justify-content: center; 
+    width: 50px; 
+    height: 50px; 
+}
+
+
+.rank-circle {
+    background: #e0e0e0; 
+    width: 32px; 
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%; 
+    font-size: 16px; 
+    font-weight: bold;
+    color: #333; 
+}
+
+.medal {
+    font-size: 32px;
+}
+
+.ranking-info {
+    flex: 1;
+    margin-left: 10px;
+}
+
+.ranking-name {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+
+.ranking-profit {
+    font-size: 14px;
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+.tier-icon img {
+    width: 30px; 
+    height: 30px;
+    object-fit: contain;
+  }
+  
+
+.school-ranking-footer {
+    background: #eaf4ff;
+    padding: 15px;
+    text-align: center;
+    border-radius: 10px;
+    font-size: 16px;
+    color: #333;
+    font-weight: bold;
+    max-width: 600px; 
+    margin: 20px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px; 
+}
+
+.school-ranking-footer .footer-icon {
+    font-size: 20px;
+    color: #f1c40f;
+}
+
+
+.ranking-footer {
+    margin-top: 20px;
+    background-color: #eaf4ff;
+    padding: 15px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 600px; 
+    margin: 20px auto; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.ranking-footer .footer-icon {
+    font-size: 24px;
+    color: #f1c40f;
+    margin-right: 10px;
+}
+
+.ranking-footer p {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    text-align: center;
+    line-height: 1.5;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    display: flex;
+    justify-content: center;
+}

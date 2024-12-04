@@ -16,13 +16,10 @@ const LoginComponent = () => {
     event.preventDefault();
 
     try {
-      const response = await axios.post(
-        "http://localhost:3001/api/auth/login",
-        {
-          email: email,
-          password: password,
-        }
-      );
+      const response = await axios.post("http://localhost:3001/api/auth/login", {
+        email: email,
+        password: password,
+      });
 
       // 로그인 성공 시
       const result = response.data;

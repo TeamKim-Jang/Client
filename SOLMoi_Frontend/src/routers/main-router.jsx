@@ -5,7 +5,6 @@ import SolMainPage from "../components/SolMainPage/SolMainPage";
 import LoginBoard from "../routes/loginBoard";
 import RegisterBoard from "../routes/registerBoard";
 import AttendanceCheckBoard from "../routes/AttendanceCheckBoard";
-import InvestMainBoard from "../routes/InvestMainBoard";
 import OverallRanking from "../components/ranking/OverallRanking";
 import SchoolRanking from "../components/ranking/SchoolRanking";
 import StockPage from "../routes/StockPage.jsx";
@@ -36,7 +35,7 @@ export const mainRoutes = [
   },
   {
     path: "/solleafcontent",
-    element: <Solleafcontent></Solleafcontent>
+    element: <Solleafcontent></Solleafcontent>,
   },
   {
     path: "/auth/login",

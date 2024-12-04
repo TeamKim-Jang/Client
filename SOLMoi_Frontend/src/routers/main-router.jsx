@@ -5,12 +5,19 @@ import SolMainPage from "../components/SolMainPage/SolMainPage";
 import LoginBoard from "../routes/loginBoard";
 import RegisterBoard from "../routes/registerBoard";
 import AttendanceCheckBoard from "../routes/AttendanceCheckBoard";
+import InvestMainBoard from "../routes/InvestMainBoard";
+import OverallRanking from "../components/ranking/OverallRanking";
+import SchoolRanking from "../components/ranking/SchoolRanking";
+import StockPage from "../routes/StockPage.jsx";
+import BuyBoard from "../routes/BuyBoard.jsx"; // 매수 페이지
+import SellBoard from "../routes/SellBoard.jsx"; // 매도 페이지
 import MockInvestMainBoard from "../routes/MockInvestMainBoard";
 import UpdownGameBoard from "../routes/UpdownGameBoard";
+
 export const mainRoutes = [
   {
     path: "/",
-    element: <SolMainPage></SolMainPage>,
+    element: <SolMainPage />,
     index: true,
   },
   {
@@ -25,7 +32,7 @@ export const mainRoutes = [
   },
   {
     path: "/news",
-    element: <NewsFeed></NewsFeed>,
+    element: <NewsFeed />,
   },
   {
     path: "/solleafcontent",
@@ -33,13 +40,40 @@ export const mainRoutes = [
   },
   {
     path: "/auth/login",
-    element: <LoginBoard></LoginBoard>,
+    element: <LoginBoard />,
     index: true,
   },
   {
     path: "/auth/register",
-    element: <RegisterBoard></RegisterBoard>,
+    element: <RegisterBoard />,
     index: true,
+  },
+  {
+    path: "/attendance",
+    element: <AttendanceCheckBoard />,
+    index: true,
+  },
+  {
+    path: "/ranking/overall",
+    element: <OverallRanking />,
+    index: true,
+  },
+  {
+    path: "/ranking/school/:schoolId",
+    element: <SchoolRanking />,
+    index: true,
+  },
+  {
+    path: "/stock/:stockCode",
+    element: <StockPage />,
+  },
+  {
+    path: "/stock/:stockCode/buy", // 매수 라우트
+    element: <BuyBoard />,
+  },
+  {
+    path: "/stock/:stockCode/sell", // 매도 라우트
+    element: <SellBoard />,
   },
   {
     path: "/attendance",

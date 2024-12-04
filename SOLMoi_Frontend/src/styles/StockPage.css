@@ -1,0 +1,42 @@
+.stock-page-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+  
+  .stock-header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .chart-container {
+    margin-top: 20px;
+  }
+  
+  .timeframe-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .timeframe-button {
+    padding: 10px 20px;
+    border: 1px solid #007aff;
+    background-color: #ffffff;
+    color: #007aff;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .timeframe-button.active {
+    background-color: #007aff;
+    color: #ffffff;
+  }
+  

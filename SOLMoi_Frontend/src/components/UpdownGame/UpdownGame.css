@@ -1,7 +1,7 @@
 :root {
   --primary-color: #2d59f7;
   --secondary-color: #ff6b6b;
-  --background-color: #ffffff;
+  --background-color: #E5F0FC;
   --card-background: #ffffff;
   --text-color: #333333;
 }
@@ -145,7 +145,8 @@
 }
 
 .button.selected {
-  transform: scale(1.5);
+  width: 200px; /* 선택된 버튼의 너비 (2배 길이) */
+  opacity: 1; /* 선택된 버튼은 완전히 표시 */
 }
 
 .arrow-icon {
@@ -236,3 +237,26 @@
   color: #f44336;
 }
 
+.back-button-container {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.back-arrow {
+  width: 24px;
+  height: 24px;
+  stroke: #333;
+  transition: stroke 0.3s ease;
+}
+
+.back-button-container:hover .back-arrow {
+  stroke: #007bff; /* 호버 시 색상 */
+}

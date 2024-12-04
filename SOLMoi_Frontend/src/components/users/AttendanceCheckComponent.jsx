@@ -143,14 +143,6 @@ export default function AttendanceCheck() {
         </div>
       )}
 
-      {/* Bottom Navigation */}
-      <div className="bottom-nav">
-        <Clock className="icon" />
-        <div className="active-icon"></div>
-        <BarChart3 className="icon" />
-        <Newspaper className="icon" />
-        <Users className="icon" />
-      </div>
     </div>
   );
 }

@@ -12,6 +12,7 @@ import SchoolRanking from "../components/ranking/SchoolRanking";
 import StockPage from "../routes/StockPage.jsx";
 import BuyBoard from "../routes/BuyBoard.jsx"; // 매수 페이지
 import SellBoard from "../routes/SellBoard.jsx"; // 매도 페이지
+import Random from "../components/Random/RandomReward"; // 매도 페이지
 
 export const mainRoutes = [
   {
@@ -73,6 +74,10 @@ export const mainRoutes = [
   {
     path: "/stock/:stockCode/sell", // 매도 라우트
     element: <SellBoard />,
+  },
+  {
+    path: "/random", // 매도 라우트
+    element: <Random />,
   },
 ];
 

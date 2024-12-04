@@ -22,7 +22,7 @@ export default function AttendanceCheck() {
           throw new Error("로그인 정보가 유효하지 않습니다. 로그인해주세요.");
         }
 
-        const response = await axios.get("http://localhost:3001/api/attendance", {
+        const response = await axios.get('/api/attendance', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -51,7 +51,7 @@ export default function AttendanceCheck() {
       const token = sessionStorage.getItem("accessToken");
       if (!token) throw new Error("로그인 정보가 없습니다.");
 
-      const response = await axios.post("http://localhost:3001/api/attendance", {}, {
+      const response = await axios.post("/api/attendance", {}, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -126,7 +126,6 @@ export default function AttendanceCheck() {
           <p style={{ color: todayCheckedIn ? "green" : "red" }}>{message}</p>
         )}
       </div>
-
       {/* Sol Animation */}
       {solAnimation && (
         <div
@@ -142,15 +141,6 @@ export default function AttendanceCheck() {
           ))}
         </div>
       )}
-
-      {/* Bottom Navigation */}
-      <div className="bottom-nav">
-        <Clock className="icon" />
-        <div className="active-icon"></div>
-        <BarChart3 className="icon" />
-        <Newspaper className="icon" />
-        <Users className="icon" />
-      </div>
     </div>
   );
 }

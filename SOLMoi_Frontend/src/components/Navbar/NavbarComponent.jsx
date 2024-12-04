@@ -47,6 +47,7 @@ export default function NavbarComponent() {
                                 <Nav.Link href="/auth/register" className="custom-nav-link">
                                     회원가입
                                 </Nav.Link>
+
                             </Nav>
                         ) : (
                             <Nav className="justify-content-end flex-grow-1 pe-3">

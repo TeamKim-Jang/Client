@@ -5,53 +5,82 @@ import SolMainPage from "../components/SolMainPage/SolMainPage";
 import LoginBoard from "../routes/loginBoard";
 import RegisterBoard from "../routes/registerBoard";
 import AttendanceCheckBoard from "../routes/AttendanceCheckBoard";
-import MockInvestMainBoard from "../routes/MockInvestMainBoard";
-import UpdownGameBoard from "../routes/UpdownGameBoard";
 import OverallRanking from "../components/ranking/OverallRanking";
 import SchoolRanking from "../components/ranking/SchoolRanking";
 import StockPage from "../routes/StockPage.jsx";
-import BuyBoard from "../routes/BuyBoard.jsx"; // 매수 페이지
-import SellBoard from "../routes/SellBoard.jsx"; // 매도 페이지
 import Random from "../components/Random/RandomReward"; // 매도 페이지
+import BuyBoard from "../routes/BuyBoard.jsx";
+import SellBoard from "../routes/SellBoard.jsx";
+import MockInvestMainBoard from "../routes/MockInvestMainBoard";
+import UpdownGameBoard from "../routes/UpdownGameBoard";
+import { SchoolProvider } from "../contexts/schoolContext";
+import SchoolComponent from "../components/users/SchoolComponent";
 
 export const mainRoutes = [
   {
     path: "/",
-    element: <SolMainPage></SolMainPage>,
-    index: true,
+    element: <SolMainPage />,
   },
   {
     path: "/stock",
-    element: <MockInvestMainBoard></MockInvestMainBoard>,
-    index: true,
+    element: <MockInvestMainBoard />,
   },
   {
-    path: "/updowngame",
-    element: <UpdownGameBoard></UpdownGameBoard>,
-    index: true,
+    path: "/stock/:stockCode",
+    element: <StockPage />,
+  },
+  {
+    path: "/stock/:stockCode/buy",
+    element: <BuyBoard />,
+  },
+  {
+    path: "/stock/:stockCode/sell",
+    element: <SellBoard />,
   },
   {
     path: "/news",
-    element: <NewsFeed></NewsFeed>,
+    element: <NewsFeed />,
   },
   {
     path: "/solleafcontent",
-    element: <Solleafcontent></Solleafcontent>
+    element: <Solleafcontent />,
   },
   {
     path: "/auth/login",
-    element: <LoginBoard></LoginBoard>,
-    index: true,
+    element: <LoginBoard />,
+  },
+  {
+    path: "/auth/school", // 학교 선택 페이지 추가
+    element: (
+      <SchoolProvider>
+        <SchoolComponent />
+      </SchoolProvider>
+    ),
   },
   {
     path: "/auth/register",
-    element: <RegisterBoard></RegisterBoard>,
+    element: (
+      <SchoolProvider>
+        <RegisterBoard />
+      </SchoolProvider>
+    ), // 컨텍스트 적용
     index: true,
   },
   {
     path: "/attendance",
-    element: <AttendanceCheckBoard></AttendanceCheckBoard>,
-    index: true,
+    element: <AttendanceCheckBoard />,
+  },
+  {
+    path: "/ranking/overall",
+    element: <OverallRanking />,
+  },
+  {
+    path: "/ranking/school/:schoolId",
+    element: <SchoolRanking />,
+  },
+  {
+    path: "/updowngame",
+    element: <UpdownGameBoard />,
   },
   {
     path: "/ranking/overall",

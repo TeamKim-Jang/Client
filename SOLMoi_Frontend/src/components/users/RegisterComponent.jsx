@@ -1,8 +1,8 @@
-//components/RegisterComponentjsx
-import axios from "axios";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "../../styles/User.css";
+import axios from "axios";
+import { useSchool } from "../../contexts/schoolContext";
+import '../../styles/User.css';
 
 const RegisterComponent = () => {
   const [email, setEmail] = useState("");
@@ -12,20 +12,16 @@ const RegisterComponent = () => {
   const [birthDate, setBirthDate] = useState("");
   const [userName, setUserName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const { selectedSchool } = useSchool();
   const [schoolName, setSchoolName] = useState("");
   const [isNoSchool, setIsNoSchool] = useState(false);
+
   const navigate = useNavigate();
 
   const handleRegister = async (event) => {
     event.preventDefault();
 
-    if (
-      !email.trim() ||
-      !password.trim() ||
-      !nickname.trim() ||
-      !birthDate.trim() ||
-      !userName.trim()
-    ) {
+    if (!email.trim() || !password.trim() || !nickname.trim() || !birthDate.trim() || !userName.trim()) {
       setErrorMessage("필수 입력 필드를 모두 입력해 주세요.");
       return;
     }
@@ -34,37 +30,25 @@ const RegisterComponent = () => {
       email,
       password,
       nickname,
-      birth_date: birthDate, // 이 값이 정확히 포함되는지 확인
+      birth_date: birthDate,
       user_name: userName,
       phone_number: phoneNumber.trim() || null,
-      school_name: isNoSchool ? "무소속" : schoolName.trim() || null,
+      school_name: selectedSchool || "무소속",
     };
 
-    console.log("Payload to send:", payload);
-
     try {
-      const response = await axios.post(
-        "http://localhost:3001/api/auth/register",
-        payload,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await axios.post('/api/auth/register', payload, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
       if (response.status === 201) {
         navigate("/auth/login");
       }
     } catch (error) {
-      if (error.response && error.response.status === 500) {
-        setErrorMessage(
-          error.response.data?.error || "이미 존재하는 이메일입니다."
-        );
-      } else {
-        setErrorMessage("회원가입에 실패했습니다. 다시 시도해 주세요.");
-      }
-      console.error("오류 발생:", error.response?.data || error);
+      setErrorMessage(error.response?.data?.error || "회원가입에 실패했습니다. 다시 시도해 주세요.");
+      console.error("오류 발생:", error.response || error.message);
     }
   };
 
@@ -73,9 +57,7 @@ const RegisterComponent = () => {
       <div className="register-page">
         <header className="header">
           <h1>회원가입</h1>
-          <button className="close-button" onClick={() => navigate("/")}>
-            ×
-          </button>
+          <button className="close-button" onClick={() => navigate("/")}>×</button>
         </header>
         <form className="user-form" onSubmit={handleRegister}>
           {errorMessage && <p className="error-message">{errorMessage}</p>}
@@ -134,26 +116,11 @@ const RegisterComponent = () => {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="schoolName">학교 이름</label>
-            <input
-              type="text"
-              id="schoolName"
-              value={isNoSchool ? "무소속" : schoolName}
-              onChange={(e) => setSchoolName(e.target.value)}
-              disabled={isNoSchool}
-            />
+            <label>학교</label>
+            <p>{selectedSchool || "학교가 선택되지 않았습니다."}</p>
+            <Link to="/auth/school">학교 선택</Link>
           </div>
-          <label>
-            <input
-              type="checkbox"
-              checked={isNoSchool}
-              onChange={(e) => setIsNoSchool(e.target.checked)} // 상태 업데이트
-            />
-          </label>
-          소속 학교 없음
-          <button className="user-button" type="submit">
-            가입하기
-          </button>
+          <button className="user-button" type="submit">가입하기</button>
           <p>
             이미 회원이신가요? <Link to="/auth/login">로그인</Link>
           </p>

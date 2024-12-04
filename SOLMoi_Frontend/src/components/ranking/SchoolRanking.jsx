@@ -5,6 +5,8 @@ import RankingTabs from './RankingTabs';
 import RankingList from './RankingList';
 import SchoolFooter from './SchoolFooter';
 import '../../styles/OverallRanking.css';
+import apiClient from "../../utils/apiClient";
+
 
 const SchoolRanking = () => {
   const { schoolId } = useParams();
@@ -28,10 +30,12 @@ const SchoolRanking = () => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const [rankingsResponse, schoolRankResponse] = await Promise.all([
-          axios.get(`http://localhost:3001/api/ranking/school/${schoolId}`),
-          axios.get(`http://localhost:3001/api/ranking/schoolrank/${schoolId}`),
-        ]);
+        // const [rankingsResponse, schoolRankResponse] = await Promise.all([
+        //   axios.get(`/api/ranking/school/${schoolId}`),
+        //   axios.get(`/api/ranking/schoolrank/${schoolId}`),
+        // ]);
+        const rankingsResponse = await apiClient.get(`/ranking/school/${schoolId}`);
+        const schoolRankResponse = await apiClient.get(`/ranking/schoolrank/${schoolId}`);
         
         const rankingsWithTier = calculateTier(rankingsResponse.data.data);
         setRankings(rankingsWithTier);

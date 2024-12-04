@@ -1,0 +1,41 @@
+.chart-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff; 
+    border: 1px solid #e0e0e0; 
+    border-radius: 10px; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+  }
+  
+  .chart-container h1 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333333;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .candlestick-chart {
+    background-color: #f9fafb; 
+    padding: 10px;
+    border-radius: 8px;
+  }
+  
+  .chart-axis {
+    stroke: #cccccc;
+  }
+  
+  .axis-label {
+    fill: #666666; 
+    font-size: 12px;
+  }
+  
+  .candlestick-series {
+    fill: #FF3B30; 
+  }
+  
+  .candlestick-series.negative {
+    fill: blue; 
+  }
+  

@@ -42,7 +42,7 @@
   flex-direction: column;
   background-color: var(--card-background);
   padding: 24px;
-  max-height: 83vh;
+  height: 83vh;
 }
 
 .card-content {

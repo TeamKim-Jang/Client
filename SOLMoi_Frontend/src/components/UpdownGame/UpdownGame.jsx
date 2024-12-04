@@ -175,10 +175,6 @@ export default function UpdownGame() {
               </div>
             )}
 
-            <div className="prediction-section">
-              <p className="question">내일 오를까? 내릴까?</p>
-            </div>
-
             <div className="buttons-wrapper">
               <div className="button-container">
                 <button

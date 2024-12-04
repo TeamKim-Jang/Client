@@ -151,28 +151,6 @@
   background-color: #1d4ed8;
 }
 
-.bottom-nav {
-  margin-top: auto;
-  border-top: 1px solid #e5e7eb;
-  display: flex;
-  justify-content: space-around;
-  padding: 1rem;
-}
-
-.bottom-nav .icon {
-  width: 1.5rem;
-  height: 1.5rem;
-  color: #9ca3af;
-}
-
-.bottom-nav .active-icon {
-  width: 1.5rem;
-  height: 1.5rem;
-  background-color: #2563eb;
-  border-radius: 50%;
-}
-
-
 @keyframes fade-in-out {
 0% {
   opacity: 0;
@@ -355,4 +333,3 @@ justify-content: center;
 .close-buttons:focus {
 outline: none; /* 포커스 시 외곽선 제거 */
 }
-

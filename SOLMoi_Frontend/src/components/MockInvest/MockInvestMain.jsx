@@ -122,7 +122,14 @@ export default function MockInvestMain() {
               >
                 <div className="stockInfo">
                   <div className="logoContainer">
-                    <div className="logo">{stock.name.charAt(0)}</div>
+                    <img
+                      src={`./src/assets/logos/${stock.stock_id}.png`}
+                      alt={stock.name}
+                      className="stockLogo"
+                      onError={(e) => {
+                        e.target.src = "./src/assets/logos/055550.png"; // 이미지 없을 경우 기본 이미지
+                      }}
+                    />
                   </div>
                   <div>
                     <div className="stockName">{stock.name}</div>

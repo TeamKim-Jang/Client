@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import CandlestickChart from "../components/CandlestickChart.jsx";
-import "../styles/StockPage.css";
-import { useNavigate } from "react-router-dom";
 
 const StockPage = () => {
   const { stockCode } = useParams();
@@ -13,6 +11,7 @@ const StockPage = () => {
     "1W": "1W",
     "1M": "1M",
   };
+
   const selectedStockName =
     sessionStorage.getItem("selectedStockName") || "주식 이름 없음";
 
@@ -22,38 +21,142 @@ const StockPage = () => {
   };
 
   return (
-    <div className="stock-page-container">
+    <div
+      style={{
+        fontFamily: "'Arial', sans-serif",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        padding: "20px",
+        maxWidth: "1200px",
+        margin: "0 auto",
+      }}
+    >
+      {/* 내장 스타일 */}
       <style>
         {`
-      
+          @media (max-width: 768px) {
+            .back-button-container {
+              top: 5%;
+              left: 5%;
+              width: 35px;
+              height: 35px;
+            }
 
-      .back-button-container {
-        position: absolute;
-        top: 10%;
-        left: 7%;
-        transform: translateX(-50%);
-        cursor: pointer;
-        width: 40px;
-        height: 40px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        
-        
-        
-      }
+            .stock-header h1 {
+              font-size: 18px;
+              text-align: center;
+            }
 
-  
+            .timeframe-buttons button {
+              font-size: 12px;
+              padding: 8px 12px;
+            }
 
-      .back-arrow {
-        width: 40px;
-        height: 40px;
-      }
+            .chart-container {
+              width: 100%;
+              padding: 10px;
+            }
+          }
 
-      
-    `}
+          @media (min-width: 769px) {
+            .back-button-container {
+              top: 10%;
+              left: 10%;
+              width: 50px;
+              height: 50px;
+            }
+
+            .stock-header h1 {
+              font-size: 24px;
+              text-align: center;
+            }
+
+            .timeframe-buttons button {
+              font-size: 14px;
+              padding: 10px 16px;
+            }
+
+            .chart-container {
+              width: 80%;
+              padding: 20px;
+            }
+          }
+
+          .back-button-container {
+            position: absolute;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #ffffff;
+            border-radius: 50%;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+          }
+
+          .back-button-container:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+          }
+
+          .back-arrow {
+            width: 24px;
+            height: 24px;
+          }
+
+          .stock-header h1 {
+            margin-bottom: 10px;
+            color: #007bff;
+          }
+
+          .timeframe-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+          }
+
+          .timeframe-button {
+            border: 1px solid #007bff;
+            background-color: #ffffff;
+            color: #007bff;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+          }
+
+          .timeframe-button:hover {
+            background-color: #007bff;
+            color: #ffffff;
+          }
+
+          .timeframe-button.active {
+            background-color: #007bff;
+            color: #ffffff;
+          }
+
+          .chart-container {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            width: 100%;
+          }
+        `}
       </style>
-      <div className="back-button-container" onClick={goBack}>
+
+      {/* 뒤로가기 버튼 */}
+      <div
+        className="back-button-container"
+        style={{
+          position: "absolute",
+          top: "10%",
+          left: "10%",
+        }}
+        onClick={goBack}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="back-arrow"
@@ -69,12 +172,16 @@ const StockPage = () => {
           />
         </svg>
       </div>
+
+      {/* 주식 이름 및 코드 */}
       <header className="stock-header">
-        {selectedStockName}
-        <h1 style={{ fontSize: 20 }}>{stockCode}</h1>
+        <h1>
+          {selectedStockName} {stockCode}
+        </h1>
       </header>
 
-      <div className="timeframe-buttons" style={{ marginTop: "20px" }}>
+      {/* 기간 버튼 */}
+      <div className="timeframe-buttons">
         {Object.entries(timeframes).map(([key, label]) => (
           <button
             key={key}
@@ -86,6 +193,7 @@ const StockPage = () => {
         ))}
       </div>
 
+      {/* 차트 컨테이너 */}
       <div className="chart-container">
         <CandlestickChart stockCode={stockCode} duration={duration} />
       </div>

@@ -23,7 +23,10 @@ export default function InvestSearch() {
   const [isLoading, setIsLoading] = useState(true);
   const [isUpdating, setIsUpdating] = useState(false);
   const timeoutRef = useRef(null);
-
+  const handleStockClick = (stockId) => {
+    const paddedStockId = stockId.toString().padStart(6, "0"); // 6자리로 변환
+    navigate(`/stock/${paddedStockId}`);
+  };
   const fetchData = useCallback(async () => {
     try {
       const response = await fetch("/api/allstock");
@@ -84,15 +87,14 @@ export default function InvestSearch() {
   return (
     <div className="containerMock">
       {/* Header */}
-      <div className={`balanceSection ${isUpdating ? "updating" : ""}`}>
-        <input
-          type="text"
-          placeholder="종목명 또는 코드로 검색하세요"
-          value={searchQuery}
-          onChange={handleSearch}
-          className="searchInput"
-        />
-      </div>
+
+      <input
+        type="text"
+        placeholder="종목명 또는 코드로 검색하세요"
+        value={searchQuery}
+        onChange={handleSearch}
+        className="searchInput"
+      />
 
       {/* Stocks Section */}
       <div className="stocksSection">
@@ -105,6 +107,7 @@ export default function InvestSearch() {
               <div
                 key={stock.stock_id}
                 className={`stockItem ${isUpdating ? "updating" : ""}`}
+                onClick={() => handleStockClick(stock.stock_id)} // 클릭 이벤트 연결
               >
                 <div className="stockInfo">
                   <div className="logoContainer">

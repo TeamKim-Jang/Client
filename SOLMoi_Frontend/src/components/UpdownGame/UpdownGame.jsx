@@ -238,15 +238,6 @@ export default function UpdownGame() {
           </div>
         </div>
       </div>
-      <footer className="bottomNav">
-        <div className="navItems">
-          <div className="navItem" onClick={() => navigate("/stock")}></div>
-          <div className="navItem activeNavItem"></div>
-          <div className="navItem" onClick={() => navigate("/solleafcontent")}>
-            <img src={game} alt="game" className="navImage" />
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }

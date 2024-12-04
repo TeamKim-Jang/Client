@@ -7,6 +7,12 @@ import RegisterBoard from "../routes/registerBoard";
 import AttendanceCheckBoard from "../routes/AttendanceCheckBoard";
 import MockInvestMainBoard from "../routes/MockInvestMainBoard";
 import UpdownGameBoard from "../routes/UpdownGameBoard";
+import OverallRanking from "../components/ranking/OverallRanking";
+import SchoolRanking from "../components/ranking/SchoolRanking";
+import StockPage from "../routes/StockPage.jsx";
+import BuyBoard from "../routes/BuyBoard.jsx"; // 매수 페이지
+import SellBoard from "../routes/SellBoard.jsx"; // 매도 페이지
+
 export const mainRoutes = [
   {
     path: "/",
@@ -45,6 +51,28 @@ export const mainRoutes = [
     path: "/attendance",
     element: <AttendanceCheckBoard></AttendanceCheckBoard>,
     index: true,
+  },
+  {
+    path: "/ranking/overall",
+    element: <OverallRanking />,
+    index: true,
+  },
+  {
+    path: "/ranking/school/:schoolId",
+    element: <SchoolRanking />,
+    index: true,
+  },
+  {
+    path: "/stock/:stockCode",
+    element: <StockPage />,
+  },
+  {
+    path: "/stock/:stockCode/buy", // 매수 라우트
+    element: <BuyBoard />,
+  },
+  {
+    path: "/stock/:stockCode/sell", // 매도 라우트
+    element: <SellBoard />,
   },
 ];
 

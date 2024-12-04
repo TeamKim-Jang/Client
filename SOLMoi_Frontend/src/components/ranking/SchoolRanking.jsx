@@ -29,8 +29,8 @@ const SchoolRanking = () => {
       setLoading(true);
       try {
         const [rankingsResponse, schoolRankResponse] = await Promise.all([
-          axios.get(`http://localhost:3001/api/ranking/school/${schoolId}`),
-          axios.get(`http://localhost:3001/api/ranking/schoolrank/${schoolId}`),
+          axios.get(`/api/ranking/school/${schoolId}`),
+          axios.get(`/api/ranking/schoolrank/${schoolId}`),
         ]);
         
         const rankingsWithTier = calculateTier(rankingsResponse.data.data);

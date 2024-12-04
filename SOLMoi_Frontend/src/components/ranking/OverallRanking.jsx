@@ -24,8 +24,8 @@ const OverallRanking = () => {
     const fetchRankings = async () => {
       setLoading(true);
       try {
-        const response = await axios.get('http://localhost:3001/api/ranking/overall');
-        const rankingsWithTier = calculateTier(response.data.data); // Tier 추가
+        const response = await axios.get('/api/ranking/overall');
+        const rankingsWithTier = calculateTier(response.data.data);
         setRankings(rankingsWithTier);
         setError(null);
       } catch (err) {

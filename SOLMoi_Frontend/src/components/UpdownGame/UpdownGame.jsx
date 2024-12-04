@@ -84,16 +84,13 @@ export default function UpdownGame() {
         name: selectedStock.name,
       };
 
-      const response = await fetch(
-        "http://localhost:3001/api/prediction/predict",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(tmpdata),
-        }
-      );
+      const response = await fetch("/api/prediction/predict", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(tmpdata),
+      });
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }

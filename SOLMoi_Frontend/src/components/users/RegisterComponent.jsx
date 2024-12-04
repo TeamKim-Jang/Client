@@ -13,6 +13,9 @@ const RegisterComponent = () => {
   const [userName, setUserName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const { selectedSchool } = useSchool();
+  const [schoolName, setSchoolName] = useState("");
+  const [isNoSchool, setIsNoSchool] = useState(false);
+
   const navigate = useNavigate();
 
   const handleRegister = async (event) => {
@@ -34,7 +37,7 @@ const RegisterComponent = () => {
     };
 
     try {
-      const response = await axios.post("http://localhost:3001/api/auth/register", payload, {
+      const response = await axios.post('/api/auth/register', payload, {
         headers: {
           "Content-Type": "application/json",
         },

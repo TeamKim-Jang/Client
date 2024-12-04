@@ -1,73 +1,90 @@
-"use client";
+'use client';
 
-import React, { useState, useEffect, useCallback } from "react";
-import "./MockInvestMain.css";
-
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './MockInvestMain.css';
+import game from '../../assets/images/game.png'
 
 const formatNumber = (num) => {
-  return new Intl.NumberFormat("ko-KR").format(num);
+  return new Intl.NumberFormat('ko-KR').format(num || 0);
 };
 
 const formatPercent = (num) => {
-  return new Intl.NumberFormat("ko-KR", {
+  return new Intl.NumberFormat('ko-KR', {
     minimumFractionDigits: 1,
     maximumFractionDigits: 1,
-  }).format(num);
+  }).format(num || 0);
 };
 
 export default function MockInvestMain() {
+  const navigate = useNavigate();
   const [balanceData, setBalanceData] = useState(null);
-  const [stockData, setStockData] = useState(null);
+  const [stockData, setStockData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isUpdating, setIsUpdating] = useState(false);
+  const timeoutRef = useRef(null);
+  const userId = sessionStorage.getItem('user_id');
 
   const fetchData = useCallback(async () => {
+    if (!userId) {
+      console.error('User ID not found in sessionStorage');
+      return;
+    }
+
     try {
       const [balanceResponse, stockResponse] = await Promise.all([
-        fetch("http://localhost:3001/api/portfolio/3"),
-        fetch("http://localhost:3001/api/portfoliostock/3"),
+        fetch(`/api/portfolio/${userId}`),
+        fetch(`/api/portfoliostock/${userId}`),
       ]);
       const balanceData = await balanceResponse.json();
       const stockData = await stockResponse.json();
-      setBalanceData(balanceData.data[0]);
-      setStockData(stockData.data);
+      setBalanceData(balanceData.data[0] || {});
+      setStockData(stockData.data || []);
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error('Error fetching data:', error);
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [userId]);
 
   useEffect(() => {
     fetchData();
 
-    // Set up polling interval (e.g., every 5 seconds)
-    const intervalId = setInterval(fetchData, 5000);
-    console.log("fetched data");
-    // Clean up interval on component unmount
-    return () => clearInterval(intervalId);
+    const intervalId = setInterval(() => {
+      setIsUpdating(true);
+      fetchData();
+      timeoutRef.current = setTimeout(() => setIsUpdating(false), 300);
+    }, 5000);
+
+    return () => {
+      clearInterval(intervalId);
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
   }, [fetchData]);
 
-  if (isLoading || !balanceData || !stockData) return null;
-
-  const cashBalance = parseFloat(balanceData.cash_balance);
-  const totalInvestment = parseFloat(balanceData.total_investment);
-  const totalProfitLoss = parseFloat(balanceData.total_profit_loss);
+  // 기본값 설정
+  const cashBalance = parseFloat(balanceData?.cash_balance || 0);
+  const totalInvestment = parseFloat(balanceData?.total_investment || 0);
+  const totalProfitLoss = parseFloat(balanceData?.total_profit_loss || 0);
   const totalBalance = cashBalance + totalInvestment;
-  const totalProfitLossRate = (totalProfitLoss / totalInvestment) * 100;
+  const totalProfitLossRate = totalInvestment
+    ? (totalProfitLoss / totalInvestment) * 100
+    : 0;
 
   return (
-    <div className="container">
+    <div className="containerMock">
       {/* Header */}
-      <div className="header">
-        <h1 className="headerTitle">로고</h1>
-      </div>
 
       {/* Main Balance */}
-      <div className="balanceSection">
+      <div className={`balanceSection ${isUpdating ? 'updating' : ''}`}>
         <div className="balanceContainer">
           <div>
             <div className="totalBalance">{formatNumber(totalBalance)}원</div>
-            <div className="profitLoss">
+            <div
+              className={`profitLoss ${
+                totalProfitLoss < 0 ? 'negative' : 'positive'
+              }`}
+            >
               {formatNumber(totalProfitLoss)}원 (
               {formatPercent(totalProfitLossRate)}%)
             </div>
@@ -87,51 +104,62 @@ export default function MockInvestMain() {
 
       {/* Stocks Section */}
       <div className="stocksSection">
-        <h2 className="sectionTitle">주식</h2>
+        <h2 className="sectionTitle">내 주식</h2>
         <div className="stocksList">
-          {stockData.map((stock) => (
-            <div key={stock.portfoliostock_id} className="stockItem">
-              <div className="stockInfo">
-                <div className="logoContainer">
-                  <div className="logo">{stock.name.charAt(0)}</div>
+          {stockData.length > 0 ? (
+            stockData.map((stock) => (
+              <div
+                key={stock.portfoliostock_id}
+                className={`stockItem ${isUpdating ? 'updating' : ''}`}
+              >
+                <div className="stockInfo">
+                  <div className="logoContainer">
+                    <div className="logo">{stock.name.charAt(0)}</div>
+                  </div>
+                  <div>
+                    <div className="stockName">{stock.name}</div>
+                    <div className="stockCode">{stock.symbol}</div>
+                  </div>
                 </div>
-                <div>
-                  <div className="stockName">{stock.name}</div>
-                  <div className="stockCode">{stock.symbol}</div>
+                <div className="stockPriceInfo">
+                  <div className="currentPrice">
+                    {formatNumber(stock.current_price)}원
+                  </div>
+                  <div
+                    className={
+                      stock.price_change >= 0
+                        ? 'priceChangePositive'
+                        : 'priceChangeNegative'
+                    }
+                  >
+                    {stock.price_change >= 0 ? '+' : ''}
+                    {formatNumber(stock.price_change)}원 (
+                    {formatPercent(
+                      (stock.price_change /
+                        (stock.current_price - stock.price_change)) *
+                        100
+                    )}
+                    %)
+                  </div>
                 </div>
               </div>
-              <div className="stockPriceInfo">
-                <div className="currentPrice">
-                  {formatNumber(stock.current_price)}원
-                </div>
-                <div
-                  className={
-                    stock.price_change >= 0
-                      ? "priceChangePositive"
-                      : "priceChangeNegative"
-                  }
-                >
-                  {stock.price_change >= 0 ? "+" : ""}
-                  {formatNumber(stock.price_change)}원 (
-                  {formatPercent(
-                    (stock.price_change /
-                      (stock.current_price - stock.price_change)) *
-                      100
-                  )}
-                  %)
-                </div>
-              </div>
-            </div>
-          ))}
+            ))
+          ) : (
+            <div className="noStocksMessage"></div>
+          )}
         </div>
       </div>
       <footer className="bottomNav">
         <div className="navItems">
           <div className="navItem activeNavItem"></div>
-          <div className="navItem"></div>
-          <div className="navItem"></div>
-          <div className="navItem"></div>
-          <div className="navItem"></div>
+          <div
+            className="navItem"
+            onClick={() => navigate('/updowngame')}
+          ></div>
+          <div className="navItem"
+          onClick={() => navigate('/solleafcontent')}>
+            <img src={game} alt="game" className="navImage" />
+          </div>
         </div>
       </footer>
     </div>

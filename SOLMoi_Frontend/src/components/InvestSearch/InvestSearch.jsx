@@ -7,47 +7,51 @@ import game from "../../assets/images/game.png";
 import stock from "../../assets/images/stock.png";
 import home from "../../assets/images/home.png";
 
-const formatNumber = (num) => {
-  return new Intl.NumberFormat("ko-KR").format(num || 0);
-};
+const formatNumber = (num) => new Intl.NumberFormat("ko-KR").format(num || 0);
 
-const formatPercent = (num) => {
-  return new Intl.NumberFormat("ko-KR", {
+const formatPercent = (num) =>
+  new Intl.NumberFormat("ko-KR", {
     minimumFractionDigits: 1,
     maximumFractionDigits: 1,
   }).format(num || 0);
-};
 
 export default function InvestSearch() {
   const navigate = useNavigate();
-  const [balanceData, setBalanceData] = useState(null);
   const [stockData, setStockData] = useState([]);
+  const [filteredStocks, setFilteredStocks] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [isUpdating, setIsUpdating] = useState(false);
   const timeoutRef = useRef(null);
-  const userId = sessionStorage.getItem("user_id");
 
   const fetchData = useCallback(async () => {
-    if (!userId) {
-      console.error("User ID not found in sessionStorage");
-      return;
-    }
-
     try {
-      const [balanceResponse, stockResponse] = await Promise.all([
-        fetch(`/api/portfolio/${userId}`),
-        fetch(`/api/portfoliostock/${userId}`),
-      ]);
-      const balanceData = await balanceResponse.json();
-      const stockData = await stockResponse.json();
-      setBalanceData(balanceData.data[0] || {});
-      setStockData(stockData.data || []);
+      const response = await fetch("/api/allstock");
+      if (!response.ok) {
+        throw new Error("Failed to fetch stock data");
+      }
+      const { data } = await response.json();
+      setStockData(data || []); // 전체 데이터를 갱신
+      // 검색 결과 유지: 검색 중이라면 필터링 유지
+      if (searchQuery.trim()) {
+        const filtered = data.filter(
+          (stock) =>
+            stock.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            stock.symbol
+              .toString()
+              .toLowerCase()
+              .includes(searchQuery.toLowerCase())
+        );
+        setFilteredStocks(filtered);
+      } else {
+        setFilteredStocks(data);
+      }
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error fetching stock data:", error);
     } finally {
       setIsLoading(false);
     }
-  }, [userId]);
+  }, [searchQuery]);
 
   useEffect(() => {
     fetchData();
@@ -56,7 +60,7 @@ export default function InvestSearch() {
       setIsUpdating(true);
       fetchData();
       timeoutRef.current = setTimeout(() => setIsUpdating(false), 60);
-    }, 1000);
+    }, 1000); // 1초마다 갱신
 
     return () => {
       clearInterval(intervalId);
@@ -64,58 +68,42 @@ export default function InvestSearch() {
     };
   }, [fetchData]);
 
-  // 기본값 설정
-  const cashBalance = parseFloat(balanceData?.cash_balance || 0);
-  const totalInvestment = parseFloat(balanceData?.total_investment || 0);
-  const totalProfitLoss = parseFloat(balanceData?.total_profit_loss || 0);
-  const totalBalance = cashBalance + totalInvestment;
-  const totalProfitLossRate = totalInvestment
-    ? (totalProfitLoss / totalInvestment) * 100
-    : 0;
+  const handleSearch = (e) => {
+    const query = e.target.value;
+    setSearchQuery(query);
+
+    const filtered = stockData.filter(
+      (stock) =>
+        stock.name.toLowerCase().includes(query.toLowerCase()) ||
+        stock.symbol.toString().toLowerCase().includes(query.toLowerCase())
+    );
+
+    setFilteredStocks(filtered);
+  };
 
   return (
     <div className="containerMock">
       {/* Header */}
-
-      {/* Main Balance */}
       <div className={`balanceSection ${isUpdating ? "updating" : ""}`}>
-        <div className="balanceContainer">
-          <div>
-            asfasdfsdfsfd
-            <div className="totalBalance">{formatNumber(totalBalance)}원</div>
-            <div className="totalBalance">{formatNumber(totalBalance)}원</div>
-            <div className="totalBalance">{formatNumber(totalBalance)}원</div>
-            <div className="totalBalance">{formatNumber(totalBalance)}원</div>
-            <div
-              className={`profitLoss ${
-                totalProfitLoss < 0 ? "negative" : "positive"
-              }`}
-            >
-              {formatNumber(totalProfitLoss)}원 (
-              {formatPercent(totalProfitLossRate)}%)
-            </div>
-          </div>
-          <div className="investmentCashContainer">
-            <div className="investmentCashItem">
-              <div className="label">투자</div>
-              <div className="value">{formatNumber(totalInvestment)}원</div>
-            </div>
-            <div className="investmentCashItem">
-              <div className="label">현금</div>
-              <div className="value">{formatNumber(cashBalance)}원</div>
-            </div>
-          </div>
-        </div>
+        <input
+          type="text"
+          placeholder="종목명 또는 코드로 검색하세요"
+          value={searchQuery}
+          onChange={handleSearch}
+          className="searchInput"
+        />
       </div>
 
       {/* Stocks Section */}
       <div className="stocksSection">
-        <h2 className="sectionTitle">내 주식</h2>
-        <div className="stocksList">
-          {stockData.length > 0 ? (
-            stockData.map((stock) => (
+        <h2 className="sectionTitle">주식 리스트</h2>
+        {isLoading ? (
+          <div className="loadingMessage">로딩 중...</div>
+        ) : (
+          <div className="stocksList">
+            {filteredStocks.map((stock) => (
               <div
-                key={stock.portfoliostock_id}
+                key={stock.stock_id}
                 className={`stockItem ${isUpdating ? "updating" : ""}`}
               >
                 <div className="stockInfo">
@@ -149,25 +137,26 @@ export default function InvestSearch() {
                   </div>
                 </div>
               </div>
-            ))
-          ) : (
-            <div className="noStocksMessage"></div>
-          )}
-        </div>
+            ))}
+          </div>
+        )}
+        <footer className="bottomNav">
+          <div className="navItems">
+            <div className="navItem" onClick={() => navigate("/stock")}>
+              <img src={home} alt="home" className="navImagehome" />
+            </div>
+            <div className="navItem activeNavItem">
+              <img src={stock} alt="stock" className="navImage" />
+            </div>
+            <div
+              className="navItem"
+              onClick={() => navigate("/solleafcontent")}
+            >
+              <img src={game} alt="game" className="navImage" />
+            </div>
+          </div>
+        </footer>
       </div>
-      <footer className="bottomNav">
-        <div className="navItems">
-          <div className="navItem" onClick={() => navigate("/stock")}>
-          <img src={home} alt="home" className="navImagehome" />
-          </div>
-          <div className="navItem activeNavItem">
-          <img src={stock} alt="stock" className="navImage" />
-          </div>
-          <div className="navItem" onClick={() => navigate("/solleafcontent")}>
-            <img src={game} alt="game" className="navImage" />
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }

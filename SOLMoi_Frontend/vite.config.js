@@ -5,13 +5,8 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      // '/api/deepsearch': {
-      //   target: 'https://api-v2.deepsearch.com',
-      //   changeOrigin: true,
-      //   rewrite: (path) => path.replace(/^\/api\/deepsearch/, ''),
-      // },
       '/api': {
-        target: 'http://localhost:3000', // Express 서버
+        target: 'http://localhost:3001', // Express 서버
         changeOrigin: true,
       },
     },

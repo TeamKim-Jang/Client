@@ -43,7 +43,11 @@ export default function UpdownGame() {
         if (data.success) {
           setYesterdayPrediction(data.data.yesterdayPrediction);
           setTodayPrediction(data.data.todayPrediction);
-          setSelectedStock(data.data.randomStock);
+          setSelectedStock(
+            data.data.randomStock
+              ? data.data.randomStock
+              : JSON.parse(sessionStorage.getItem("data"))
+          );
         } else {
           throw new Error(
             data.message || "게임 상태를 가져오는데 실패했습니다"
@@ -72,6 +76,14 @@ export default function UpdownGame() {
     setIsLoading(true);
     setError(null);
     try {
+      const tmpdata = {
+        userId: userId,
+        stockId: selectedStock.stock_id,
+        predictionUpOrDown: prediction,
+        symbol: selectedStock.name.toString().charAt(0),
+        name: selectedStock.name,
+      };
+
       const response = await fetch(
         "http://localhost:3001/api/prediction/predict",
         {
@@ -79,11 +91,7 @@ export default function UpdownGame() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            userId: userId,
-            stockId: selectedStock.stock_id,
-            predictionUpOrDown: prediction,
-          }),
+          body: JSON.stringify(tmpdata),
         }
       );
       if (!response.ok) {
@@ -96,6 +104,7 @@ export default function UpdownGame() {
           message: `${prediction === "UP" ? "상승" : "하락"} 예측이 기록되었습니다.`,
         });
         setTodayPrediction(data.data); // 오늘의 예측 결과 저장
+        sessionStorage.setItem("data", JSON.stringify(tmpdata));
       } else {
         throw new Error(data.message || "예측을 등록하는데 실패했습니다");
       }
@@ -120,7 +129,7 @@ export default function UpdownGame() {
   }
 
   return (
-    <div className="container">
+    <div className="containerUpdown">
       <main className="main">
         <div className="card">
           <div className="card-content">
@@ -155,7 +164,7 @@ export default function UpdownGame() {
               </div>
             )}
 
-            <h2 className="game-title">주가예측게임</h2>
+            <h2 className="game-title"></h2>
 
             {selectedStock && (
               <div className="stock-info">

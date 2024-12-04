@@ -71,7 +71,7 @@ export default function MockInvestMain() {
     : 0;
 
   return (
-    <div className="container">
+    <div className="containerMock">
       {/* Header */}
 
       {/* Main Balance */}

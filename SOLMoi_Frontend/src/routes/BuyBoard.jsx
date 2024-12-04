@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import apiClient from "../utils/apiClient";
+
 
 const BuyBoard = () => {
   const { stockCode } = useParams();
@@ -22,7 +24,34 @@ const BuyBoard = () => {
     setQuantity((prev) => prev.slice(0, -1));
   };
 
-  const handleSubmit = async () => {
+//   const handleSubmit = async () => {
+//     if (!quantity || parseFloat(quantity) <= 0) {
+//       setError("유효한 수량을 입력하세요.");
+//       return;
+//     }
+
+//     try {
+//       setLoading(true);
+//       setError("");
+//       setSuccess(false);
+
+//       const response = await axios.post("/api/trade/buy", {
+//         userId: 1, // 유저 ID로 변경해야댐
+//         stockId: stockCode,
+//         quantity: parseFloat(quantity),
+//       });
+
+//       setSuccess(true);
+//       console.log("매수 성공:", response.data);
+//     } catch (err) {
+//       setError(err.response?.data?.message || "매수 요청 중 오류가 발생했습니다.");
+//       console.error("매수 실패:", err);
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+const handleSubmit = async () => {
     if (!quantity || parseFloat(quantity) <= 0) {
       setError("유효한 수량을 입력하세요.");
       return;
@@ -33,8 +62,7 @@ const BuyBoard = () => {
       setError("");
       setSuccess(false);
 
-      const response = await axios.post("/api/trade/buy", {
-        userId: 1, // 유저 ID로 변경해야댐
+      const response = await apiClient.post("/trade/buy", {
         stockId: stockCode,
         quantity: parseFloat(quantity),
       });
@@ -48,6 +76,7 @@ const BuyBoard = () => {
       setLoading(false);
     }
   };
+
 
   return (
     <div style={{ padding: "20px", textAlign: "center", fontFamily: "Arial, sans-serif" }}>

@@ -50,10 +50,18 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between; /* 위와 아래로 나누기 */
+  height: 100%;
   gap: 32px;
+  padding: 16px;
 }
-
+.stock-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 가운데 정렬 */
+  justify-content: center;
+  flex-grow: 1; /* 여유 공간을 채움 */
+}
 .game-title {
   font-size: 28px;
   font-weight: bold;
@@ -65,7 +73,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
+  gap: 20px;
 }
 
 .stock-logo {
@@ -109,13 +117,19 @@
   gap: 20px;
   width: 100%;
   max-width: 400px;
+  gap: 10px; /* 버튼 간격 */
   margin-top: 32px;
 }
 
 .button-container {
   flex: 1;
+  margin-bottom: 40px;
 }
-
+.game-info{
+  text-align: center;
+  margin-top: 10px;
+  color: rgb(88, 88, 88);
+}
 .button {
   width: 100%;
   border: none;
@@ -142,6 +156,7 @@
 
 .button:disabled {
   opacity: 0.5;
+  transform: scale(0.7);
   cursor: not-allowed;
 }
 

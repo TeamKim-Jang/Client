@@ -3,8 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./UpdownGame.css";
-import game from '../../assets/images/game.png'
-
+import game from "../../assets/images/game.png";
 
 export default function UpdownGame() {
   const navigate = useNavigate();
@@ -45,7 +44,11 @@ export default function UpdownGame() {
         if (data.success) {
           setYesterdayPrediction(data.data.yesterdayPrediction);
           setTodayPrediction(data.data.todayPrediction);
-          setSelectedStock(data.data.randomStock);
+          setSelectedStock(
+            data.data.randomStock
+              ? data.data.randomStock
+              : JSON.parse(sessionStorage.getItem("data"))
+          );
         } else {
           throw new Error(
             data.message || "게임 상태를 가져오는데 실패했습니다"
@@ -74,20 +77,21 @@ export default function UpdownGame() {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await fetch(
-        "http://localhost:3001/api/prediction/predict",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            userId: userId,
-            stockId: selectedStock.stock_id,
-            predictionUpOrDown: prediction,
-          }),
-        }
-      );
+      const tmpdata = {
+        userId: userId,
+        stockId: selectedStock.stock_id,
+        predictionUpOrDown: prediction,
+        symbol: selectedStock.name.toString().charAt(0),
+        name: selectedStock.name,
+      };
+
+      const response = await fetch("/api/prediction/predict", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(tmpdata),
+      });
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -98,6 +102,7 @@ export default function UpdownGame() {
           message: `${prediction === "UP" ? "상승" : "하락"} 예측이 기록되었습니다.`,
         });
         setTodayPrediction(data.data); // 오늘의 예측 결과 저장
+        sessionStorage.setItem("data", JSON.stringify(tmpdata));
       } else {
         throw new Error(data.message || "예측을 등록하는데 실패했습니다");
       }
@@ -122,8 +127,21 @@ export default function UpdownGame() {
   }
 
   return (
-    <div className="container">
-      <main className="main">
+    <div className="containerUpdown">
+      <div className="container">
+        {yesterdayPrediction && yesterdayPrediction.is_correct !== null && (
+          <div className="popup">
+            <div className="popup-content">
+              <p>
+                {yesterdayPrediction.is_correct
+                  ? "포인트 획득!"
+                  : "포인트 획득 실패"}
+              </p>
+              <button onClick={() => setYesterdayPrediction(null)}>닫기</button>
+            </div>
+          </div>
+        )}
+
         <div className="card">
           <div className="card-content">
             <div className="back-button-container" onClick={goBack}>
@@ -217,13 +235,12 @@ export default function UpdownGame() {
             )}
           </div>
         </div>
-      </main>
+      </div>
       <footer className="bottomNav">
         <div className="navItems">
-         <div className="navItem" onClick={() => navigate("/stock")}></div>
+          <div className="navItem" onClick={() => navigate("/stock")}></div>
           <div className="navItem activeNavItem"></div>
-          <div className="navItem"
-          onClick={() => navigate('/solleafcontent')}>
+          <div className="navItem" onClick={() => navigate("/solleafcontent")}>
             <img src={game} alt="game" className="navImage" />
           </div>
         </div>

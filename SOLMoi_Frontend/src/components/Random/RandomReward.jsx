@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import axios from "axios"; // Axios 추가
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import "./RandomReward.css";
 
 const rewards = [
@@ -21,6 +21,16 @@ const RandomReward = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [popupMessage, setPopupMessage] = useState("");
   const [isFetching, setIsFetching] = useState(false); // 서버 요청 중 상태
+
+  const today = new Date().toISOString().split("T")[0]; // 오늘 날짜
+
+  useEffect(() => {
+    // 새로고침해도 상태 유지: 로컬 스토리지에서 "오늘 뽑기 여부" 확인
+    const storedDrawDate = localStorage.getItem("draw_date");
+    if (storedDrawDate === today) {
+      setLocked(false); // 오늘 이미 뽑기 완료 상태
+    }
+  }, []);
 
   const unlockRewards = async () => {
     setLocked(false);
@@ -54,6 +64,9 @@ const RandomReward = () => {
               ? "아쉬워요😢 내일 다시 도전해주세요😤"
               : `축하해요👏 ${value}쏠잎을 받으셨습니다!`
           );
+          // 오늘 뽑기 완료 기록
+          localStorage.setItem("draw_date", today);
+          setLocked(false); // 다시 뽑기 비활성화
         } else {
           setPopupMessage("오늘 이미 뽑기를 했습니다! 내일 다시 도전하세요!");
         }

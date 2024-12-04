@@ -196,14 +196,24 @@
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background-color: #e5e7eb;
+  background-color: #ffffff;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
-.navItem:hover {
-  transform: scale(1.1);
+.navImage {
+  width: 300%; /* 부모 컨테이너의 150% 크기 */
+  height: 200%;
+  object-fit: cover;
+  border-radius: 50%;
+  position: relative;
+  transform: translate(-31px, -20%); /* 중앙 정렬 */
 }
+
+.navItem:hover {
+  background-color: var(--secondary-color) !important;
+}
+
 
 .activeNavItem {
   background-color: var(--primary-color);

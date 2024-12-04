@@ -66,6 +66,28 @@ export const mainRoutes = [
     path: "/updowngame",
     element: <UpdownGameBoard />,
   },
+  {
+    path: "/ranking/overall",
+    element: <OverallRanking />,
+    index: true,
+  },
+  {
+    path: "/ranking/school/:schoolId",
+    element: <SchoolRanking />,
+    index: true,
+  },
+  {
+    path: "/stock/:stockCode",
+    element: <StockPage />,
+  },
+  {
+    path: "/stock/:stockCode/buy", // 매수 라우트
+    element: <BuyBoard />,
+  },
+  {
+    path: "/stock/:stockCode/sell", // 매도 라우트
+    element: <SellBoard />,
+  },
 ];
 
 const router = createBrowserRouter(mainRoutes);

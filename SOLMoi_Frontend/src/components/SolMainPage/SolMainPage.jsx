@@ -9,8 +9,7 @@ import leafR from '../../../src/assets/images/image-leafR.png';
 import ad from '../../../src/assets/images/image-ad.png';
 import cou from '../../../src/assets/images/image-cou.png';
 import walk from '../../../src/assets/images/image-walk.png';
-import { useNavigate } from "react-router-dom";
-
+import { useNavigate } from 'react-router-dom';
 
 export default function InvestMain() {
   const navigate = useNavigate();
@@ -18,18 +17,14 @@ export default function InvestMain() {
     <div className="bank-app">
       {/* Header */}
       <div className="rectangle-9">
-      <span style={{fontSize:'25px'}}>
-          👻
-          </span>{' '}
-        <div className="profile">
-          김쏠밈
-        </div>
-       </div>
+        <span style={{ fontSize: '25px' }}>👻</span>{' '}
+        <div className="profile">김쏠밈</div>
+      </div>
 
       {/* Main Card */}
       <div className="rectangle-12">
-            <img className="image-card" src={card}/>
-            머니
+        <img className="image-card" src={card} />
+        머니
       </div>
       <div className="main-card2">
         <div className="account-info">
@@ -51,15 +46,17 @@ export default function InvestMain() {
       </div>
 
       {/* 모의투자 하러가기 */}
-      <button className="investment-card"
-      onClick={()=> {
-        navigate("/stock")
-        console.log("모의투자 하러가기!");
-      }}>
+      <button
+        className="investment-card"
+        onClick={() => {
+          navigate('/stock');
+          console.log('모의투자 하러가기!');
+        }}
+      >
         <h2>모의투자 하러 가기</h2>
-        <div>
-        <img className="image-bear" src={bear1} alt="bear Icon" />
-        <img className="image-up" src={up} alt="up Icon" />
+        <div style={{ display: 'flex', gap: '10px' }}>
+          <img className="image-bear" src={bear1} alt="bear Icon" />
+          <img className="image-up" src={up} alt="up Icon" />
         </div>
       </button>
 
@@ -74,7 +71,7 @@ export default function InvestMain() {
             gap: '8px',
           }}
         >
-          <p style={{ margin: 0 ,fontWeight: 'bold'}}>
+          <p style={{ margin: 0, fontWeight: 'bold' }}>
             챌린지하고
             <br />
             쏠잎 모으기
@@ -89,16 +86,17 @@ export default function InvestMain() {
           광고보고
           <br />
           쏠잎 모으기
-          <img src={ad}/>
+          <img src={ad} />
         </div>
         <div className="mini-card">
           쿠폰
           <br />
           사고 팔기
-          <img src={cou}/>
+          <img src={cou} />
         </div>
-        <div className="mini-card">만보기
-        <img src={walk}/>
+        <div className="mini-card">
+          만보기
+          <img src={walk} />
         </div>
         <div className="mini-card2">+</div>
       </div>

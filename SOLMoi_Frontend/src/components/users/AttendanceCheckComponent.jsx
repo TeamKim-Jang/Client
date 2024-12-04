@@ -15,14 +15,14 @@ export default function AttendanceCheck() {
   useEffect(() => {
     const fetchMonthlyAttendance = async () => {
       try {
-        const token = sessionStorage.getItem('accessToken');
-        const email = sessionStorage.getItem('email');
+        const token = sessionStorage.getItem("accessToken");
+        const email = sessionStorage.getItem("email");
 
         if (!token || !email) {
-          throw new Error('로그인 정보가 유효하지 않습니다. 로그인해주세요.');
+          throw new Error("로그인 정보가 유효하지 않습니다. 로그인해주세요.");
         }
 
-        const response = await axios.get('http://localhost:3001/api/attendance', {
+        const response = await axios.get("http://localhost:3001/api/attendance", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -31,7 +31,9 @@ export default function AttendanceCheck() {
         setMonthlyCount(response.data.monthlyAttendanceCount);
         setTodayCheckedIn(response.data.hasCheckInToday);
         setUserName(sessionStorage.getItem("user_name"));
-        if (response.data.hasCheckInToday) {
+
+        // Check if animation should show
+        if (response.data.hasCheckInToday && !localStorage.getItem("animationClosed")) {
           setSolAnimation(true);
         }
       } catch (error) {
@@ -60,6 +62,7 @@ export default function AttendanceCheck() {
         setTodayCheckedIn(true); // 오늘 출석 여부 갱신
         setMonthlyCount((prev) => prev + 1); // 이번 달 출석 횟수 증가
         setSolAnimation(true); // 솔 애니메이션 표시
+        localStorage.removeItem("animationClosed"); // 애니메이션 표시 상태 초기화
       }
     } catch (error) {
       console.error("Error checking in:", error.message);
@@ -71,9 +74,15 @@ export default function AttendanceCheck() {
     }
   };
 
+  const closeAnimation = () => {
+    setSolAnimation(false);
+    localStorage.setItem("animationClosed", "true");
+  };
+
   if (loading) {
     return <p>Loading...</p>;
   }
+
   return (
     <div className="attendance-check">
       {/* Main Content */}
@@ -124,7 +133,7 @@ export default function AttendanceCheck() {
           className="frame-9"
           key={Date.now()} // 매번 새로운 키로 DOM 강제 갱신
         >
-          <button className="close-buttons" onClick={() => setSolAnimation(false)}>
+          <button className="close-buttons" onClick={closeAnimation}>
             ×
           </button>
           <img className="solleaf" src={solleaf10} alt="Leaf Image 28" />

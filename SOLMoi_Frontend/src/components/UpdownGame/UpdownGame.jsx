@@ -128,50 +128,51 @@ export default function UpdownGame() {
   return (
     <div className="containerUpdown">
       <main className="main">
+        {yesterdayPrediction && yesterdayPrediction.is_correct !== null && (
+          <div className="popup">
+            <div className="popup-content">
+              <p>
+                {yesterdayPrediction.is_correct
+                  ? "포인트 획득!"
+                  : "포인트 획득 실패"}
+              </p>
+              <button onClick={() => setYesterdayPrediction(null)}>닫기</button>
+            </div>
+          </div>
+        )}
         <div className="card">
           <div className="card-content">
-            <div className="back-button-container" onClick={goBack}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="back-arrow"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M15.5 19.5L8.5 12l7-7.5"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+            <div className="stock-info">
+              <div className="back-button-container" onClick={goBack}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="back-arrow"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M15.5 19.5L8.5 12l7-7.5"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </div>
+
+              {selectedStock && (
+                <div className="stock-info">
+                  <div className="stock-logo">
+                    {selectedStock.name.toString().charAt(0)}
+                  </div>
+                  <h3 className="stock-name">{selectedStock.name}</h3>
+                  <h2 className="game-title">내일 오를까? 내릴까?</h2>
+                  <div className="game-info">
+                    맞히면 10쏠 지급<br></br>(전일 대비 09시 기준)
+                  </div>
+                </div>
+              )}
             </div>
-            {yesterdayPrediction && yesterdayPrediction.is_correct !== null && (
-              <div className="popup">
-                <div className="popup-content">
-                  <p>
-                    {yesterdayPrediction.is_correct
-                      ? "포인트 획득!"
-                      : "포인트 획득 실패"}
-                  </p>
-                  <button onClick={() => setYesterdayPrediction(null)}>
-                    닫기
-                  </button>
-                </div>
-              </div>
-            )}
-
-            <h2 className="game-title"></h2>
-
-            {selectedStock && (
-              <div className="stock-info">
-                <div className="stock-logo">
-                  {selectedStock.name.toString().charAt(0)}
-                </div>
-                <h3 className="stock-name">{selectedStock.name}</h3>
-              </div>
-            )}
-
             <div className="buttons-wrapper">
               <div className="button-container">
                 <button

@@ -1,16 +1,16 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './MockInvestMain.css';
-import game from '../../assets/images/game.png'
+import React, { useState, useEffect, useCallback, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import "./MockInvestMain.css";
+import game from "../../assets/images/game.png";
 
 const formatNumber = (num) => {
-  return new Intl.NumberFormat('ko-KR').format(num || 0);
+  return new Intl.NumberFormat("ko-KR").format(num || 0);
 };
 
 const formatPercent = (num) => {
-  return new Intl.NumberFormat('ko-KR', {
+  return new Intl.NumberFormat("ko-KR", {
     minimumFractionDigits: 1,
     maximumFractionDigits: 1,
   }).format(num || 0);
@@ -23,11 +23,11 @@ export default function MockInvestMain() {
   const [isLoading, setIsLoading] = useState(true);
   const [isUpdating, setIsUpdating] = useState(false);
   const timeoutRef = useRef(null);
-  const userId = sessionStorage.getItem('user_id');
+  const userId = sessionStorage.getItem("user_id");
 
   const fetchData = useCallback(async () => {
     if (!userId) {
-      console.error('User ID not found in sessionStorage');
+      console.error("User ID not found in sessionStorage");
       return;
     }
 
@@ -41,7 +41,7 @@ export default function MockInvestMain() {
       setBalanceData(balanceData.data[0] || {});
       setStockData(stockData.data || []);
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
     } finally {
       setIsLoading(false);
     }
@@ -76,13 +76,13 @@ export default function MockInvestMain() {
       {/* Header */}
 
       {/* Main Balance */}
-      <div className={`balanceSection ${isUpdating ? 'updating' : ''}`}>
+      <div className={`balanceSection ${isUpdating ? "updating" : ""}`}>
         <div className="balanceContainer">
           <div>
             <div className="totalBalance">{formatNumber(totalBalance)}원</div>
             <div
               className={`profitLoss ${
-                totalProfitLoss < 0 ? 'negative' : 'positive'
+                totalProfitLoss < 0 ? "negative" : "positive"
               }`}
             >
               {formatNumber(totalProfitLoss)}원 (
@@ -110,7 +110,7 @@ export default function MockInvestMain() {
             stockData.map((stock) => (
               <div
                 key={stock.portfoliostock_id}
-                className={`stockItem ${isUpdating ? 'updating' : ''}`}
+                className={`stockItem ${isUpdating ? "updating" : ""}`}
               >
                 <div className="stockInfo">
                   <div className="logoContainer">
@@ -128,11 +128,11 @@ export default function MockInvestMain() {
                   <div
                     className={
                       stock.price_change >= 0
-                        ? 'priceChangePositive'
-                        : 'priceChangeNegative'
+                        ? "priceChangePositive"
+                        : "priceChangeNegative"
                     }
                   >
-                    {stock.price_change >= 0 ? '+' : ''}
+                    {stock.price_change >= 0 ? "+" : ""}
                     {formatNumber(stock.price_change)}원 (
                     {formatPercent(
                       (stock.price_change /
@@ -154,10 +154,9 @@ export default function MockInvestMain() {
           <div className="navItem activeNavItem"></div>
           <div
             className="navItem"
-            onClick={() => navigate('/updowngame')}
+            onClick={() => navigate("/updowngame")}
           ></div>
-          <div className="navItem"
-          onClick={() => navigate('/solleafcontent')}>
+          <div className="navItem" onClick={() => navigate("/solleafcontent")}>
             <img src={game} alt="game" className="navImage" />
           </div>
         </div>

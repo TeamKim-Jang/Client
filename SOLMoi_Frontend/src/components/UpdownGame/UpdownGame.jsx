@@ -84,16 +84,13 @@ export default function UpdownGame() {
         name: selectedStock.name,
       };
 
-      const response = await fetch(
-        "http://localhost:3001/api/prediction/predict",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(tmpdata),
-        }
-      );
+      const response = await fetch("/api/prediction/predict", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(tmpdata),
+      });
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -169,16 +166,11 @@ export default function UpdownGame() {
             {selectedStock && (
               <div className="stock-info">
                 <div className="stock-logo">
-                  {selectedStock.symbol.toString().charAt(0)}
+                  {selectedStock.name.toString().charAt(0)}
                 </div>
                 <h3 className="stock-name">{selectedStock.name}</h3>
               </div>
             )}
-
-            <div className="prediction-section">
-              <h4 className="stock-name-question">{selectedStock?.name}</h4>
-              <p className="question">내일 오를까? 내릴까?</p>
-            </div>
 
             <div className="buttons-wrapper">
               <div className="button-container">

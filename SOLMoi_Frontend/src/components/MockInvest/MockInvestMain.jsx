@@ -32,8 +32,8 @@ export default function MockInvestMain() {
 
     try {
       const [balanceResponse, stockResponse] = await Promise.all([
-        fetch(`http://localhost:3001/api/portfolio/${userId}`),
-        fetch(`http://localhost:3001/api/portfoliostock/${userId}`),
+        fetch(`/api/portfolio/${userId}`),
+        fetch(`/api/portfoliostock/${userId}`),
       ]);
       const balanceData = await balanceResponse.json();
       const stockData = await stockResponse.json();

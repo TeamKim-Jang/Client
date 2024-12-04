@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSchool } from "../../contexts/schoolContext";
 import ListGroup from "react-bootstrap/ListGroup";
-import '../../styles/User.css';
+import "../../styles/User.css";
 let debounceTimer;
 
 const SchoolComponent = () => {
@@ -21,12 +21,15 @@ const SchoolComponent = () => {
       return;
     }
     try {
-      const response = await axios.get(`http://localhost:3001/api/schools`, {
+      const response = await axios.get(`/api/schools`, {
         params: { query: term },
       });
       setSchoolResults(response.data.schools);
     } catch (error) {
-      console.error("Error searching schools:", error.response || error.message);
+      console.error(
+        "Error searching schools:",
+        error.response || error.message
+      );
     }
   };
 
@@ -60,7 +63,9 @@ const SchoolComponent = () => {
       <div className="school-page">
         <header className="header">
           <h1>회원가입 - 학교 선택</h1>
-          <button className="close-button" onClick={() => navigate("/")}>×</button>
+          <button className="close-button" onClick={() => navigate("/")}>
+            ×
+          </button>
         </header>
         <form className="user-form">
           <div className="form-group">
@@ -88,19 +93,19 @@ const SchoolComponent = () => {
               ))}
             </ListGroup>
           )}
-            <label>
-              <input
-                type="checkbox"
-                checked={isNoSchool}
-                onChange={(e) => {
-                  setIsNoSchool(e.target.checked);
-                  setSelectedSchool("");
-                  setSearchTerm("");
-                  setSchoolResults([]);
-                }}
-              />
-            </label>
-            소속 학교 없음
+          <label>
+            <input
+              type="checkbox"
+              checked={isNoSchool}
+              onChange={(e) => {
+                setIsNoSchool(e.target.checked);
+                setSelectedSchool("");
+                setSearchTerm("");
+                setSchoolResults([]);
+              }}
+            />
+          </label>
+          소속 학교 없음
           <button
             className="user-button"
             onClick={handleNext}

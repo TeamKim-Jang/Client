@@ -36,7 +36,7 @@ export default function NavbarComponent() {
                         {!onLogin ? (
                             <Nav className="justify-content-end flex-grow-1 pe-3">
                                 <Nav.Link href="/auth/login">로그인</Nav.Link>
-                                <Nav.Link href="/auth/register">회원가입</Nav.Link>
+                                <Nav.Link href="/auth/school">회원가입</Nav.Link>
                             </Nav>
                         ) : (
                             <Nav className="justify-content-end flex-grow-1 pe-3">

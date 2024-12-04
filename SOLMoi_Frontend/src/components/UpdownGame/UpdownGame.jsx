@@ -141,115 +141,110 @@ export default function UpdownGame() {
             </div>
           </div>
         )}
-        <main className="main">
-          <div className="card">
-            <div className="card-content">
-              <div className="back-button-container" onClick={goBack}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="back-arrow"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    d="M15.5 19.5L8.5 12l7-7.5"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </div>
-              {yesterdayPrediction &&
-                yesterdayPrediction.is_correct !== null && (
-                  <div className="popup">
-                    <div className="popup-content">
-                      <p>
-                        {yesterdayPrediction.is_correct
-                          ? "포인트 획득!"
-                          : "포인트 획득 실패"}
-                      </p>
-                      <button onClick={() => setYesterdayPrediction(null)}>
-                        닫기
-                      </button>
-                    </div>
-                  </div>
-                )}
 
-              <h2 className="game-title">주가예측게임</h2>
-
-              {selectedStock && (
-                <div className="stock-info">
-                  <div className="stock-logo">
-                    {selectedStock.symbol.toString().charAt(0)}
-                  </div>
-                  <h3 className="stock-name">{selectedStock.name}</h3>
-                </div>
-              )}
-
-              <div className="prediction-section">
-                <h4 className="stock-name-question">{selectedStock?.name}</h4>
-                <p className="question">내일 오를까? 내릴까?</p>
-              </div>
-
-              <div className="buttons-wrapper">
-                <div className="button-container">
-                  <button
-                    onClick={() => makePrediction("UP")}
-                    disabled={isLoading || !selectedStock || todayPrediction}
-                    className={`button up-button ${
-                      todayPrediction?.prediction_upordown === "UP"
-                        ? "selected"
-                        : ""
-                    }`}
-                  >
-                    <span className="arrow-icon">↗</span>
-                    <span className="button-text">오른다</span>
-                  </button>
-                </div>
-                <div className="button-container">
-                  <button
-                    onClick={() => makePrediction("DOWN")}
-                    disabled={isLoading || !selectedStock || todayPrediction}
-                    className={`button down-button ${
-                      todayPrediction?.prediction_upordown === "DOWN"
-                        ? "selected"
-                        : ""
-                    }`}
-                  >
-                    <span className="arrow-icon">↘</span>
-                    <span className="button-text">내린다</span>
+        <div className="card">
+          <div className="card-content">
+            <div className="back-button-container" onClick={goBack}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="back-arrow"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M15.5 19.5L8.5 12l7-7.5"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </div>
+            {yesterdayPrediction && yesterdayPrediction.is_correct !== null && (
+              <div className="popup">
+                <div className="popup-content">
+                  <p>
+                    {yesterdayPrediction.is_correct
+                      ? "포인트 획득!"
+                      : "포인트 획득 실패"}
+                  </p>
+                  <button onClick={() => setYesterdayPrediction(null)}>
+                    닫기
                   </button>
                 </div>
               </div>
+            )}
 
-              {apiResponse && (
-                <p
-                  className={`message ${
-                    apiResponse.status === "success"
-                      ? "success-message"
-                      : "error-message"
+            <h2 className="game-title">주가예측게임</h2>
+
+            {selectedStock && (
+              <div className="stock-info">
+                <div className="stock-logo">
+                  {selectedStock.symbol.toString().charAt(0)}
+                </div>
+                <h3 className="stock-name">{selectedStock.name}</h3>
+              </div>
+            )}
+
+            <div className="prediction-section">
+              <h4 className="stock-name-question">{selectedStock?.name}</h4>
+              <p className="question">내일 오를까? 내릴까?</p>
+            </div>
+
+            <div className="buttons-wrapper">
+              <div className="button-container">
+                <button
+                  onClick={() => makePrediction("UP")}
+                  disabled={isLoading || !selectedStock || todayPrediction}
+                  className={`button up-button ${
+                    todayPrediction?.prediction_upordown === "UP"
+                      ? "selected"
+                      : ""
                   }`}
                 >
-                  {apiResponse.message}
-                </p>
-              )}
+                  <span className="arrow-icon">↗</span>
+                  <span className="button-text">오른다</span>
+                </button>
+              </div>
+              <div className="button-container">
+                <button
+                  onClick={() => makePrediction("DOWN")}
+                  disabled={isLoading || !selectedStock || todayPrediction}
+                  className={`button down-button ${
+                    todayPrediction?.prediction_upordown === "DOWN"
+                      ? "selected"
+                      : ""
+                  }`}
+                >
+                  <span className="arrow-icon">↘</span>
+                  <span className="button-text">내린다</span>
+                </button>
+              </div>
             </div>
+
+            {apiResponse && (
+              <p
+                className={`message ${
+                  apiResponse.status === "success"
+                    ? "success-message"
+                    : "error-message"
+                }`}
+              >
+                {apiResponse.message}
+              </p>
+            )}
           </div>
-        </main>
-        <footer className="bottomNav">
-          <div className="navItems">
-            <div className="navItem" onClick={() => navigate("/stock")}></div>
-            <div className="navItem activeNavItem"></div>
-            <div
-              className="navItem"
-              onClick={() => navigate("/solleafcontent")}
-            >
-              <img src={game} alt="game" className="navImage" />
-            </div>
-          </div>
-        </footer>
+        </div>
       </div>
+      <footer className="bottomNav">
+        <div className="navItems">
+          <div className="navItem" onClick={() => navigate("/stock")}></div>
+          <div className="navItem activeNavItem"></div>
+          <div className="navItem" onClick={() => navigate("/solleafcontent")}>
+            <img src={game} alt="game" className="navImage" />
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

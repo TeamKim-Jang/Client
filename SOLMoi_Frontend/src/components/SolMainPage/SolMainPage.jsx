@@ -1,24 +1,44 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import './SolMainPage.css';
-import bear from '../../../src/assets/images/imageBear.png';
 import bear1 from '../../../src/assets/images/imageBear1.png';
 import up from '../../../src/assets/images/imageUp.png';
 import card from '../../../src/assets/images/image1.png';
 import leafL from '../../../src/assets/images/image-leafL.png';
 import leafR from '../../../src/assets/images/image-leafR.png';
-import ad from '../../../src/assets/images/image-ad.png';
 import cou from '../../../src/assets/images/image-cou.png';
 import walk from '../../../src/assets/images/image-walk.png';
 import { useNavigate } from 'react-router-dom';
 
 export default function InvestMain() {
   const navigate = useNavigate();
+  const [totalSolLeaf, setTotalSolLeaf] = useState(0); // 쏠잎 포인트 상태
+  const userId = sessionStorage.getItem('user_id'); // 사용자 ID를 가져옴
+  const userName = sessionStorage.getItem('user_name'); // 사용자 ID를 가져옴
+
+  // 쏠잎 포인트를 DB에서 가져오는 함수
+  const fetchTotalSolLeaf = async () => {
+    try {
+      const response = await axios.get(`/api/user/${userId}/total_sol_leaf`);
+      setTotalSolLeaf(response.data.total_sol_leaf); // 상태 업데이트
+    } catch (error) {
+      console.error('❌ 쏠잎 포인트 가져오기 실패:', error.message);
+    }
+  };
+
+  // 컴포넌트가 마운트될 때 데이터 가져오기
+  useEffect(() => {
+    if (userId) {
+      fetchTotalSolLeaf();
+    }
+  }, [userId]);
+
   return (
     <div className="bank-app">
       {/* Header */}
       <div className="rectangle-9">
         <span style={{ fontSize: '25px' }}>👻</span>{' '}
-        <div className="profile">김쏠밈</div>
+        <div className="profile">{userName}</div>
       </div>
 
       {/* Main Card */}
@@ -79,15 +99,10 @@ export default function InvestMain() {
           <div className="rectangle-333" style={{ justifyContent: 'center' }}>
             <img className="image-leafR" src={leafR} />
             <img className="image-leafL" src={leafL} />
-            3,333P
+            {totalSolLeaf}P {/* 실시간 쏠잎 포인트 표시 */}
           </div>
         </div>
-        <div className="mini-card">
-          광고보고
-          <br />
-          쏠잎 모으기
-          <img src={ad} />
-        </div>
+
         <div className="mini-card">
           쿠폰
           <br />

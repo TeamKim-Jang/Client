@@ -25,7 +25,7 @@ const Solleafcontent = ({ className, ...props }) => {
           {/* 주가 예측 게임 카드 */}
           <button
             className="sol-card"
-            onClick={() => navigate('/predicton/predict')}
+            onClick={() => navigate('/updowngame')}
           >
             <div className="sol-card-icon">📈</div>
             <div className="sol-card-title">오를까? 내릴까?</div>
@@ -40,14 +40,14 @@ const Solleafcontent = ({ className, ...props }) => {
           </button>
 
           {/* 순위표 카드 */}
-          <button className="sol-card" onClick={() => navigate('/rankings')}>
+          <button className="sol-card" onClick={() => navigate('/ranking/overall')}>
             <div className="sol-card-icon">🏆</div>
             <div className="sol-card-title">순위표 보러가기</div>
             <div className="sol-card-subtitle">내 성적</div>
           </button>
 
           {/* 랜덤뽑기 */}
-          <button className="sol-card" onClick={() => navigate('/rankings')}>
+          <button className="sol-card" onClick={() => navigate('/random')}>
             <div className="sol-card-icon">
               <img src={random} alt="random" className="random-img" />
             </div>

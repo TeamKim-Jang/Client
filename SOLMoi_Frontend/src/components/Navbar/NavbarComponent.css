@@ -1,0 +1,81 @@
+/* Navbar 배경색 */
+.custom-navbar {
+  background-color: #E5F0FC;
+  border-bottom: 0.7px solid #2D59F7;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-family: 'Arial', sans-serif;
+}
+
+/* Logo 스타일 */
+.navbar-logo {
+  width: 40px;
+  height: auto;
+}
+
+/* Nav 링크 스타일 */
+.custom-nav-link {
+  color: #2D59F7;
+  font-weight: bold;
+  margin-right: 15px;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+/* Nav 링크 Hover 효과 */
+.custom-nav-link:hover {
+  color: #FF6B6B;
+  transform: scale(1.1);
+}
+
+/* Offcanvas 스타일 */
+.offcanvas {
+  background-color: #E5F0FC;
+  color: #333333;
+}
+
+/* Offcanvas 제목 */
+.offcanvas-title {
+  font-weight: bold;
+  color: #2D59F7;
+}
+
+/* Navbar Brand 스타일 */
+.navbar-brand {
+  font-size: 1.5rem;
+  color: #2D59F7;
+  font-weight: bold;
+}
+
+/* Toggle 버튼 스타일 */
+.navbar-toggler {
+  /* border-color: #2D59F7; */
+  /* background-color: #2D59F7; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Toggle 버튼 아이콘 */
+.navbar-toggler-icon {
+  background-image: none; /* Bootstrap 기본 햄버거 메뉴 아이콘 제거 */
+  background-color: transparent; /* 기본 배경 제거 */
+  position: relative;
+  /* width: 20px; */
+  /* height: 20px; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 🔒 아이콘 추가 */
+.navbar-toggler-icon::before {
+  content: "🔒"; /* 잠금 아이콘 */
+  font-size: 30px;
+  color: #ffffff; /* 흰색 */
+}
+
+/* 호버 효과 */
+.navbar-toggler:hover .navbar-toggler-icon::before {
+  transform: scale(1.2); /* 확대 */
+  color: #FF6B6B; /* 강조 색상 */
+  transition: transform 0.3s ease, color 0.3s ease;
+}

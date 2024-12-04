@@ -94,8 +94,7 @@ export default function AttendanceCheck() {
         </div>
 
         <p className="description">
-          매일매일 출석만 해도 포인트가 쏠쏠!<br />
-          출석할수록 커지는 혜택을 확인해보세요
+          매일매일 출석만 해도 포인트가 쏠쏠!
         </p>
 
         <div className="progress-circle">

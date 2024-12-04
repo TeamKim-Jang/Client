@@ -8,6 +8,8 @@ import leafL from '../../../src/assets/images/image-leafL.png';
 import leafR from '../../../src/assets/images/image-leafR.png';
 import cou from '../../../src/assets/images/image-cou.png';
 import walk from '../../../src/assets/images/image-walk.png';
+import random from "../../../src/assets/images/random.png";
+
 import { useNavigate } from 'react-router-dom';
 
 export default function InvestMain() {
@@ -38,11 +40,11 @@ export default function InvestMain() {
       {/* Header */}
       <div className="rectangle-9">
         <span style={{ fontSize: '25px' }}>👻</span>{' '}
-        <div className="profile">{userName}</div>
+        <div className="profile"style={{fontFamily: 'Paperlogy-4Regular, sans-serif'}}>{userName}</div>
       </div>
 
       {/* Main Card */}
-      <div className="rectangle-12">
+      <div className="rectangle-12" style={{fontFamily: 'Paperlogy-4Regular, sans-serif'}}>
         <img className="image-card" src={card} />
         머니
       </div>
@@ -57,10 +59,6 @@ export default function InvestMain() {
           </p>
           <h2 style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             333,333원
-            <div style={{ display: 'flex', gap: '30px' }}>
-              <div className="rectangle-18"></div>
-              <div className="div9">보내기 </div>
-            </div>
           </h2>
         </div>
       </div>
@@ -73,7 +71,7 @@ export default function InvestMain() {
           console.log('모의투자 하러가기!');
         }}
       >
-        <h2>모의투자 하러 가기</h2>
+        <h4 style={{fontFamily: 'BMJUA, sans-serif'}}>모의투자 하러 가기</h4>
         <div style={{ display: 'flex', gap: '10px' }}>
           <img className="image-bear" src={bear1} alt="bear Icon" />
           <img className="image-up" src={up} alt="up Icon" />
@@ -91,10 +89,8 @@ export default function InvestMain() {
             gap: '8px',
           }}
         >
-          <p style={{ margin: 0, fontWeight: 'bold' }}>
-            챌린지하고
-            <br />
-            쏠잎 모으기
+          <p style={{ margin: 0, fontWeight: 'bold',padding:'15px' }}>
+            🌱 현재 쏠잎 🌱
           </p>
           <div className="rectangle-333" style={{ justifyContent: 'center' }}>
             <img className="image-leafR" src={leafR} />
@@ -103,17 +99,28 @@ export default function InvestMain() {
           </div>
         </div>
 
-        <div className="mini-card">
-          쿠폰
+        <button className="mini-card" style={{fontFamily: 'Paperlogy-6SemiBold, sans-serif'}} onClick={() => navigate("/random")}>
+          쏠쏠 뽑기
           <br />
-          사고 팔기
-          <img src={cou} />
-        </div>
-        <div className="mini-card">
-          만보기
-          <img src={walk} />
-        </div>
-        <div className="mini-card2">+</div>
+          <img src={random} className="random-img2"/>
+        </button>
+        
+        <button className="mini-card2" disabled>
+        <div style={{fontFamily: 'Paperlogy-6SemiBold, sans-serif'}} >준비중</div>
+            <div className="sol-card-icon">
+              {/* 로딩 애니메이션 추가 */}
+              <div className="loading-spinner">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </div>
+          </button>
       </div>
 
       {/* Footer */}
@@ -130,7 +137,7 @@ export default function InvestMain() {
           <div class="center-line"></div>
         </div>
 
-        <div className="payment">신한 쏠모이 결제</div>
+        <div className="payment" style={{fontFamily: 'Paperlogy-6SemiBold, sans-serif'}}>신한 쏠모이 결제</div>
       </div>
     </div>
   );

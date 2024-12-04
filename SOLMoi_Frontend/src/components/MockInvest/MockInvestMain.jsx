@@ -48,7 +48,12 @@ export default function MockInvestMain() {
       setIsLoading(false);
     }
   }, [userId]);
-
+  const handleStockClick = (stockId, stockName) => {
+    const paddedStockId = stockId.toString().padStart(6, "0");
+    sessionStorage.setItem("selectedStockId", paddedStockId); // stock_id 저장
+    sessionStorage.setItem("selectedStockName", stockName); // 6자리로 변환
+    navigate(`/stock/${paddedStockId}`);
+  };
   useEffect(() => {
     fetchData();
 
@@ -111,8 +116,9 @@ export default function MockInvestMain() {
           {stockData.length > 0 ? (
             stockData.map((stock) => (
               <div
-                key={stock.portfoliostock_id}
+                key={stock.stock_id}
                 className={`stockItem ${isUpdating ? "updating" : ""}`}
+                onClick={() => handleStockClick(stock.stock_id, stock.name)} // 클릭 이벤트 연결
               >
                 <div className="stockInfo">
                   <div className="logoContainer">
@@ -154,12 +160,9 @@ export default function MockInvestMain() {
       <footer className="bottomNav">
         <div className="navItems">
           <div className="navItem activeNavItem">
-          <img src={home} alt="home" className="navImagehome" />
+            <img src={home} alt="home" className="navImagehome" />
           </div>
-          <div
-            className="navItem"
-            onClick={() => navigate("/investsearch")}
-          >
+          <div className="navItem" onClick={() => navigate("/investsearch")}>
             <img src={stock} alt="stock" className="navImage" />
           </div>
           <div className="navItem" onClick={() => navigate("/solleafcontent")}>

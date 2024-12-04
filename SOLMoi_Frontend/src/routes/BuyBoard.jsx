@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import apiClient from "../utils/apiClient";
 
-
 const BuyBoard = () => {
   const { stockCode } = useParams();
   const navigate = useNavigate();
@@ -23,6 +22,8 @@ const BuyBoard = () => {
     setQuantity((prev) => prev.slice(0, -1));
   };
 
+  const selectedStockName =
+    sessionStorage.getItem("selectedStockName") || "주식 이름 없음";
 
   const handleSubmit = async () => {
     if (!quantity || parseFloat(quantity) <= 0) {
@@ -43,26 +44,44 @@ const BuyBoard = () => {
       setSuccess(true);
       console.log("매수 성공:", response.data);
     } catch (err) {
-      setError(err.response?.data?.message || "매수 요청 중 오류가 발생했습니다.");
+      setError(
+        err.response?.data?.message || "매수 요청 중 오류가 발생했습니다."
+      );
       console.error("매수 실패:", err);
     } finally {
       setLoading(false);
     }
   };
 
-
   return (
-    <div style={{ padding: "20px", textAlign: "center", fontFamily: "Arial, sans-serif" }}>
-      <div style={{ textAlign: "left", marginBottom: "20px", fontSize: "16px" }}>
+    <div
+      style={{
+        padding: "20px",
+        textAlign: "center",
+        fontFamily: "Arial, sans-serif",
+      }}
+    >
+      <div
+        style={{ textAlign: "left", marginBottom: "20px", fontSize: "16px" }}
+      >
         <a
           onClick={() => navigate(`/stock/${stockCode}`)}
-          style={{ textDecoration: "none", color: "#007AFF", cursor: "pointer" }}
+          style={{
+            textDecoration: "none",
+            color: "#007AFF",
+            cursor: "pointer",
+          }}
         >
           ←
         </a>
       </div>
-      <h1 style={{ fontSize: "20px", margin: "10px 0" }}>삼성전자 {stockCode}</h1>
-      <p style={{ fontSize: "16px", color: "#777", marginBottom: "20px" }}>몇 주 사시겠어요?</p>
+      <h1 style={{ fontSize: "20px", margin: "10px 0" }}>
+        {selectedStockName}
+      </h1>
+      <h1 style={{ fontSize: "20px", margin: "10px 0" }}>{stockCode}</h1>
+      <p style={{ fontSize: "16px", color: "#777", marginBottom: "20px" }}>
+        몇 주 사시겠어요?
+      </p>
       <div
         style={{
           fontSize: "32px",
@@ -77,7 +96,15 @@ const BuyBoard = () => {
           alignItems: "center",
         }}
       >
-        <span style={{ flex: 1, textAlign: "right", paddingRight: "5px", overflow: "hidden", whiteSpace: "nowrap" }}>
+        <span
+          style={{
+            flex: 1,
+            textAlign: "right",
+            paddingRight: "5px",
+            overflow: "hidden",
+            whiteSpace: "nowrap",
+          }}
+        >
           {quantity || "0"}
         </span>
         <span style={{ flexShrink: 0 }}>주</span>
@@ -153,7 +180,9 @@ const BuyBoard = () => {
         </button>
       </div>
       {error && <p style={{ color: "red", marginBottom: "20px" }}>{error}</p>}
-      {success && <p style={{ color: "green", marginBottom: "20px" }}>매수 성공!</p>}
+      {success && (
+        <p style={{ color: "green", marginBottom: "20px" }}>매수 성공!</p>
+      )}
       <button
         style={{
           padding: "15px 30px",

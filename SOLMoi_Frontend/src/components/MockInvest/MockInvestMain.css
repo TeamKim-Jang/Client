@@ -228,7 +228,14 @@
   position: relative;
   transform: translate(-31px, -20%); /* 중앙 정렬 */
 }
-
+.navImagehome {
+  width: 300%; /* 부모 컨테이너의 150% 크기 */
+  height: 200%;
+  object-fit: cover;
+  border-radius: 50%;
+  position: relative;
+  transform: translate(-39px, -20%); /* 중앙 정렬 */
+}
 
 .navItem:hover {
   background-color: var(--secondary-color);

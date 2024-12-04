@@ -4,6 +4,8 @@ import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "./InvestSearch.css";
 import game from "../../assets/images/game.png";
+import stock from "../../assets/images/stock.png";
+import home from "../../assets/images/home.png";
 
 const formatNumber = (num) => {
   return new Intl.NumberFormat("ko-KR").format(num || 0);
@@ -155,8 +157,12 @@ export default function InvestSearch() {
       </div>
       <footer className="bottomNav">
         <div className="navItems">
-          <div className="navItem" onClick={() => navigate("/stock")}></div>
-          <div className="navItem activeNavItem"></div>
+          <div className="navItem" onClick={() => navigate("/stock")}>
+          <img src={home} alt="home" className="navImagehome" />
+          </div>
+          <div className="navItem activeNavItem">
+          <img src={stock} alt="stock" className="navImage" />
+          </div>
           <div className="navItem" onClick={() => navigate("/solleafcontent")}>
             <img src={game} alt="game" className="navImage" />
           </div>

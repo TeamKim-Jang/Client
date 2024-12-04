@@ -15,7 +15,17 @@ const RankingList = ({ rankings }) => {
           <div className="ranking-info">
             <span className="ranking-name">{rank.User?.nickname || '익명'}</span>
             <br />
-            <span className="ranking-profit">+{rank.total_profit_loss.toLocaleString()}원</span>
+            <span
+              className="ranking-profit"
+              style={{
+                color: rank.total_profit_loss >= 0 ? 'red' : 'blue',
+                fontWeight: 'bold',
+              }}
+            >
+              {rank.total_profit_loss >= 0
+                ? `+${rank.total_profit_loss.toLocaleString()}원`
+                : `${rank.total_profit_loss.toLocaleString()}원`}
+            </span>
           </div>
           <TierIcon tier={rank.tier} />
         </div>

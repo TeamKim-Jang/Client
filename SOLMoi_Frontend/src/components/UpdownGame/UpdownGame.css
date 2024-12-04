@@ -12,7 +12,7 @@
   flex-direction: column;
   background-color: var(--background-color);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-  
+  padding-top: 6vh; /* 화면 높이의 10%만큼 상단 여백 추가 */
   margin: 0 auto;
 }
 
@@ -42,7 +42,7 @@
   flex-direction: column;
   background-color: var(--card-background);
   padding: 24px;
-  height: 83vh;
+  max-height: 83vh;
 }
 
 .card-content {
@@ -196,7 +196,7 @@
 
 .bottomNav {
   padding: 16px;
-  background-color: var(--background-color);
+  background-color: #E5F0FC;
   border-top: 1px solid #eee;
 }
 

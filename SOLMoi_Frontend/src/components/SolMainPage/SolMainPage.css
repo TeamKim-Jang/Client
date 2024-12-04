@@ -4,7 +4,7 @@
   padding: 15px; 
   margin: 0; /* 마진 제거 */
   width: 100vw; /* 전체 화면 너비 */
-  height: auto; /* 전체 화면 높이 */
+  min-height: 100vh; /* 전체 화면 높이 */
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
@@ -86,10 +86,16 @@
 .rectangle-18 {
   background: #e5f0fc;
   border-radius: 10px;
-  width: 101px;
+  width: 101px; /* 필요에 따라 더 넓게 설정 */
   height: 45px;
-  transform: translateX(30px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center; /* 텍스트 중앙 정렬 */
+  white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+  padding: 5px; /* 텍스트와 박스 간격 조정 */
 }
+
 .rectangle-333 {
   background: #e8f6ff;
   border-radius: 60px;
@@ -102,9 +108,8 @@
   font-family: 'Inter-SemiBold', sans-serif;
   font-size: 20px;
   font-weight: 600;
-  left: 312px;
-  top: 224px;
-  transform: translateX(-75px) translateY(11px);
+  white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+  transform: translateX(-107px) translateY(11px);
 }
 .image-card {
   width: 30px; /* 너비를 고정 */
@@ -193,7 +198,7 @@
   gap: 10px; /* 카드 간격 유지 */
   width: 100%; /* 부모의 너비에 맞춤 */
   box-sizing: border-box; /* 패딩 포함 크기 계산 */
-  margin-top: 20px; /* 상단 간격 추가 */
+  margin-top: 10px; /* 상단 간격 추가 */
 }
 
 .challenge-card {
@@ -207,19 +212,40 @@
 }
 
 .mini-card {
-  background: white;
-  border-radius: 10px;
-  box-shadow: 3px 3px 1px rgba(0, 0, 0, 0.1);
+  all: unset; /* 브라우저 기본 스타일 초기화 */
   display: flex;
   flex-direction: column;
   justify-content: center; /* 세로 중앙 정렬 */
   align-items: center; /* 가로 중앙 정렬 */
   text-align: center;
   margin: 10px;
-  padding: 20px; /* 카드 내부 여백 */
   box-sizing: border-box; /* 패딩 포함 크기 계산 */
-  height: auto; /* 고정된 높이 */
+  height: 130px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 3px 3px 1px rgba(0, 0, 0, 0.1);
+  cursor: pointer; /* 버튼처럼 보이도록 커서 변경 */
+  transition: all 0.3s ease; /* 부드러운 효과 */
 }
+
+/* Hover 효과 */
+.mini-card:hover {
+  background-color: #f0f4ff; /* 살짝 강조된 배경색 */
+  transform: translateY(-2px); /* 살짝 올라가는 효과 */
+}
+
+/* Active 상태 */
+.mini-card:active {
+  background-color: #e0e4ff; /* 더 강조된 배경색 */
+  transform: translateY(0); /* 눌리는 효과 */
+}
+
+/* 이미지 스타일 */
+.random-img2 {
+  width: 42px;
+  height: auto;
+}
+
 
 .mini-card2 {
   background: #a9a7a7c3;
@@ -231,10 +257,14 @@
   align-items: center; /* 가로 중앙 정렬 */
   text-align: center;
   margin: 10px;
-  padding: 20px; /* 카드 내부 여백 */
   box-sizing: border-box; /* 패딩 포함 크기 계산 */
-  padding: 50px;
-  height: auto; /* 고정된 높이 */
+  height: 130px;
+}
+
+.mini-card2 div {
+  white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+  font-size: 16px; /* 텍스트 크기 */
+  line-height: 2; /* 줄 간격 조정 */
 }
 
 .footer-main {

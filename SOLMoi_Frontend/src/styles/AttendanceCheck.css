@@ -3,10 +3,13 @@
 .attendance-check {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  background-color: #f8fafc;
+  justify-content: flex-start; /* 상단에서부터 배치 시작 */
+  min-height: 100vh; /* 화면 높이를 기준으로 정렬 */
+  padding-top: 10vh; /* 화면 높이의 10%만큼 상단 여백 추가 */
+  background-color: #E5F0FC;
   font-family: Arial, sans-serif;
 }
+
 
 
 .time {

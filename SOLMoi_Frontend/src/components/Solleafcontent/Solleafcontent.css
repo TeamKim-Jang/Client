@@ -1,23 +1,24 @@
 /* 전체 컨테이너 */
 .solleaf-container {
-  background: #f8fafd;
+  background: #e5f0fc;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20px;
-  min-height: 100vh;
+  height: auto; /* 높이를 100vh로 변경 */
 }
 
 /* 헤더 제목 */
-.header-title {
-  font-size: 24px;
+.sol-header-title {
+  font-family: 'BMJUA';
+  font-size: 30px;
   font-weight: bold;
   color: #214ebf;
-  margin-bottom: 20px;
+  transform: translateY(-170px);
 }
 
 /* 카드 그리드 레이아웃 */
-.cards-grid {
+.sol-cards-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 20px;
@@ -26,7 +27,7 @@
 }
 
 /* 카드 스타일 (버튼) */
-.card {
+.sol-card {
   background: #ffffff;
   border: 1px solid #214ebf;
   border-radius: 20px;
@@ -45,25 +46,25 @@
 }
 
 /* hover 효과 */
-.card:hover {
+.sol-card:hover {
   transform: translateY(-5px); /* 위로 살짝 이동 */
   box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
 }
 
 /* active 상태 (클릭 시 눌리는 효과) */
-.card:active {
+.sol-card:active {
   transform: translateY(2px); /* 아래로 눌리는 효과 */
   box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.15);
 }
 
 /* 카드 아이콘 */
-.card-icon {
+.sol-card-icon {
   font-size: 40px;
   margin-bottom: 10px;
 }
 
 /* 카드 제목 */
-.card-title {
+.sol-card-title {
   font-size: 18px;
   font-weight: bold;
   color: #454545;
@@ -71,7 +72,110 @@
 }
 
 /* 카드 부제목 */
-.card-subtitle {
+.sol-card-subtitle {
   font-size: 14px;
   color: #343030;
+}
+.random-img {
+  width: 45px;
+  height: auto;
+}
+
+/* 준비중 카드 스타일 (sol-card2) */
+.sol-card2 {
+  background: #f5f5f5; /* 흐린 배경 */
+  border: 1px solid #ddd; /* 흐린 경계선 */
+  border-radius: 20px;
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: none; /* 그림자 제거 */
+  cursor: not-allowed; /* 비활성화된 상태의 커서 */
+  transition: none; /* hover 효과 제거 */
+  font: inherit;
+  color: #bbb; /* 텍스트 색도 흐리게 */
+  outline: none;
+  border: none;
+}
+
+/* 로딩 애니메이션 컨테이너 */
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px; /* 카드 크기에 맞게 조정 */
+  height: 40px;
+  position: relative;
+  opacity: 0.6; /* 흐리게 처리 */
+}
+
+/* 각 점 */
+.loading-spinner div {
+  width: 8px;
+  height: 8px;
+  margin: 2px;
+  background-color: #000000; /* 흐린 색상 */
+  border-radius: 50%;
+  position: absolute;
+  animation: fade 1.2s infinite ease-in-out;
+}
+
+/* 점 위치 설정 */
+.loading-spinner div:nth-child(1) { top: 0; left: 50%; transform: translate(-50%, -50%); }
+.loading-spinner div:nth-child(2) { top: 14%; left: 86%; transform: translate(-50%, -50%); }
+.loading-spinner div:nth-child(3) { top: 50%; left: 100%; transform: translate(-50%, -50%); }
+.loading-spinner div:nth-child(4) { top: 86%; left: 86%; transform: translate(-50%, -50%); }
+.loading-spinner div:nth-child(5) { top: 100%; left: 50%; transform: translate(-50%, -50%); }
+.loading-spinner div:nth-child(6) { top: 86%; left: 14%; transform: translate(-50%, -50%); }
+.loading-spinner div:nth-child(7) { top: 50%; left: 0; transform: translate(-50%, -50%); }
+.loading-spinner div:nth-child(8) { top: 14%; left: 14%; transform: translate(-50%, -50%); }
+
+/* 애니메이션 효과 */
+@keyframes fade {
+  0%, 39%, 100% {
+    opacity: 0.3;
+  }
+  40% {
+    opacity: 1;
+  }
+}
+
+/* 각 점에 시간차 적용 */
+.loading-spinner div:nth-child(1) { animation-delay: -1.1s; }
+.loading-spinner div:nth-child(2) { animation-delay: -1s; }
+.loading-spinner div:nth-child(3) { animation-delay: -0.9s; }
+.loading-spinner div:nth-child(4) { animation-delay: -0.8s; }
+.loading-spinner div:nth-child(5) { animation-delay: -0.7s; }
+.loading-spinner div:nth-child(6) { animation-delay: -0.6s; }
+.loading-spinner div:nth-child(7) { animation-delay: -0.5s; }
+.loading-spinner div:nth-child(8) { animation-delay: -0.4s; }
+
+/* hover 및 active 상태 비활성화 */
+.sol-card2:hover {
+  background-color: #f5f5f5; /* 유지 */
+  transform: none; /* 효과 없음 */
+  box-shadow: none; /* 그림자 제거 */
+}
+
+.sol-card2:active {
+  transform: none; /* 눌리는 효과 없음 */
+  box-shadow: none; /* 그림자 제거 */
+}
+
+/* solmois 이미지 스타일 */
+.solleaf-container img {
+  max-width: 100%; /* 컨테이너 너비에 맞게 조정 */
+  height: auto; /* 비율 유지 */
+  object-fit: contain; /* 이미지 왜곡 방지 */
+  display: block; /* 불필요한 inline 여백 제거 */
+}
+
+/* solmois 이미지 스타일 */
+.solmois-img {
+  max-width: 100%; /* 부모 컨테이너의 너비에 맞게 조정 */
+  height: auto; /* 이미지의 비율 유지 */
+  object-fit: contain; /* 왜곡 방지 */
+  display: block; /* 이미지 주변 불필요한 공백 제거 */
 }

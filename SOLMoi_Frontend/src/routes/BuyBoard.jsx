@@ -13,7 +13,7 @@ const BuyBoard = () => {
   const handleNumberClick = (number) => {
     setQuantity((prev) => {
       const newValue = prev + number;
-      if (newValue.split(".").length > 2) return prev; // 소수점 2개 방지
+      if (newValue.split(".").length > 2) return prev;
       return newValue.length < 10 ? newValue : prev;
     });
   };

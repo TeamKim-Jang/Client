@@ -52,8 +52,8 @@ export default function MockInvestMain() {
     const intervalId = setInterval(() => {
       setIsUpdating(true);
       fetchData();
-      timeoutRef.current = setTimeout(() => setIsUpdating(false), 600);
-    }, 5000);
+      timeoutRef.current = setTimeout(() => setIsUpdating(false), 60);
+    }, 1000);
 
     return () => {
       clearInterval(intervalId);

@@ -169,14 +169,13 @@ export default function UpdownGame() {
             {selectedStock && (
               <div className="stock-info">
                 <div className="stock-logo">
-                  {selectedStock.symbol.toString().charAt(0)}
+                  {selectedStock.name.toString().charAt(0)}
                 </div>
                 <h3 className="stock-name">{selectedStock.name}</h3>
               </div>
             )}
 
             <div className="prediction-section">
-              <h4 className="stock-name-question">{selectedStock?.name}</h4>
               <p className="question">내일 오를까? 내릴까?</p>
             </div>
 

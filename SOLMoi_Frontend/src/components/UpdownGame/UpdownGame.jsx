@@ -3,6 +3,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./UpdownGame.css";
+import game from '../../assets/images/game.png'
+
 
 export default function UpdownGame() {
   const navigate = useNavigate();
@@ -217,14 +219,14 @@ export default function UpdownGame() {
           </div>
         </div>
       </main>
-
       <footer className="bottomNav">
         <div className="navItems">
-          <div className="navItem" onClick={() => navigate("/stock")}></div>
+         <div className="navItem" onClick={() => navigate("/stock")}></div>
           <div className="navItem activeNavItem"></div>
-          <div className="navItem"></div>
-          <div className="navItem"></div>
-          <div className="navItem"></div>
+          <div className="navItem"
+          onClick={() => navigate('/solleafcontent')}>
+            <img src={game} alt="game" className="navImage" />
+          </div>
         </div>
       </footer>
     </div>

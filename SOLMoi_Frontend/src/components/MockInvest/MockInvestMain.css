@@ -8,12 +8,13 @@
   --negative-color: #EF4444;
 }
 
-.container {
+.containerMock {
   min-height: 100vh;
   background-color: var(--background-color);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   color: var(--text-color);
-  padding-bottom: 80px;
+  padding: 10px;
+
   animation: fadeIn 0.5s ease;
 }
 
@@ -249,4 +250,3 @@
 .updating {
   opacity: 0.7;
 }
-

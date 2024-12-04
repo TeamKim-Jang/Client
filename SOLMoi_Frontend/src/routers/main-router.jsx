@@ -15,6 +15,7 @@ import MockInvestMainBoard from "../routes/MockInvestMainBoard";
 import UpdownGameBoard from "../routes/UpdownGameBoard";
 import { SchoolProvider } from "../contexts/schoolContext";
 import SchoolComponent from "../components/users/SchoolComponent";
+import InvestSearchBoard from "../routes/InvestSearchBoard.jsx";
 
 export const mainRoutes = [
   {
@@ -107,6 +108,10 @@ export const mainRoutes = [
   {
     path: "/random", // 매도 라우트
     element: <Random />,
+  },
+  {
+    path: "/investsearch", // 주식검색 라우트
+    element: <InvestSearchBoard />,
   },
 ];
 

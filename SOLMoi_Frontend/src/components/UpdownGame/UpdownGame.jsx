@@ -187,8 +187,10 @@ export default function UpdownGame() {
             )}
 
             <div className="prediction-section">
-              <h4 className="stock-name-question">{selectedStock?.name}</h4>
-              <p className="question">내일 오를까? 내릴까?</p>
+              <h4 className="stock-name-question">내일 오를까? 내릴까?</h4>
+              <p className="question">
+                맞히면 <b>10쏠잎</b> 지급<br></br>(09:00시 기준)
+              </p>
             </div>
 
             <div className="buttons-wrapper">

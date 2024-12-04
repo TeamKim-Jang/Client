@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import "./MockInvestMain.css";
+import "./InvestSearch.css";
 import game from "../../assets/images/game.png";
 
 const formatNumber = (num) => {
@@ -16,7 +16,7 @@ const formatPercent = (num) => {
   }).format(num || 0);
 };
 
-export default function MockInvestMain() {
+export default function InvestSearch() {
   const navigate = useNavigate();
   const [balanceData, setBalanceData] = useState(null);
   const [stockData, setStockData] = useState([]);
@@ -79,6 +79,10 @@ export default function MockInvestMain() {
       <div className={`balanceSection ${isUpdating ? "updating" : ""}`}>
         <div className="balanceContainer">
           <div>
+            asfasdfsdfsfd
+            <div className="totalBalance">{formatNumber(totalBalance)}원</div>
+            <div className="totalBalance">{formatNumber(totalBalance)}원</div>
+            <div className="totalBalance">{formatNumber(totalBalance)}원</div>
             <div className="totalBalance">{formatNumber(totalBalance)}원</div>
             <div
               className={`profitLoss ${
@@ -151,11 +155,8 @@ export default function MockInvestMain() {
       </div>
       <footer className="bottomNav">
         <div className="navItems">
+          <div className="navItem" onClick={() => navigate("/stock")}></div>
           <div className="navItem activeNavItem"></div>
-          <div
-            className="navItem"
-            onClick={() => navigate("/investsearch")}
-          ></div>
           <div className="navItem" onClick={() => navigate("/solleafcontent")}>
             <img src={game} alt="game" className="navImage" />
           </div>

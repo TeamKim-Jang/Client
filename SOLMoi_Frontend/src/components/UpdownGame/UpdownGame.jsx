@@ -13,6 +13,9 @@ export default function UpdownGame() {
   const [yesterdayPrediction, setYesterdayPrediction] = useState(null);
   const [todayPrediction, setTodayPrediction] = useState(null);
   const [error, setError] = useState(null);
+  const goBack = () => {
+    navigate(-1); // 이전 페이지로 이동
+  };
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -68,7 +71,6 @@ export default function UpdownGame() {
   const makePrediction = async (prediction) => {
     setIsLoading(true);
     setError(null);
-    const stockBackup = selectedStock;
     try {
       const response = await fetch(
         "http://localhost:3001/api/prediction/predict",
@@ -93,7 +95,7 @@ export default function UpdownGame() {
           status: "success",
           message: `${prediction === "UP" ? "상승" : "하락"} 예측이 기록되었습니다.`,
         });
-        setTodayPrediction(data.data);
+        setTodayPrediction(data.data); // 오늘의 예측 결과 저장
       } else {
         throw new Error(data.message || "예측을 등록하는데 실패했습니다");
       }
@@ -105,9 +107,7 @@ export default function UpdownGame() {
       });
       setError("예측을 하는데 실패했습니다. 나중에 다시 시도해주세요.");
     } finally {
-      setSelectedStock(stockBackup); // 주식 정보 복원
-
-      setIsLoading(false);
+      setIsLoading(false); // 로딩 상태 해제
     }
   };
 
@@ -124,6 +124,22 @@ export default function UpdownGame() {
       <main className="main">
         <div className="card">
           <div className="card-content">
+            <div className="back-button-container" onClick={goBack}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="back-arrow"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M15.5 19.5L8.5 12l7-7.5"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </div>
             {yesterdayPrediction && yesterdayPrediction.is_correct !== null && (
               <div className="popup">
                 <div className="popup-content">
@@ -152,7 +168,7 @@ export default function UpdownGame() {
 
             <div className="prediction-section">
               <h4 className="stock-name-question">{selectedStock?.name}</h4>
-              <p className="question">오를까? 내릴까?</p>
+              <p className="question">내일 오를까? 내릴까?</p>
             </div>
 
             <div className="buttons-wrapper">

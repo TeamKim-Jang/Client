@@ -1,171 +1,211 @@
+:root {
+  --primary-color: #2d59f7;
+  --secondary-color: #ff6b6b;
+  --background-color: #E5F0FC;
+  --card-background: #ffffff;
+  --text-color: #333333;
+}
+
 .container {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: #f0f2f5;
-  font-family: Arial, sans-serif;
+  background-color: var(--background-color);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
   max-width: 480px;
   margin: 0 auto;
 }
+
 .header {
-  background-color: white;
   padding: 16px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: var(--background-color);
 }
+
 .header-title {
-  color: #2d59f7;
-  font-size: 18px;
+  color: var(--primary-color);
+  font-size: 20px;
   font-weight: bold;
+  text-align: left;
+  margin: 0;
 }
+
 .main {
   flex: 1;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
   padding: 20px;
 }
+
 .card {
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--card-background);
   padding: 24px;
-  width: 86vw;
 }
-.card-title {
-  font-size: 24px;
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 24px;
-}
+
 .card-content {
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 24px;
+  justify-content: center;
+  gap: 32px;
 }
+
+.game-title {
+  font-size: 28px;
+  font-weight: bold;
+  color: var(--text-color);
+  margin: 0;
+}
+
 .stock-info {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
 }
-.stock-icon {
-  width: 80px;
-  height: 80px;
+
+.stock-logo {
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
-  background-color: #2d59f7;
+  background-color: var(--primary-color);
   color: white;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 36px;
+  font-size: 48px;
   font-weight: bold;
-  margin: 0 auto 16px;
 }
+
 .stock-name {
+  font-size: 32px;
+  font-weight: bold;
+  color: var(--text-color);
+  margin: 0;
+}
+
+.prediction-section {
+  text-align: center;
+}
+
+.stock-name-question {
   font-size: 24px;
   font-weight: bold;
-  margin-bottom: 8px;
+  margin: 0 0 8px 0;
 }
-.stock-price {
-  font-size: 20px;
-  color: #2d59f7;
-  font-weight: bold;
-}
-.loading,
-.error {
-  text-align: center;
-  padding: 20px;
-  font-size: 18px;
-}
-.error {
-  color: red;
-}
+
 .question {
   font-size: 20px;
-  font-weight: bold;
+  color: var(--text-color);
+  margin: 0;
 }
-.button-container {
+
+.buttons-wrapper {
   display: flex;
-  gap: 16px;
+  gap: 20px;
   width: 100%;
+  max-width: 400px;
+  margin-top: 32px;
 }
-.button {
+
+.button-container {
   flex: 1;
+}
+
+.button {
+  width: 100%;
   border: none;
   border-radius: 30px;
   padding: 16px;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: bold;
   color: white;
   cursor: pointer;
   display: flex;
   flex-direction: column;
   align-items: center;
-  transition:
-    background-color 0.3s,
-    opacity 0.3s;
+  gap: 8px;
+  transition: all 0.2s ease;
 }
+
 .up-button {
-  background-color: #ff6b6b;
+  background-color: var(--secondary-color);
 }
+
 .down-button {
-  background-color: #2d59f7;
+  background-color: var(--primary-color);
 }
+
 .button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
+
 .button.selected {
-  opacity: 1;
+  width: 200px; /* 선택된 버튼의 너비 (2배 길이) */
+  opacity: 1; /* 선택된 버튼은 완전히 표시 */
 }
-.arrow-up,
-.arrow-down {
+
+.arrow-icon {
   font-size: 24px;
-  margin-bottom: 8px;
-}
-.message {
-  padding: 12px;
-  border-radius: 4px;
-  text-align: center;
   font-weight: bold;
 }
+
+.button-text {
+  font-size: 16px;
+}
+
+.message {
+  padding: 16px;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: bold;
+  width: 100%;
+}
+
 .success-message {
   background-color: #4caf50;
   color: white;
 }
+
 .error-message {
   background-color: #f44336;
   color: white;
 }
-.footer {
-  position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: white;
-    border-top: 1px solid #E5E7EB;
-    padding: 16px;
 
+.bottomNav {
+  padding: 16px;
+  background-color: var(--background-color);
+  border-top: 1px solid #eee;
 }
-.nav-container {
+
+.navItems {
   display: flex;
   justify-content: space-between;
   max-width: 300px;
   margin: 0 auto;
 }
-.navItems {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.nav-item {
-  width: 24px;
-  height: 24px;
+
+.navItem {
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   background-color: #e5e7eb;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
-.active-nav-item {
-  background-color: #2d59f7;
+.navItem:hover {
+  transform: scale(1.1);
 }
+
+.activeNavItem {
+  background-color: var(--primary-color);
+}
+
 .popup {
   position: fixed;
   top: 0;
@@ -176,11 +216,47 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1000;
 }
+
 .popup-content {
-  background-color: white;
-  padding: 20px;
-  border-radius: 8px;
+  background-color: var(--card-background);
+  padding: 24px;
+  border-radius: 16px;
   text-align: center;
 }
 
+.loading,
+.error {
+  text-align: center;
+  padding: 20px;
+  font-size: 18px;
+}
+
+.error {
+  color: #f44336;
+}
+
+.back-button-container {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.back-arrow {
+  width: 24px;
+  height: 24px;
+  stroke: #333;
+  transition: stroke 0.3s ease;
+}
+
+.back-button-container:hover .back-arrow {
+  stroke: #007bff; /* 호버 시 색상 */
+}

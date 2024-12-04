@@ -117,15 +117,6 @@ export default function AttendanceCheck() {
           <p style={{ color: todayCheckedIn ? "green" : "red" }}>{message}</p>
         )}
       </div>
-
-      {/* Bottom Navigation */}
-      <div className="bottom-nav">
-        <Clock className="icon" />
-        <div className="active-icon"></div>
-        <BarChart3 className="icon" />
-        <Newspaper className="icon" />
-        <Users className="icon" />
-      </div>
     </div>
   );
 }

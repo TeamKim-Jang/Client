@@ -3,18 +3,14 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "./InvestSearch.css";
-import game from "../../assets/images/game.png";
 
-const formatNumber = (num) => {
-  return new Intl.NumberFormat("ko-KR").format(num || 0);
-};
+const formatNumber = (num) => new Intl.NumberFormat("ko-KR").format(num || 0);
 
-const formatPercent = (num) => {
-  return new Intl.NumberFormat("ko-KR", {
+const formatPercent = (num) =>
+  new Intl.NumberFormat("ko-KR", {
     minimumFractionDigits: 1,
     maximumFractionDigits: 1,
   }).format(num || 0);
-};
 
 export default function InvestSearch() {
   const navigate = useNavigate();
@@ -32,14 +28,27 @@ export default function InvestSearch() {
         throw new Error("Failed to fetch stock data");
       }
       const { data } = await response.json();
-      setStockData(data || []);
-      setFilteredStocks(data || []);
+      setStockData(data || []); // 전체 데이터를 갱신
+      // 검색 결과 유지: 검색 중이라면 필터링 유지
+      if (searchQuery.trim()) {
+        const filtered = data.filter(
+          (stock) =>
+            stock.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            stock.symbol
+              .toString()
+              .toLowerCase()
+              .includes(searchQuery.toLowerCase())
+        );
+        setFilteredStocks(filtered);
+      } else {
+        setFilteredStocks(data);
+      }
     } catch (error) {
       console.error("Error fetching stock data:", error);
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [searchQuery]);
 
   useEffect(() => {
     fetchData();
@@ -57,17 +66,16 @@ export default function InvestSearch() {
   }, [fetchData]);
 
   const handleSearch = (e) => {
-    const query = e.target.value.toLowerCase();
+    const query = e.target.value;
     setSearchQuery(query);
 
     const filtered = stockData.filter(
       (stock) =>
-        stock.name.toLowerCase().includes(query) ||
-        stock.symbol.toLowerCase().includes(query)
+        stock.name.toLowerCase().includes(query.toLowerCase()) ||
+        stock.symbol.toString().toLowerCase().includes(query.toLowerCase())
     );
 
-    // 검색된 주식이 없을 경우 전체 주식 표시
-    setFilteredStocks(filtered.length > 0 ? filtered : stockData);
+    setFilteredStocks(filtered);
   };
 
   return (
@@ -76,7 +84,7 @@ export default function InvestSearch() {
       <div className={`balanceSection ${isUpdating ? "updating" : ""}`}>
         <input
           type="text"
-          placeholder="검색 주식 이름이나 코드를 입력하세요"
+          placeholder="종목명 또는 코드로 검색하세요"
           value={searchQuery}
           onChange={handleSearch}
           className="searchInput"
@@ -92,7 +100,7 @@ export default function InvestSearch() {
           <div className="stocksList">
             {filteredStocks.map((stock) => (
               <div
-                key={stock.id}
+                key={stock.stock_id}
                 className={`stockItem ${isUpdating ? "updating" : ""}`}
               >
                 <div className="stockInfo">
@@ -130,17 +138,6 @@ export default function InvestSearch() {
           </div>
         )}
       </div>
-
-      {/* Footer Navigation */}
-      <footer className="bottomNav">
-        <div className="navItems">
-          <div className="navItem" onClick={() => navigate("/stock")}></div>
-          <div className="navItem activeNavItem"></div>
-          <div className="navItem" onClick={() => navigate("/solleafcontent")}>
-            <img src={game} alt="game" className="navImage" />
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }

@@ -3,6 +3,8 @@ import axios from 'axios';
 import RankingTabs from './RankingTabs';
 import RankingList from './RankingList';
 import '../../styles/OverallRanking.css';
+import apiClient from "../../utils/apiClient";
+
 
 const OverallRanking = () => {
   const [rankings, setRankings] = useState([]);
@@ -24,7 +26,7 @@ const OverallRanking = () => {
     const fetchRankings = async () => {
       setLoading(true);
       try {
-        const response = await axios.get('/api/ranking/overall');
+        const response = await apiClient.get("/ranking/overall");        
         const rankingsWithTier = calculateTier(response.data.data);
         setRankings(rankingsWithTier);
         setError(null);

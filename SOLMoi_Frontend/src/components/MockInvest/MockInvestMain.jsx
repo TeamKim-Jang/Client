@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "./MockInvestMain.css";
+import game from "../../assets/images/game.png";
 
 const formatNumber = (num) => {
   return new Intl.NumberFormat("ko-KR").format(num || 0);
@@ -52,8 +53,8 @@ export default function MockInvestMain() {
     const intervalId = setInterval(() => {
       setIsUpdating(true);
       fetchData();
-      timeoutRef.current = setTimeout(() => setIsUpdating(false), 300);
-    }, 5000);
+      timeoutRef.current = setTimeout(() => setIsUpdating(false), 60);
+    }, 1000);
 
     return () => {
       clearInterval(intervalId);
@@ -155,9 +156,9 @@ export default function MockInvestMain() {
             className="navItem"
             onClick={() => navigate("/updowngame")}
           ></div>
-          <div className="navItem"></div>
-          <div className="navItem"></div>
-          <div className="navItem"></div>
+          <div className="navItem" onClick={() => navigate("/solleafcontent")}>
+            <img src={game} alt="game" className="navImage" />
+          </div>
         </div>
       </footer>
     </div>

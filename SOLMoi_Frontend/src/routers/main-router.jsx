@@ -8,10 +8,13 @@ import AttendanceCheckBoard from "../routes/AttendanceCheckBoard";
 import OverallRanking from "../components/ranking/OverallRanking";
 import SchoolRanking from "../components/ranking/SchoolRanking";
 import StockPage from "../routes/StockPage.jsx";
+import Random from "../components/Random/RandomReward"; // 매도 페이지
 import BuyBoard from "../routes/BuyBoard.jsx";
 import SellBoard from "../routes/SellBoard.jsx";
 import MockInvestMainBoard from "../routes/MockInvestMainBoard";
 import UpdownGameBoard from "../routes/UpdownGameBoard";
+import { SchoolProvider } from "../contexts/schoolContext";
+import SchoolComponent from "../components/users/SchoolComponent";
 
 export const mainRoutes = [
   {
@@ -47,8 +50,21 @@ export const mainRoutes = [
     element: <LoginBoard />,
   },
   {
+    path: "/auth/school", // 학교 선택 페이지 추가
+    element: (
+      <SchoolProvider>
+        <SchoolComponent />
+      </SchoolProvider>
+    ),
+  },
+  {
     path: "/auth/register",
-    element: <RegisterBoard />,
+    element: (
+      <SchoolProvider>
+        <RegisterBoard />
+      </SchoolProvider>
+    ), // 컨텍스트 적용
+    index: true,
   },
   {
     path: "/attendance",
@@ -65,6 +81,32 @@ export const mainRoutes = [
   {
     path: "/updowngame",
     element: <UpdownGameBoard />,
+  },
+  {
+    path: "/ranking/overall",
+    element: <OverallRanking />,
+    index: true,
+  },
+  {
+    path: "/ranking/school/:schoolId",
+    element: <SchoolRanking />,
+    index: true,
+  },
+  {
+    path: "/stock/:stockCode",
+    element: <StockPage />,
+  },
+  {
+    path: "/stock/:stockCode/buy", // 매수 라우트
+    element: <BuyBoard />,
+  },
+  {
+    path: "/stock/:stockCode/sell", // 매도 라우트
+    element: <SellBoard />,
+  },
+  {
+    path: "/random", // 매도 라우트
+    element: <Random />,
   },
 ];
 

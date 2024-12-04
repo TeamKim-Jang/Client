@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./UpdownGame.css";
+import game from "../../assets/images/game.png";
 
 export default function UpdownGame() {
   const navigate = useNavigate();
@@ -127,7 +128,20 @@ export default function UpdownGame() {
 
   return (
     <div className="containerUpdown">
-      <main className="main">
+      <div className="container">
+        {yesterdayPrediction && yesterdayPrediction.is_correct !== null && (
+          <div className="popup">
+            <div className="popup-content">
+              <p>
+                {yesterdayPrediction.is_correct
+                  ? "포인트 획득!"
+                  : "포인트 획득 실패"}
+              </p>
+              <button onClick={() => setYesterdayPrediction(null)}>닫기</button>
+            </div>
+          </div>
+        )}
+
         <div className="card">
           <div className="card-content">
             <div className="back-button-container" onClick={goBack}>
@@ -161,16 +175,21 @@ export default function UpdownGame() {
               </div>
             )}
 
-            <h2 className="game-title"></h2>
+            <h2 className="game-title">주가예측게임</h2>
 
             {selectedStock && (
               <div className="stock-info">
                 <div className="stock-logo">
-                  {selectedStock.name.toString().charAt(0)}
+                  {selectedStock.symbol.toString().charAt(0)}
                 </div>
                 <h3 className="stock-name">{selectedStock.name}</h3>
               </div>
             )}
+
+            <div className="prediction-section">
+              <h4 className="stock-name-question">{selectedStock?.name}</h4>
+              <p className="question">내일 오를까? 내릴까?</p>
+            </div>
 
             <div className="buttons-wrapper">
               <div className="button-container">
@@ -216,15 +235,14 @@ export default function UpdownGame() {
             )}
           </div>
         </div>
-      </main>
-
+      </div>
       <footer className="bottomNav">
         <div className="navItems">
           <div className="navItem" onClick={() => navigate("/stock")}></div>
           <div className="navItem activeNavItem"></div>
-          <div className="navItem"></div>
-          <div className="navItem"></div>
-          <div className="navItem"></div>
+          <div className="navItem" onClick={() => navigate("/solleafcontent")}>
+            <img src={game} alt="game" className="navImage" />
+          </div>
         </div>
       </footer>
     </div>

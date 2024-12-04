@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./UpdownGame.css";
+import game from "../../assets/images/game.png";
 
 export default function UpdownGame() {
   const navigate = useNavigate();
@@ -127,7 +128,7 @@ export default function UpdownGame() {
 
   return (
     <div className="containerUpdown">
-      <main className="main">
+      <div className="container">
         {yesterdayPrediction && yesterdayPrediction.is_correct !== null && (
           <div className="popup">
             <div className="popup-content">
@@ -140,9 +141,9 @@ export default function UpdownGame() {
             </div>
           </div>
         )}
-        <div className="card">
-          <div className="card-content">
-            <div className="stock-info">
+        <main className="main">
+          <div className="card">
+            <div className="card-content">
               <div className="back-button-container" onClick={goBack}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -159,75 +160,96 @@ export default function UpdownGame() {
                   />
                 </svg>
               </div>
+              {yesterdayPrediction &&
+                yesterdayPrediction.is_correct !== null && (
+                  <div className="popup">
+                    <div className="popup-content">
+                      <p>
+                        {yesterdayPrediction.is_correct
+                          ? "포인트 획득!"
+                          : "포인트 획득 실패"}
+                      </p>
+                      <button onClick={() => setYesterdayPrediction(null)}>
+                        닫기
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+              <h2 className="game-title">주가예측게임</h2>
 
               {selectedStock && (
                 <div className="stock-info">
                   <div className="stock-logo">
-                    {selectedStock.name.toString().charAt(0)}
+                    {selectedStock.symbol.toString().charAt(0)}
                   </div>
                   <h3 className="stock-name">{selectedStock.name}</h3>
-                  <h2 className="game-title">내일 오를까? 내릴까?</h2>
-                  <div className="game-info">
-                    맞히면 10쏠 지급<br></br>(전일 대비 09시 기준)
-                  </div>
                 </div>
               )}
-            </div>
-            <div className="buttons-wrapper">
-              <div className="button-container">
-                <button
-                  onClick={() => makePrediction("UP")}
-                  disabled={isLoading || !selectedStock || todayPrediction}
-                  className={`button up-button ${
-                    todayPrediction?.prediction_upordown === "UP"
-                      ? "selected"
-                      : ""
-                  }`}
-                >
-                  <span className="arrow-icon">↗</span>
-                  <span className="button-text">오른다</span>
-                </button>
-              </div>
-              <div className="button-container">
-                <button
-                  onClick={() => makePrediction("DOWN")}
-                  disabled={isLoading || !selectedStock || todayPrediction}
-                  className={`button down-button ${
-                    todayPrediction?.prediction_upordown === "DOWN"
-                      ? "selected"
-                      : ""
-                  }`}
-                >
-                  <span className="arrow-icon">↘</span>
-                  <span className="button-text">내린다</span>
-                </button>
-              </div>
-            </div>
 
-            {apiResponse && (
-              <p
-                className={`message ${
-                  apiResponse.status === "success"
-                    ? "success-message"
-                    : "error-message"
-                }`}
-              >
-                {apiResponse.message}
-              </p>
-            )}
+              <div className="prediction-section">
+                <h4 className="stock-name-question">{selectedStock?.name}</h4>
+                <p className="question">내일 오를까? 내릴까?</p>
+              </div>
+
+              <div className="buttons-wrapper">
+                <div className="button-container">
+                  <button
+                    onClick={() => makePrediction("UP")}
+                    disabled={isLoading || !selectedStock || todayPrediction}
+                    className={`button up-button ${
+                      todayPrediction?.prediction_upordown === "UP"
+                        ? "selected"
+                        : ""
+                    }`}
+                  >
+                    <span className="arrow-icon">↗</span>
+                    <span className="button-text">오른다</span>
+                  </button>
+                </div>
+                <div className="button-container">
+                  <button
+                    onClick={() => makePrediction("DOWN")}
+                    disabled={isLoading || !selectedStock || todayPrediction}
+                    className={`button down-button ${
+                      todayPrediction?.prediction_upordown === "DOWN"
+                        ? "selected"
+                        : ""
+                    }`}
+                  >
+                    <span className="arrow-icon">↘</span>
+                    <span className="button-text">내린다</span>
+                  </button>
+                </div>
+              </div>
+
+              {apiResponse && (
+                <p
+                  className={`message ${
+                    apiResponse.status === "success"
+                      ? "success-message"
+                      : "error-message"
+                  }`}
+                >
+                  {apiResponse.message}
+                </p>
+              )}
+            </div>
           </div>
-        </div>
-      </main>
-
-      <footer className="bottomNav">
-        <div className="navItems">
-          <div className="navItem" onClick={() => navigate("/stock")}></div>
-          <div className="navItem activeNavItem"></div>
-          <div className="navItem"></div>
-          <div className="navItem"></div>
-          <div className="navItem"></div>
-        </div>
-      </footer>
+        </main>
+        <footer className="bottomNav">
+          <div className="navItems">
+            <div className="navItem" onClick={() => navigate("/stock")}></div>
+            <div className="navItem activeNavItem"></div>
+            <div
+              className="navItem"
+              onClick={() => navigate("/solleafcontent")}
+            >
+              <img src={game} alt="game" className="navImage" />
+            </div>
+          </div>
+        </footer>
+      </div>
     </div>
   );
 }

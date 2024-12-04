@@ -23,8 +23,10 @@ export default function InvestSearch() {
   const [isLoading, setIsLoading] = useState(true);
   const [isUpdating, setIsUpdating] = useState(false);
   const timeoutRef = useRef(null);
-  const handleStockClick = (stockId) => {
-    const paddedStockId = stockId.toString().padStart(6, "0"); // 6자리로 변환
+  const handleStockClick = (stockId, stockName) => {
+    const paddedStockId = stockId.toString().padStart(6, "0");
+    sessionStorage.setItem("selectedStockId", paddedStockId); // stock_id 저장
+    sessionStorage.setItem("selectedStockName", stockName); // 6자리로 변환
     navigate(`/stock/${paddedStockId}`);
   };
   const fetchData = useCallback(async () => {
@@ -107,11 +109,18 @@ export default function InvestSearch() {
               <div
                 key={stock.stock_id}
                 className={`stockItem ${isUpdating ? "updating" : ""}`}
-                onClick={() => handleStockClick(stock.stock_id)} // 클릭 이벤트 연결
+                onClick={() => handleStockClick(stock.stock_id, stock.name)} // 클릭 이벤트 연결
               >
                 <div className="stockInfo">
                   <div className="logoContainer">
-                    <div className="logo">{stock.name.charAt(0)}</div>
+                    <img
+                      src={`./src/assets/logos/${stock.stock_id}.png`}
+                      alt={stock.name}
+                      className="stockLogo"
+                      onError={(e) => {
+                        e.target.src = "./src/assets/logos/055550.png"; // 이미지 없을 경우 기본 이미지
+                      }}
+                    />
                   </div>
                   <div>
                     <div className="stockName">{stock.name}</div>

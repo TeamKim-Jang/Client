@@ -35,7 +35,7 @@ export default function UpdownGame() {
 
       try {
         const response = await fetch(
-          `http://localhost:3001/api/prediction/game-status/${userId}`
+          `/api/prediction/game-status/${userId}`
         );
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);

@@ -7,7 +7,7 @@ export default defineConfig({
     port: 5173,
     proxy: {
       "/api": {
-        target: "http://localhost:3001",
+        target: "http://43.201.60.104:3001", // 서버의 퍼블릭 IP와 포트
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, "/api"),
       },

@@ -4,7 +4,7 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Offcanvas from 'react-bootstrap/Offcanvas';
-import SoLMoiLogo from '../../assets/images/SoLMoi.png';
+import SoLMoiLogo from '../../../assets/images/SoLMoi.png';
 import './NavbarComponent.css'; // 커스텀 CSS 파일 추가
 
 export default function NavbarComponent() {

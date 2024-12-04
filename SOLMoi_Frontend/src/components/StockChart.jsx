@@ -11,7 +11,7 @@ const StockChart = (stockCode) => {
   useEffect(() => {
     const fetchStockData = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/api/stock/${stockCode}`);
+        const response = await axios.get(`/api/stock/${stockCode}`);
         const stockData = response.data;
         const formattedData = stockData.map((d) => ({
           date: new Date(d.timestamp),

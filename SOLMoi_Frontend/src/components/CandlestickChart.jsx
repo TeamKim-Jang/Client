@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom"; 
 import axios from "axios";
 import {
   ChartCanvas,
@@ -15,13 +16,14 @@ const CandlestickChart = ({ stockCode, duration }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   const fetchData = async () => {
     setLoading(true);
     setError(null);
     try {
       const response = await axios.get(
-        `http://localhost:3001/api/stock/${stockCode}?duration=${duration}`
+        `/api/stock/${stockCode}?duration=${duration}`
       );
 
       const formattedData = response.data.data.map((item) => ({
@@ -128,6 +130,7 @@ const CandlestickChart = ({ stockCode, duration }) => {
       {/* 사기/팔기 */}
       <div style={{ marginTop: "30px", textAlign: "center" }}>
         <button
+          onClick={() => navigate(`/stock/${stockCode}/buy`)}
           style={{
             padding: "12px 30px",
             fontSize: "16px",
@@ -142,6 +145,7 @@ const CandlestickChart = ({ stockCode, duration }) => {
           사기
         </button>
         <button
+          onClick={() => navigate(`/stock/${stockCode}/sell`)} 
           style={{
             padding: "12px 30px",
             fontSize: "16px",
